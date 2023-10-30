@@ -39,7 +39,6 @@ class RoomResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('room_id'),
                 Tables\Columns\TextColumn::make('room')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
