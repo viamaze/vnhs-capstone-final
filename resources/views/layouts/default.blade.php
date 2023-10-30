@@ -1,10 +1,3 @@
-@extends('errors::minimal')
-
-@section('title', __('Forbidden'))
-@section('code', '403')
-@section('message', __($exception->getMessage() ?: 'Forbidden'))
-
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -21,8 +14,21 @@
 
     </head>
     <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+        <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
+
+            <!-- Page Wrapper -->
+            <div
+                class="flex flex-col min-h-screen"
+                style="transition-property: margin; transition-duration: 150ms;"
+            >
+
+                <!-- Page Content -->
+                <main class="flex">
+                    <div class="w-full p-2 m-2 min-h-screen overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1 ">
             @yield('content')
+                    </div>
+                </main>
+            </div>
         </div>
     </body>
 </html>

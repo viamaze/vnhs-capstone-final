@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Wizard;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Blade;
 
 class FacultyResource extends Resource
 {
@@ -23,50 +26,70 @@ class FacultyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('lname')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('fname')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('mname')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('mi')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ext')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('gender')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('dob')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('pob')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('civilstatus')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nationality')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('religion')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('contactno')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('address')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('barangay')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('municipality')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('province')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('emergency_contact')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('emergency_address')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('emergency_mobile')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('emergency_tel')
-                    ->tel()
-                    ->maxLength(255),
+                Forms\Components\Wizard::make([
+                    Wizard\Step::make('Faculty Information')
+                    ->schema([
+                    Forms\Components\TextInput::make('lname')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('fname')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('mname')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('mi')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('ext')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('gender')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('dob')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('pob')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('civilstatus')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('nationality')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('religion')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('contactno')
+                        ->maxLength(255),
+                ]),
+                Wizard\Step::make('Address')
+                    ->schema([
+                        Forms\Components\TextInput::make('address')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('barangay')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('municipality')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('province')
+                            ->maxLength(255),
+                ]),
+                Wizard\Step::make('Emergency Contact')
+                    ->schema([
+                    Forms\Components\TextInput::make('emergency_contact')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('emergency_address')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('emergency_mobile')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('emergency_tel')
+                        ->tel()
+                        ->maxLength(255),
+                    ])
+                ])
+                ->columnSpan('full')
+                ->submitAction(new HtmlString(Blade::render(<<<BLADE
+                    <x-filament::button
+                        type="submit"
+                        size="sm"
+                    >
+                        Submit
+                    </x-filament::button>
+                BLADE))) 
             ]);
     }
 
