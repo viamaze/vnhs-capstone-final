@@ -1,12 +1,14 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  @vite('resources/css/app.css')
-</head>
-<body>
-<h1 class="text-9xl">Hello World</h1>
-</body>
-</html>
+@extends('layouts.default')
 
+@section('content')
+    <div class="text-center">
+      <h1 class="font-black text-gray-500 text-9xl">403</h1>
+  
+      <p class="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Uh-oh!
+      </p>
+  
+      <p class="mt-4 text-gray-500">We can't find that page.</p>
+  
+    </div>
+@endsection
