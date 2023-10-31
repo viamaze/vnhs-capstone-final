@@ -56,7 +56,6 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->authGuard('web')
-            ->sidebarCollapsibleOnDesktop()
             ->brandName('VNHS Student Information System')
             ->favicon(asset('images/favicon.png'));
     }

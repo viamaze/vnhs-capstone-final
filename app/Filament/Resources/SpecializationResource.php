@@ -12,7 +12,12 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\Subject;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\TimePicker;
 
 class SpecializationResource extends Resource
 {
@@ -30,10 +35,14 @@ class SpecializationResource extends Resource
                 Forms\Components\TextInput::make('grade_level')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('subject_id')
-                    ->label('Subject')
-                    ->relationship('subjects', 'subject')
-                    ->required(),
+                Forms\Components\Repeater::make('subjects')
+                    ->schema([
+                        TextInput::make('subjects')
+                        ->required(),
+                        TimePicker::make('start_time'),
+                        TimePicker::make('end_time')
+                    ])
+                ->columnSpan('full'),
             ]);
     }
 
@@ -41,9 +50,6 @@ class SpecializationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subject_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('specialization')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('grade_level')

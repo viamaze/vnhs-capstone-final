@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Models\Subject;
+use App\Filament\Resources\OwnerResource\Pages;
+use App\Filament\Resources\OwnerResource\RelationManagers;
+use App\Models\Owner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 
-class SubjectResource extends Resource
+class OwnerResource extends Resource
 {
-    protected static ?string $model = Subject::class;
+    protected static ?string $model = Owner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,12 +26,14 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('subject')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Repeater::make('pets')
+                ->schema([
+                    TextInput::make('pets')
+                    ->required(),
+                    ]),
             ]);
     }
 
@@ -36,9 +41,7 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subject')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -75,9 +78,9 @@ class SubjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubjects::route('/'),
-            'create' => Pages\CreateSubject::route('/create'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
+            'index' => Pages\ListOwners::route('/'),
+            'create' => Pages\CreateOwner::route('/create'),
+            'edit' => Pages\EditOwner::route('/{record}/edit'),
         ];
     }    
 }

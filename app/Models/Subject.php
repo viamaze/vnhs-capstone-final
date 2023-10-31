@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Subject extends Model
 {
-    public function specialization(): BelongsTo
+
+    public function specialization(): HasMany
     {
-        return $this->belongsTo(Specialization::class);
+        return $this->hasMany(Specialization::class);
     }
 }
