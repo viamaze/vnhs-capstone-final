@@ -66,7 +66,8 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('student_ethnicity')
                             ->maxLength(255),
                         
-                    ]),
+                    ])
+                    ->icon('heroicon-m-user'),
                     Wizard\Step::make('Address')
                     ->schema([
                         Forms\Components\TextInput::make('student_address')
@@ -79,7 +80,7 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('student_zipcode')
                             ->maxLength(255),
-                    ]),
+                    ])->icon('heroicon-m-map'),
                     Wizard\Step::make('Parents Information')
                     ->schema([
                         Forms\Components\TextInput::make('father_lname')

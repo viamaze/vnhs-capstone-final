@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Subject extends Model
+class Specialization extends Model
 {
-    public function specialization(): BelongsTo
+
+    public function subjects()
     {
-        return $this->belongsTo(Specialization::class);
+        return $this->belongsTo(Subject::class);
     }
 }
