@@ -39,8 +39,6 @@ class SpecializationResource extends Resource
                     ->schema([
                         TextInput::make('subjects')
                         ->required(),
-                        TimePicker::make('start_time'),
-                        TimePicker::make('end_time')
                     ])
                 ->columnSpan('full'),
             ]);

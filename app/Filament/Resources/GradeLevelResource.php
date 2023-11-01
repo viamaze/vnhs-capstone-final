@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Models\Subject;
+use App\Filament\Resources\GradeLevelResource\Pages;
+use App\Filament\Resources\GradeLevelResource\RelationManagers;
+use App\Models\GradeLevel;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,26 +13,18 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubjectResource extends Resource
+class GradeLevelResource extends Resource
 {
-    protected static ?string $model = Subject::class;
+    protected static ?string $model = GradeLevel::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Student Management';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('subject')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('grade_level')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('teacher')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -42,14 +34,7 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subject')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('grade_level')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('teacher')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -86,9 +71,9 @@ class SubjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubjects::route('/'),
-            'create' => Pages\CreateSubject::route('/create'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
+            'index' => Pages\ListGradeLevels::route('/'),
+            'create' => Pages\CreateGradeLevel::route('/create'),
+            'edit' => Pages\EditGradeLevel::route('/{record}/edit'),
         ];
     }    
 }
