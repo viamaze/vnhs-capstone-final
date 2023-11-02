@@ -18,6 +18,9 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
+use Filament\Pages\Dashboard;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -55,8 +58,19 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->navigationItems([
+                NavigationItem::make('Logout')
+                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('User Management')
+                    ->sort(3),
+                    
+            ])
             ->authGuard('web')
             ->brandName('VNHS Student Information System')
-            ->favicon(asset('images/favicon.png'));
+            ->favicon(asset('images/favicon.png'))
+            ->userMenuItems([
+                'logout' => MenuItem::make()->label('Signout'),
+            ]);
     }
 }

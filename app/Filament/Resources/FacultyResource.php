@@ -13,11 +13,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Wizard;
-use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\TimePicker;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Columns\ImageColumn;
 
 class FacultyResource extends Resource
 {
@@ -29,60 +35,88 @@ class FacultyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Wizard::make([
-                    Wizard\Step::make('Faculty Information')
+                Wizard::make([
+                    Wizard\Step::make('Personal Information')
                     ->schema([
-                    Forms\Components\TextInput::make('lname')
+                        Forms\Components\TextInput::make('first_name')
+                        ->maxLength(255)
+                        ->required(),
+                    Forms\Components\TextInput::make('middle_name')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('fname')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('mname')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('mi')
+                    Forms\Components\TextInput::make('last_name')
+                        ->maxLength(255)
+                        ->required(),
+                    Forms\Components\TextInput::make('middle_initial')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('ext')
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('gender')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('dob')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('pob')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('civilstatus')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('nationality')
-                        ->maxLength(255),
+                    Forms\Components\Select::make('gender')
+                        ->options([
+                            'male' => 'Male',
+                            'female' => 'Female',
+                        ])->searchable(),
+                        Forms\Components\DatePicker::make('date_of_birth')
+                        ->format('m/d/Y')
+                        ->required(),
+                    Forms\Components\TextInput::make('place_of_birth')
+                        ->maxLength(255)
+                        ->required(),
+                    Forms\Components\Select::make('civil_status')
+                        ->options([
+                            'single' => 'Single',
+                            'married' => 'Married',
+                            'divorce' => 'Divorce',
+                            'widower' => 'Widower',
+                        ])
+                        ->required()
+                        ->searchable(),
+                    Forms\Components\Select::make('nationality')
+                        ->options([
+                            'filipino' => 'Filipino',
+                            'american' => 'American',
+                        ])
+                        ->required()
+                        ->searchable(),
                     Forms\Components\TextInput::make('religion')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->required(),
                     Forms\Components\TextInput::make('email')
                         ->email()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('contactno')
-                        ->maxLength(255),
-                ]),
-                Wizard\Step::make('Address')
+                        ->maxLength(255)
+                        ->required(),
+                    Forms\Components\TextInput::make('contact_number')
+                        ->tel()
+                        ->maxLength(255)
+                        ->required(),
+                    ])->columns(2),
+                    Wizard\Step::make('Address')
                     ->schema([
                         Forms\Components\TextInput::make('address')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('barangay')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('municipality')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('province')
-                            ->maxLength(255),
-                ]),
-                Wizard\Step::make('Emergency Contact')
+                            ->maxLength(255)
+                            ->required(),
+                        
+                            
+                            ])->columns(2),
+                            Wizard\Step::make('Emergency Contact')
                     ->schema([
-                    Forms\Components\TextInput::make('emergency_contact')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('emergency_address')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('emergency_mobile')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('emergency_tel')
-                        ->tel()
-                        ->maxLength(255),
-                    ])
+                        Forms\Components\TextInput::make('emergency_contactperson')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('emergency_address')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('emergency_mobile')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('emergency_tel')
+                            ->tel()
+                            ->maxLength(255)
+                            ->required(),
+                    ]),
+                    Wizard\Step::make('Profile Image')
+                    ->schema([
+                        Forms\Components\FileUpload::make('profile_image')
+                    ]),
                 ])
                 ->columnSpan('full')
                 ->submitAction(new HtmlString(Blade::render(<<<BLADE
@@ -92,7 +126,7 @@ class FacultyResource extends Resource
                     >
                         Submit
                     </x-filament::button>
-                BLADE))) 
+                BLADE))),
             ]);
     }
 
@@ -100,22 +134,13 @@ class FacultyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('lname')
+                Tables\Columns\TextColumn::make('first_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fname')
+                Tables\Columns\TextColumn::make('middle_name'),
+                Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('mname')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('mi')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('middle_initial'),
+                Tables\Columns\ImageColumn::make('profile_image')
             ])
             ->filters([
                 //

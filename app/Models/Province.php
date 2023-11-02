@@ -8,13 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Faculty extends Model
+class Province extends Model
 {
     use HasFactory;
 
-    public function province(): HasMany
+    public function faculty(): BelongsTo
     {
-        return $this->hasMany(province::class);
+        return $this->BelongsTo(Faculty::class);
     }
-    
+
+    public function municipalities(): HasMany
+    {
+        return $this->hasMany(Municipality::class);
+    }
+
 }
