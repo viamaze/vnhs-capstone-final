@@ -18,7 +18,7 @@ class SubjectResource extends Resource
     protected static ?string $model = Subject::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Subject Management';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,7 +32,7 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('grade_level')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('teacher')
+                Forms\Components\TextInput::make('faculty_id')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -49,7 +49,7 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('grade_level')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('teacher')
+                Tables\Columns\TextColumn::make('faculty_id')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

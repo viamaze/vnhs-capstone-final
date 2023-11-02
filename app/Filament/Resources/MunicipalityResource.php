@@ -18,6 +18,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Collection;
 
+
 class MunicipalityResource extends Resource
 {
     protected static ?string $model = Municipality::class;
@@ -33,25 +34,25 @@ class MunicipalityResource extends Resource
                     ->preload()
                     ->live()
                     ->required(),
+
                 Forms\Components\Select::make('municipality_id')
                     ->relationship('municipality','municipality')
                     ->label('Municipality')
-                    ->options(fn (Get $get): Collection => Municipality::query()
+                    ->options(fn (Get $get): Collection =>Municipality::query()
                     ->where('province_id', $get('province_id'))
                     ->pluck('municipality', 'id'))
                     ->preload()
                     ->live()
                     ->required(),
                 Forms\Components\Select::make('barangay_id')
-                    ->relationship('barangay','barangay')
+                    
                     ->label('Barangay')
-                    ->options(fn (Get $get): Collection => Barangay::query()
+                    ->options(fn (Get $get): Collection =>Barangay::query()
                     ->where('municipality_id', $get('municipality_id'))
                     ->pluck('barangay', 'id'))
                     ->preload()
                     ->live()
                     ->required(),
-               
             ]);
     }
 

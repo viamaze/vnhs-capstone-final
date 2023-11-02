@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('subject');
             $table->string('description');
             $table->integer('grade_level');
-            $table->string('teacher');
+            $table->string('faculty_id');
             $table->timestamps();
         });
     }

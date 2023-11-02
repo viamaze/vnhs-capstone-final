@@ -94,8 +94,15 @@ class FacultyResource extends Resource
                         Forms\Components\TextInput::make('address')
                             ->maxLength(255)
                             ->required(),
-                        
-                            
+                        Forms\Components\TextInput::make('barangay')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('municipality')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\TextInput::make('province')
+                            ->maxLength(255)
+                            ->required(),
                             ])->columns(2),
                             Wizard\Step::make('Emergency Contact')
                     ->schema([

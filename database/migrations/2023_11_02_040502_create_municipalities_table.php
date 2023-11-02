@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
             $table->string('municipality');
-            $table->string('province_id');
+            $table->foreignId('province_id')->constrained('provinces')->cascadeOnDelete();
         });
     }
 
