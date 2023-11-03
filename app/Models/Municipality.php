@@ -11,10 +11,9 @@ class Municipality extends Model
 {
     use HasFactory;
 
-    public function province(): belongsTo
+    public function barangay(): HasMany
     {
-        return $this->belongsTo(Province::class);
+        return $this->HasMany(Barangay::class);
     }
-
 
 }

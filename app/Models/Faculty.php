@@ -12,9 +12,19 @@ class Faculty extends Model
 {
     use HasFactory;
 
-    public function province(): HasMany
+    public function province(): BelongsTo
     {
-        return $this->hasMany(province::class);
+        return $this->BelongsTo(Province::class);
     }
-    
+
+    public function municipality(): BelongsTo
+    {
+        return $this->BelongsTo(Municipality::class);
+    }
+
+    public function barangay(): BelongsTo
+    {
+        return $this->BelongsTo(Barangay::class);
+    }
+
 }

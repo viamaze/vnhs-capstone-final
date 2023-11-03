@@ -45,7 +45,6 @@ class MunicipalityResource extends Resource
                     ->live()
                     ->required(),
                 Forms\Components\Select::make('barangay_id')
-                    
                     ->label('Barangay')
                     ->options(fn (Get $get): Collection =>Barangay::query()
                     ->where('municipality_id', $get('municipality_id'))

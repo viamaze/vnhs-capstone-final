@@ -5,6 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FacultyResource\Pages;
 use App\Filament\Resources\FacultyResource\RelationManagers;
 use App\Models\Faculty;
+use App\Models\Municipality;
+use App\Models\Barangay;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -24,6 +27,8 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Get;
+use Illuminate\Support\Collection;
 
 class FacultyResource extends Resource
 {
@@ -91,16 +96,30 @@ class FacultyResource extends Resource
                     ])->columns(2),
                     Wizard\Step::make('Address')
                     ->schema([
+                        Forms\Components\Select::make('province_id')
+                        ->relationship(name: 'province', titleAttribute: 'province')
+                            ->preload()
+                            ->live()
+                            ->required(),
+                            Forms\Components\Select::make('municipality_id')
+                            ->relationship(name: 'municipality', titleAttribute: 'municipality')
+                                ->label('Municipality')
+                                ->options(fn (Get $get): Collection =>Municipality::query()
+                                ->where('province_id', $get('province_id'))
+                                ->pluck('municipality', 'id'))
+                                ->preload()
+                                ->live()
+                                ->required(),
+                        Forms\Components\Select::make('barangay_id')
+                                ->relationship(name: 'barangay', titleAttribute: 'barangay')
+                                ->label('Barangay')
+                                ->options(fn (Get $get): Collection =>Barangay::query()
+                                ->where('municipality_id', $get('municipality_id'))
+                                ->pluck('barangay', 'id'))
+                                ->preload()
+                                ->live()
+                                ->required(),
                         Forms\Components\TextInput::make('address')
-                            ->maxLength(255)
-                            ->required(),
-                        Forms\Components\TextInput::make('barangay')
-                            ->maxLength(255)
-                            ->required(),
-                        Forms\Components\TextInput::make('municipality')
-                            ->maxLength(255)
-                            ->required(),
-                        Forms\Components\TextInput::make('province')
                             ->maxLength(255)
                             ->required(),
                             ])->columns(2),
