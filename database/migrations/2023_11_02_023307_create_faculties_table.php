@@ -34,6 +34,8 @@ return new class extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('emergency_tel')->nullable();
+            $table->string('grade_level')->nullable();
+            $table->string('subject_major')->nullable();
             $table->string('profile_image')->nullable();
             $table->timestamps();
         });

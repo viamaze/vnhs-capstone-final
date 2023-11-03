@@ -139,20 +139,33 @@ class FacultyResource extends Resource
                             ->maxLength(255)
                             ->required(),
                     ]),
+                    Wizard\Step::make('Academic Char')
+                    ->schema([
+                        Forms\Components\Select::make('grade_level')
+                        ->options([
+                            '7' => '7',
+                            '8' => '8',
+                            '9' => '9',
+                            '10' => '10',
+                        ])
+                        ->required()
+                        ->searchable(),
+                        Forms\Components\Select::make('subject_major')
+                        ->options([
+                            'math' => 'math',
+                            'science' => 'science',
+                            'english' => 'english',
+                            'filipino' => 'filipino',
+                        ])
+                        ->required()
+                        ->searchable(),
+                    ]),
                     Wizard\Step::make('Profile Image')
                     ->schema([
                         Forms\Components\FileUpload::make('profile_image')
                     ]),
                 ])
-                ->columnSpan('full')
-                ->submitAction(new HtmlString(Blade::render(<<<BLADE
-                    <x-filament::button
-                        type="submit"
-                        size="sm"
-                    >
-                        Submit
-                    </x-filament::button>
-                BLADE))),
+                ->columnSpan('full'),
             ]);
     }
 
@@ -164,8 +177,8 @@ class FacultyResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('middle_name'),
                 Tables\Columns\TextColumn::make('last_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('middle_initial'),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('profile_image')
             ])
             ->filters([

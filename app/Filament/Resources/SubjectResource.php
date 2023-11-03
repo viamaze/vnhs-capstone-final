@@ -5,13 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Models\Subject;
+
 use Filament\Forms;
+
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class SubjectResource extends Resource
 {
@@ -29,9 +32,14 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('grade_level')
-                    ->required()
-                    ->numeric(),
+                Select::make('grade_level')
+                    ->options([
+                        '7' => '7',
+                        '8' => '8',
+                        '9' => '9',
+                        '10' => '10',
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('faculty_id')
                     ->required()
                     ->maxLength(255),
