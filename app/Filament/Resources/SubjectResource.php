@@ -5,16 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Models\Subject;
+use App\Models\Level;
+use App\Models\Faculty;
 
 use Filament\Forms;
-
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Get;
+use Illuminate\Support\Collection;
 
 class SubjectResource extends Resource
 {
@@ -32,17 +34,27 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Select::make('grade_level')
-                    ->options([
-                        '7' => '7',
-                        '8' => '8',
-                        '9' => '9',
-                        '10' => '10',
-                    ])
-                    ->required(),
-                Forms\Components\TextInput::make('faculty_id')
-                    ->required()
-                    ->maxLength(255),
+
+
+
+                Forms\Components\Select::make('level_id')
+                    ->relationship(name: 'level', titleAttribute: 'level')
+                    ->label('Grade Level')
+                        ->preload()
+                        ->live()
+                        ->required(),
+
+                Forms\Components\Select::make('faculty_id')
+                        ->relationship(name: 'faculty', titleAttribute: 'full_name')
+                            ->label('Faculty')
+                            ->options(fn (Get $get): Collection =>Faculty::query()
+                            ->where('level_id', $get('level_id'))
+                            ->pluck('full_name', 'id'))
+                            ->preload()
+                            ->live()
+                            ->required(),
+
+            
             ]);
     }
 
@@ -54,25 +66,19 @@ class SubjectResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('grade_level')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('level.level')
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('faculty_id')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('faculty.full_name')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

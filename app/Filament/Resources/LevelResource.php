@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GradeLevelResource\Pages;
-use App\Filament\Resources\GradeLevelResource\RelationManagers;
-use App\Models\GradeLevel;
+use App\Filament\Resources\LevelResource\Pages;
+use App\Filament\Resources\LevelResource\RelationManagers;
+use App\Models\Level;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,18 +13,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GradeLevelResource extends Resource
+class LevelResource extends Resource
 {
-    protected static ?string $model = GradeLevel::class;
+    protected static ?string $model = Level::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Student Management';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('grade_level')
+                Forms\Components\TextInput::make('level')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -34,22 +33,15 @@ class GradeLevelResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('grade_level')
+                Tables\Columns\TextColumn::make('level')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -71,9 +63,9 @@ class GradeLevelResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGradeLevels::route('/'),
-            'create' => Pages\CreateGradeLevel::route('/create'),
-            'edit' => Pages\EditGradeLevel::route('/{record}/edit'),
+            'index' => Pages\ListLevels::route('/'),
+            'create' => Pages\CreateLevel::route('/create'),
+            'edit' => Pages\EditLevel::route('/{record}/edit'),
         ];
     }    
 }

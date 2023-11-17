@@ -20,22 +20,9 @@
     </head>
  
     <body class="antialiased">
-        <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
-
-            <!-- Page Wrapper -->
-            <div
-                class="flex flex-col min-h-screen"
-                style="transition-property: margin; transition-duration: 150ms;"
-            >
-
-                <!-- Page Content -->
-                <main class="flex">
-                    <div class="w-full p-2 m-2 min-h-screen overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1 ">
-            @yield('content')
-                    </div>
-                </main>
-            </div>
-        </div>  
+        {{ $slot }}
+ 
+            
         @filamentScripts
         @vite('resources/js/app.js')
     </body>

@@ -34,9 +34,10 @@ return new class extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('emergency_tel')->nullable();
-            $table->string('grade_level')->nullable();
+            $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
             $table->string('subject_major')->nullable();
             $table->string('profile_image')->nullable();
+            $table->string('full_name')->virtualAs('concat(first_name, \' \', middle_name , \' \', last_name)');
             $table->timestamps();
         });
     }

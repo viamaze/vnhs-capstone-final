@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('subject');
             $table->string('description');
-            $table->integer('grade_level');
-            $table->string('faculty_id');
+            $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
+            $table->foreignId('faculty_id')->constrained('faculties')->cascadeOnDelete();
             $table->timestamps();
         });
     }

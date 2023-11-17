@@ -101,7 +101,7 @@ class FacultyResource extends Resource
                             ->preload()
                             ->live()
                             ->required(),
-                            Forms\Components\Select::make('municipality_id')
+                        Forms\Components\Select::make('municipality_id')
                             ->relationship(name: 'municipality', titleAttribute: 'municipality')
                                 ->label('Municipality')
                                 ->options(fn (Get $get): Collection =>Municipality::query()
@@ -139,17 +139,14 @@ class FacultyResource extends Resource
                             ->maxLength(255)
                             ->required(),
                     ]),
-                    Wizard\Step::make('Academic Char')
+                    Wizard\Step::make('Subject Advisory')
                     ->schema([
-                        Forms\Components\Select::make('grade_level')
-                        ->options([
-                            '7' => '7',
-                            '8' => '8',
-                            '9' => '9',
-                            '10' => '10',
-                        ])
-                        ->required()
-                        ->searchable(),
+                        Forms\Components\Select::make('level_id')
+                        ->label('Grade Level Advisory')
+                        ->relationship(name: 'level', titleAttribute: 'level')
+                        ->preload()
+                        ->live()
+                        ->required(),
                         Forms\Components\Select::make('subject_major')
                         ->options([
                             'math' => 'math',
@@ -179,6 +176,8 @@ class FacultyResource extends Resource
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable()
                     ->sortable(),
+                    Tables\Columns\TextColumn::make('level.level')
+                    ->label('Advisory Level'),
                 Tables\Columns\ImageColumn::make('profile_image')
             ])
             ->filters([
