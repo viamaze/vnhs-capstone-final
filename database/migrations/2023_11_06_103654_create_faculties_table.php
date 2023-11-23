@@ -27,9 +27,9 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('address')->nullable();
-            $table->foreignId('barangay_id')->constrained('barangays')->cascadeOnDelete();
-            $table->foreignId('municipality_id')->constrained('municipalities')->cascadeOnDelete();
-            $table->foreignId('province_id')->constrained('provinces')->cascadeOnDelete();
+            $table->foreignId('barangay_id')->constrained('barangays');
+            $table->foreignId('municipality_id')->constrained('municipalities');
+            $table->foreignId('province_id')->constrained('provinces');
             $table->string('emergency_contactperson')->nullable();
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();

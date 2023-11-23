@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Wizard;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
+use Filament\Tables\Filters\SelectFilter;
 
 class StudentResource extends Resource
 {
@@ -30,55 +31,56 @@ class StudentResource extends Resource
                     Wizard\Step::make('Student Information')
                     ->schema([
                         Forms\Components\TextInput::make('student_id')
-                         ->maxLength(255),
-                        Forms\Components\TextInput::make('student_lname')
+                         ->default(state:'VNHS-' . random_int(1000000, 9999990))
+                        ->maxLength(255),
+                        Forms\Components\TextInput::make('lname')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_fname')
+                        Forms\Components\TextInput::make('fname')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_mname')
+                        Forms\Components\TextInput::make('mname')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_mi')
+                        Forms\Components\TextInput::make('mi')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_ext')
+                        Forms\Components\TextInput::make('ext')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_gender')
+                        Forms\Components\TextInput::make('gender')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('student_dob'),
-                        Forms\Components\TextInput::make('student_pob')
+                        Forms\Components\DatePicker::make('dob'),
+                        Forms\Components\TextInput::make('pob')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_civilstatus')
+                        Forms\Components\TextInput::make('civilstatus')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_nationality')
+                        Forms\Components\TextInput::make('nationality')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_religion')
+                        Forms\Components\TextInput::make('religion')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_email')
+                        Forms\Components\TextInput::make('email')
                             ->email()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_contactnumber')
+                        Forms\Components\TextInput::make('contactnumber')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_height')
+                        Forms\Components\TextInput::make('height')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_weight')
+                        Forms\Components\TextInput::make('weight')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_bloodtype')
+                        Forms\Components\TextInput::make('bloodtype')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_ethnicity')
+                        Forms\Components\TextInput::make('ethnicity')
                             ->maxLength(255),
                         
                     ])
                     ->icon('heroicon-m-user'),
                     Wizard\Step::make('Address')
                     ->schema([
-                        Forms\Components\TextInput::make('student_address')
+                        Forms\Components\TextInput::make('address')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_province')
+                        Forms\Components\TextInput::make('province')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_municipality')
+                        Forms\Components\TextInput::make('municipality')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_barangay')
+                        Forms\Components\TextInput::make('barangay')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('student_zipcode')
+                        Forms\Components\TextInput::make('zipcode')
                             ->maxLength(255),
                     ])->icon('heroicon-m-map'),
                     Wizard\Step::make('Parents Information')
@@ -141,21 +143,32 @@ class StudentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('student_id')
+                    ->label('Student ID')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('student_lname')
+                Tables\Columns\TextColumn::make('lname')
+                    ->label('Last Name')
+                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('student_fname')
+                Tables\Columns\TextColumn::make('fname')
+                    ->label('First Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('student_mname')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('student_mi')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'pre-enrolled' => 'info',
+                    'enrolled' => 'success',
+                })
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                ->options([
+                    'pre-enrolled' => 'Pre-Enrolled',
+                    'enrolled' => 'Enrolled',
+                ])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -181,5 +194,10 @@ class StudentResource extends Resource
             'create' => Pages\CreateStudent::route('/create'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
-    }    
+    }  
+    
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }

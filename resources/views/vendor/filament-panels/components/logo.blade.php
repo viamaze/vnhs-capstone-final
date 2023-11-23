@@ -1,0 +1,1 @@
+<img src="{{ asset('/images/vnhs-logo.png') }}" alt="Logo" class="h-12">

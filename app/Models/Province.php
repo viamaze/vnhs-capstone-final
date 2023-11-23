@@ -16,5 +16,6 @@ class Province extends Model
     {
         return $this->HasMany(Municipality::class);
     }
+
     
 }

@@ -23,6 +23,7 @@ class SubjectResource extends Resource
     protected static ?string $model = Subject::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Subject Management';
 
     public static function form(Form $form): Form
     {
@@ -34,9 +35,7 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-
-
-
+                    
                 Forms\Components\Select::make('level_id')
                     ->relationship(name: 'level', titleAttribute: 'level')
                     ->label('Grade Level')
@@ -53,8 +52,6 @@ class SubjectResource extends Resource
                             ->preload()
                             ->live()
                             ->required(),
-
-            
             ]);
     }
 
@@ -74,7 +71,15 @@ class SubjectResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('level.level')
+                ->options([
+                    'Grade 7' => 'Grade 7',
+                    'Grade 8' => 'Grade 8',
+                    'Grade 9' => 'Grade 9',
+                    'Grade 10' => 'Grade 10',
+                    'Grade 11' => 'Grade 11',
+                    'Grade 12' => 'Grade 12',
+                ])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

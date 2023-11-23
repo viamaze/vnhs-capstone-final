@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SpecializationResource\Pages;
 use App\Filament\Resources\SpecializationResource\RelationManagers;
 use App\Models\Specialization;
+use App\Models\Subject;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,35 +13,49 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\TimePicker;
 
 class SpecializationResource extends Resource
 {
     protected static ?string $model = Specialization::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Subject Management';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('level_id')
+                    ->relationship(name: 'level', titleAttribute: 'level')
+                    ->label('Grade Level')
+                        ->preload()
+                        ->live()
+                        ->required(),
+
                 Forms\Components\TextInput::make('specialization')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('grade_level')
+                Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Repeater::make('subjects')
+                Forms\Components\Card::make()
+                ->schema([
+                    Forms\Components\Repeater::make(name: 'specializationItems')
+                    ->label(label: 'Specialization Subjects')
+                    ->relationship()
                     ->schema([
-                        TextInput::make('subjects')
-                        ->required(),
+                        Forms\Components\Select::make(name: 'subject_id')
+                        ->label(label: 'Subject')
+                        ->options(Subject::query()->pluck(column:'subject', key: 'id'))
+                        ->required()
+                        ->reactive()
+                        ->columnSpan([
+                            'md' => 5,
+                        ])
                     ])
-                ->columnSpan('full'),
+                    ->defaultItems(count: 1)
+                    ->columnSpan(span: 'full')
+                    ->addActionLabel('Add Subject')
+                ])
             ]);
     }
 
@@ -48,9 +63,12 @@ class SpecializationResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('level.level')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('specialization')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('grade_level')
+                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

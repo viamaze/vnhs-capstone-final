@@ -43,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -68,7 +68,6 @@ class AdminPanelProvider extends PanelProvider
                     
             ])
             ->authGuard('web')
-            ->brandName('VNHS Student Information System')
             ->favicon(asset('images/favicon.png'))
             ->userMenuItems([
                 'logout' => MenuItem::make()->label('Signout'),
