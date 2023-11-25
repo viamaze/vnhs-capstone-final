@@ -14,6 +14,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Forms\Get;
+use Illuminate\Support\Collection;
+
 class SpecializationResource extends Resource
 {
     protected static ?string $model = Specialization::class;
@@ -28,7 +31,7 @@ class SpecializationResource extends Resource
                     ->relationship(name: 'level', titleAttribute: 'level')
                     ->label('Grade Level')
                         ->preload()
-                        ->live()
+                        ->reactive()
                         ->required(),
 
                 Forms\Components\TextInput::make('specialization')
@@ -37,6 +40,7 @@ class SpecializationResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\Card::make()
                 ->schema([
                     Forms\Components\Repeater::make(name: 'specializationItems')
@@ -45,15 +49,13 @@ class SpecializationResource extends Resource
                     ->schema([
                         Forms\Components\Select::make(name: 'subject_id')
                         ->label(label: 'Subject')
-                        ->options(Subject::query()->pluck(column:'subject', key: 'id'))
+                        ->options(fn (Get $get): Collection =>Subject::query()
+                        ->where('level_id', $get('level_id'))
+                        ->pluck('subject'))
                         ->required()
+                        ->preload()
                         ->reactive()
-                        ->columnSpan([
-                            'md' => 5,
-                        ])
                     ])
-                    ->defaultItems(count: 1)
-                    ->columnSpan(span: 'full')
                     ->addActionLabel('Add Subject')
                 ])
             ]);
