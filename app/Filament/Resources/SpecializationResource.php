@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SpecializationResource\Pages;
 use App\Filament\Resources\SpecializationResource\RelationManagers;
 use App\Models\Specialization;
-use App\Models\Subject;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +12,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-use Filament\Forms\Get;
-use Illuminate\Support\Collection;
 
 class SpecializationResource extends Resource
 {
@@ -28,36 +24,17 @@ class SpecializationResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('level_id')
-                    ->relationship(name: 'level', titleAttribute: 'level')
-                    ->label('Grade Level')
-                        ->preload()
-                        ->reactive()
-                        ->required(),
-
+                ->relationship(name: 'level', titleAttribute: 'level')
+                ->label('Grade Level')
+                    ->preload()
+                    ->reactive()
+                    ->required(),
                 Forms\Components\TextInput::make('specialization')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-
-                Forms\Components\Card::make()
-                ->schema([
-                    Forms\Components\Repeater::make(name: 'specializationItems')
-                    ->label(label: 'Specialization Subjects')
-                    ->relationship()
-                    ->schema([
-                        Forms\Components\Select::make(name: 'subject_id')
-                        ->label(label: 'Subject')
-                        ->options(fn (Get $get): Collection =>Subject::query()
-                        ->where('level_id', $get('level_id'))
-                        ->pluck('subject'))
-                        ->required()
-                        ->preload()
-                        ->reactive()
-                    ])
-                    ->addActionLabel('Add Subject')
-                ])
             ]);
     }
 

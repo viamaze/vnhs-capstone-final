@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('section_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('level_id')->constrained();
-            $table->string('section');
-            $table->foreignId('specialization_id')->constrained();
+            $table->foreignId('section_id')->nullable()->constrained();
+            $table->foreignId('subject_id')->nullable()->constrained();
+            $table->string('day');
+            $table->string('time_start');
+            $table->string('time_end');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('section_items');
     }
 };

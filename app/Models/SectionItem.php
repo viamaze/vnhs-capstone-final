@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Specialization extends Model
+class SectionItem extends Model
 {
     use HasFactory;
 
-    public function level(): BelongsTo
+    public function subject(): BelongsTo
     {
-        return $this->BelongsTo(Level::class);
+        return $this->BelongsTo(Subject::class);
     }
 }
