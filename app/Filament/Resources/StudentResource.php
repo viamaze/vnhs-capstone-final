@@ -41,6 +41,13 @@ class StudentResource extends Resource
                         ->default(state:'VNHS' . Carbon::now()->year . random_int(1000000, 9999999))
                         ->disabled()
                         ->maxLength(255),
+                        Forms\Components\Select::make('level_id')
+                        ->relationship(name: 'level', titleAttribute: 'level')
+                        ->label('Grade Level')
+                            ->preload()
+                            ->live()
+                            ->required(),
+                            
                         Forms\Components\TextInput::make('lname')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('fname')

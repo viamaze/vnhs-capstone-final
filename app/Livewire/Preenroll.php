@@ -5,31 +5,40 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Student;
 use Illuminate\Support\Carbon;
-
+use App\Models\Province;
+use App\Models\Municipality;
+use App\Models\Barangay;
 
 
 class Preenroll extends Component
 {
 
-    public $currentStep = 1;
-    public $student_id, $lname, $fname, $mname, $mi, $ext, $gender, $dob, $pob, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $currentStep = 1, $successMessage = '', $status = 'pre-enrolled';
+
+    public $student_id, $grade_level, $lname, $fname, $mname, $mi, $ext, $gender, $dob, $pob, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
 
     public $father_lname, $father_fname, $father_mname, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_lname, $mother_fname, $mother_mname, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
     public $emergency_contact, $emergency_address, $emergency_mobile;
     
-    public $successMessage = '';
-    public $status = 'pre-enrolled';
+    public $provinces, $municipalities, $barangays;
     
-
+    public function mount()
+    {
+        $this->provinces = Province::all();
+        $this->municipalities = Municipality::all();
+        $this->barangays = Barangay::all();
+    }
+    
     public function render()
     {
         return view('livewire.preenroll');
-    }
+    }   
 
     public function firstStepSubmit()
     {
         $validatedData = $this->validate([
+            'grade_level' => 'required',
             'lname' => 'required',
             'fname' => 'required',
             'ext' => 'required',
@@ -52,7 +61,7 @@ class Preenroll extends Component
             'zipcode' => 'required',
         ]);
         $this->currentStep = 2;
-        $this->student_id = "VNHS-" . Carbon::now()->year . random_int(1000000, 9999999);
+        $this->student_id = "VNHS" . Carbon::now()->year . random_int(1000000, 9999999);
     }
 
     public function secondStepSubmit()
@@ -100,6 +109,7 @@ class Preenroll extends Component
 
         Student::create([
             'student_id' => $this->student_id,
+            'grade_level' => $this->grade_level,
             'lname' => $this->lname,
             'fname' => $this->fname,
             'mname' => $this->mname,

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('grade_level');
             $table->string('student_id')->nullable();
             $table->string('lname')->nullable();
             $table->string('fname')->nullable();

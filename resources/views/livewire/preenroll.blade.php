@@ -1,11 +1,5 @@
-@inject('carbon', 'Carbon\Carbon')
-@php 
-$Year_Start = $carbon::now()->format('Y'); 
-$student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
-@endphp
-
 <div class="mb-6" >
-    <h2 class="text-2xl text-center font-bold">Pre-Enrollment</h2>
+    <h2 class="text-2xl text-center font-bold">VNHS Pre-Enrollment</h2>
     @if(!empty($successMessage))
     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
         <span class="font-bold">{{ $successMessage }}</span>
@@ -34,6 +28,23 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
         <div class="{{ $currentStep != 1 ? 'hidden' : '' }} " id="step-1">
             <h3 class="mb-2 text-2xl text-center font-bold">Student Information</h3>
             <div class="grid grid-cols-4">
+                <div class="mb-6 px-2">
+                    <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade Level</label>
+                    <select wire:model="grade_level" name="grade_level" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Select Grade Level</option>
+                        <option value="Grade 7">Grade 7</option>
+                        <option value="Grade 8">Grade 8</option>
+                        <option value="Grade 9">Grade 9</option>
+                        <option value="Grade 10">Grade 10</option>
+                        <option value="Grade 11">Grade 11</option>
+                        <option value="Grade 12">Grade 12</option>
+                    </select>
+                    @error('civil_status') 
+                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-bold">{{ $message }}</span> 
+                        </div>
+                    @enderror
+                </div>
 
                 <div class="mb-6 px-2">
                         <label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
@@ -62,40 +73,65 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                             </div>
                          @enderror
                 </div>
-                <div class="mb-6 px-2">
-                        <label for="mi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">MI</label>
-                        <input type="text" wire:model="mi" maxlength="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('mi') 
-                            <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-bold">{{ $message }}</span> 
-                            </div>
-                         @enderror
-                </div>
+
             </div>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                        <label for="ext" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ext.</label>
-                        <input type="text" wire:model="ext" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('ext') 
-                            <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-bold">{{ $message }}</span> 
-                            </div>
-                         @enderror
+                    <label for="mi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">MI</label>
+                    <input type="text" wire:model="mi" maxlength="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('mi') 
+                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-bold">{{ $message }}</span> 
+                        </div>
+                     @enderror
+                </div>
+
+                <div class="mb-6 px-2">
+                    <label for="ext" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ext.</label>
+                    <input type="text" wire:model="ext" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('ext') 
+                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-bold">{{ $message }}</span> 
+                        </div>
+                     @enderror
 
                 </div>
+
                 <div class="mb-6 px-2">
-                        <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                        
-                        <select wire:model="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                        @error('gender') 
-                            <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-bold">{{ $message }}</span> 
-                            </div>
-                         @enderror
+                    <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status</label>
+                    <select wire:model="civil_status" name="civil_status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Select Civil Status</option>
+                        <option value="Single" selected>Single</option>
+                        <option value="Single">Married</option>
+                        <option value="Single">Divorce</option>
+                        <option value="Single">Widower</option>
+                    </select>
+                    @error('civil_status') 
+                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-bold">{{ $message }}</span> 
+                        </div>
+                    @enderror
                 </div>
+
+                <div class="mb-6 px-2">
+                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                    
+                    <select wire:model="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    @error('gender') 
+                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-bold">{{ $message }}</span> 
+                        </div>
+                     @enderror
+            </div>
+            
+            </div>
+            <div class="grid grid-cols-4">
+
+
                 <div class="mb-6 px-2">
                         <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
 
@@ -116,10 +152,12 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                     @enderror
                     </div>
             </div>
+
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
                         <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality</label>
                         <select wire:model="nationality" name="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected>Select Nationality</option>
                             <option value="Filipino">Filipino</option>
                             <option value="American">American</option>
                         </select>
@@ -134,6 +172,7 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                         <label for="religion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Religion</label>
 
                         <select wire:model="religion" name="religion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected>Select Religion</option>
                             <option value="Roman Catholic">Roman Catholic</option>
                             <option value="Baptist">Baptist</option>
                             <option value="SDA">SDA</option>
@@ -187,6 +226,7 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                 <div class="mb-6 px-2">
                         <label for="bloodtype" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blood Type</label>
                         <select wire:model="bloodtype" name="bloodtype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected>Select Blood Type</option>
                             <option value="Type A">Type A</option>
                             <option value="Type B">Type B</option>
                             <option value="Type AB">Type AB</option>
@@ -205,6 +245,7 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                         <label for="ethnicity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ethnicity</label>
                         
                         <select wire:model="ethnicity" name="ethnicity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected>Select Ethnicity</option>
                             <option value="Cebuano">Cebuano</option>
                             <option value="Ilonggo">Ilonggo</option>
                             <option value="Tagalog">Tagalog</option>
@@ -231,37 +272,10 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                 <div class="mb-6 px-2">
                         <label for="barangay" name="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay</label>
                         <select wire:model="barangay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="Bagontaas">Bagontaas</option>
-                            <option value="Banlag">Banlag</option>
-                            <option value="Barobo">Barobo</option>
-                            <option value="Batangan">Batangan</option>
-                            <option value="Catumbalon">Catumbalon</option>
-                            <option value="Colonia">Colonia</option>
-                            <option value="Concepcion">Concepcion</option>
-                            <option value="Dagat- Kidavao">Dagat- Kidavao</option>
-                            <option value="Guinoyuran">Guinoyuran</option>
-                            <option value="Kahaponan">Kahaponan</option>
-                            <option value="Laligan">Laligan</option>
-                            <option value="Lilingayon">Lilingayon</option>
-                            <option value="Lourdes">Lourdes</option>
-                            <option value="Lumbayao">Lumbayao</option>
-                            <option value="Lumbo">Lumbo</option>
-                            <option value="Lurogan">Lurogan</option>
-                            <option value="Maapag">Maapag</option>
-                            <option value="Mabuhay">Mabuhay</option>
-                            <option value="Mailag">Mailag</option>
-                            <option value="Mt.Nebo">Mt.Nebo</option>
-                            <option value="Nabag-o">Nabag-o</option>
-                            <option value="Pinatilan">Pinatilan</option>
-                            <option value="Poblacion">Poblacion</option>
-                            <option value="San Carlos">San Carlos</option>
-                            <option value="San Isidro">San Isidro</option>
-                            <option value="Sinabuagan">Sinabuagan</option>
-                            <option value="Sinayawan">Sinayawan</option>
-                            <option value="Sugod">Sugod</option>
-                            <option value="Tongantongan">Tongantongan</option>
-                            <option value="Tugaya">Tugaya</option>
-                            <option value="Vintar">Vintar</option>
+                            <option value="" selected>Select Barangay</option>
+                            @foreach($barangays as $barangay)
+                                <option value="{{ $barangay->barangay }}">{{ $barangay->barangay }}</option>
+                            @endforeach
                         </select>
                         @error('barangay') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -273,8 +287,10 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                         <label for="municipality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipality</label>
                        
                         <select wire:model="municipality" name="municipality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="City of Valencia" selected>City of Valencia</option>
-                            <option value="City of Malaybalay">City of Malaybalay</option>
+                            <option value="" selected>Select Municipality</option>
+                            @foreach($municipalities as $municipality)
+                                <option value="{{ $municipality->municipality }}">{{ $municipality->municipality }}</option>
+                            @endforeach
                         </select>
                         @error('municipality') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -285,8 +301,10 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                 <div class="mb-6 px-2">
                         <label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province</label>
                         <select wire:model="province" name="province" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="Bukidnon" selected>Bukidnon</option>
-                            <option value="Misamis Occidental">Misamis Occidental</option>
+                            <option value="" selected>Select Province</option>
+                            @foreach($provinces as $province)
+                                <option value="{{ $province->province }}">{{ $province->province }}</option>
+                            @endforeach
                         </select>
                         @error('province') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -305,20 +323,7 @@ $student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
                             </div>
                          @enderror
                 </div>
-                <div class="mb-6 px-2">
-                    <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status</label>
-                    <select wire:model="civil_status" name="civil_status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="Single" selected>Single</option>
-                        <option value="Single">Married</option>
-                        <option value="Single">Divorce</option>
-                        <option value="Single">Widower</option>
-                    </select>
-                    @error('civil_status') 
-                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-bold">{{ $message }}</span> 
-                        </div>
-                    @enderror
-            </div>
+
             </div>
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" wire:click="firstStepSubmit" type="button" >Next</button>
         </div>
