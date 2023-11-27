@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Tables\Enums\FiltersLayout;
 
 class SectionResource extends Resource
 {
@@ -35,24 +37,25 @@ class SectionResource extends Resource
                         ->preload()
                         ->reactive()
                         ->required(),
+                Forms\Components\Select::make('section')
+                    ->options([
+                        'Section A' => 'Section A',
+                        'Section B' => 'Section B', 
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('faculty_id')
+                    ->relationship(name: 'faculty', titleAttribute: 'full_name')
+                    ->label('Faculty')
+                    ->preload()
+                    ->reactive()
+                    ->required(),
                 Forms\Components\Select::make('room_id')
                         ->relationship(name: 'room', titleAttribute: 'room')
                         ->label('Room')
                             ->preload()
                             ->reactive()
                             ->required(),
-                Forms\Components\Select::make('faculty_id')
-                        ->relationship(name: 'faculty', titleAttribute: 'full_name')
-                        ->label('Faculty')
-                        ->preload()
-                        ->reactive()
-                        ->required(),
-                Forms\Components\Select::make('section')
-                    ->options([
-                        'A' => 'Section A',
-                        'B' => 'Section B', 
-                    ])
-                    ->required(),
+
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Repeater::make(name: 'sectionItems')
@@ -64,9 +67,8 @@ class SectionResource extends Resource
                             ->label('Subject')
                             ->preload()
                             ->reactive()
-                            ->required()
-                            ,
-                            Forms\Components\Select::make('day')
+                            ->required(),
+                            Forms\Components\CheckboxList::make('day')
                             ->options([
                                 'monday' => 'Monday',
                                 'tuesday' => 'Tuesday',
@@ -74,9 +76,23 @@ class SectionResource extends Resource
                                 'thursday' => 'Thursday',
                                 'friday' => 'Friday',
                                 'saturday' => 'Saturday',
-                            ])
-                            ->required(),
-                            Forms\Components\TimePicker::make('time_start'),
+                            ])->columns(2),
+                            Forms\Components\TimePicker::make('time_start')
+                            ->datalist([
+                                '06:00',
+                                '06:30',
+                                '07:00',
+                                '07:30',
+                                '08:00',
+                                '08:30',
+                                '09:00',
+                                '09:30',
+                                '10:00',
+                                '10:30',
+                                '11:00',
+                                '11:30',
+                                '12:00',
+                            ]),
                             Forms\Components\TimePicker::make('time_end')
                         ])
                         ->addActionLabel('Add Subject')
@@ -89,34 +105,38 @@ class SectionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('level_id')
+                Tables\Columns\TextColumn::make('level.level')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('specialization_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('room_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('faculty_id')
+                Tables\Columns\TextColumn::make('specialization.specialization')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('section')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('faculty.full_name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('room.room')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('sectionItems.time_start')
+                ->label('Start'),
+                Tables\Columns\TextColumn::make('sectionItems.time_end')
+                ->label('End')
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('level')
+                ->relationship('level', 'level')
+                ->preload(),
+                Tables\Filters\SelectFilter::make('specialization')
+                ->relationship('specialization', 'specialization')
+                ->preload(),
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(3)
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

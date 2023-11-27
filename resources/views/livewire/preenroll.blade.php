@@ -1,3 +1,9 @@
+@inject('carbon', 'Carbon\Carbon')
+@php 
+$Year_Start = $carbon::now()->format('Y'); 
+$student_id = "VNHS" . $Year_Start . rand(1000000, 10000000);
+@endphp
+
 <div class="mb-6" >
     <h2 class="text-2xl text-center font-bold">Pre-Enrollment</h2>
     @if(!empty($successMessage))
@@ -28,6 +34,7 @@
         <div class="{{ $currentStep != 1 ? 'hidden' : '' }} " id="step-1">
             <h3 class="mb-2 text-2xl text-center font-bold">Student Information</h3>
             <div class="grid grid-cols-4">
+
                 <div class="mb-6 px-2">
                         <label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
                         <input type="text" wire:model="fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

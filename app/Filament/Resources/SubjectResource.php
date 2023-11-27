@@ -29,20 +29,19 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('level_id')
+                ->relationship(name: 'level', titleAttribute: 'level')
+                ->label('Grade Level')
+                    ->preload()
+                    ->live()
+                    ->required(),
+                    
                 Forms\Components\TextInput::make('subject')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                    
-                Forms\Components\Select::make('level_id')
-                    ->relationship(name: 'level', titleAttribute: 'level')
-                    ->label('Grade Level')
-                        ->preload()
-                        ->live()
-                        ->required(),
-
                 Forms\Components\Select::make('faculty_id')
                         ->relationship(name: 'faculty', titleAttribute: 'full_name')
                             ->label('Faculty')

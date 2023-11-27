@@ -16,6 +16,10 @@ use Filament\Forms\Components\Wizard;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Enums\FiltersLayout;
+use Illuminate\Support\Carbon;
+
+
 
 class StudentResource extends Resource
 {
@@ -23,6 +27,9 @@ class StudentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Student Management';
+    
+    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -31,7 +38,8 @@ class StudentResource extends Resource
                     Wizard\Step::make('Student Information')
                     ->schema([
                         Forms\Components\TextInput::make('student_id')
-                         ->default(state:'VNHS-' . random_int(1000000, 9999990))
+                        ->default(state:'VNHS' . Carbon::now()->year . random_int(1000000, 9999999))
+                        ->disabled()
                         ->maxLength(255),
                         Forms\Components\TextInput::make('lname')
                             ->maxLength(255),
@@ -48,7 +56,7 @@ class StudentResource extends Resource
                         Forms\Components\DatePicker::make('dob'),
                         Forms\Components\TextInput::make('pob')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('civilstatus')
+                        Forms\Components\TextInput::make('civil_status')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('nationality')
                             ->maxLength(255),
@@ -57,7 +65,7 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('email')
                             ->email()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('contactnumber')
+                        Forms\Components\TextInput::make('contact_number')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('height')
                             ->maxLength(255),
@@ -69,7 +77,8 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         
                     ])
-                    ->icon('heroicon-m-user'),
+                    ->icon('heroicon-m-user')
+                    ->columns(3),
                     Wizard\Step::make('Address')
                     ->schema([
                         Forms\Components\TextInput::make('address')
@@ -82,7 +91,8 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('zipcode')
                             ->maxLength(255),
-                    ])->icon('heroicon-m-map'),
+                    ])->icon('heroicon-m-map')
+                    ->columns(3),
                     Wizard\Step::make('Parents Information')
                     ->schema([
                         Forms\Components\TextInput::make('father_lname')
@@ -123,18 +133,18 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mother_educational')
                             ->maxLength(255),
-                    ]),
+                    ])->columns(2),
+                    Wizard\Step::make('Emergency Contact')
+                    ->schema([
+                        Forms\Components\TextInput::make('emergency_contact')
+                        ->maxLength(255),
+                        Forms\Components\TextInput::make('emergency_address')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('emergency_mobile')
+                            ->maxLength(255),
+                    ])->columns(2)
                 ])
                 ->columnSpan('full')
-                ->submitAction(new HtmlString(Blade::render(<<<BLADE
-                    <x-filament::button
-                        type="submit"
-                        size="sm"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Submit
-                    </x-filament::button>
-                BLADE)))
             ]);
     }
 
@@ -143,7 +153,7 @@ class StudentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('student_id')
-                    ->label('Student ID')
+                    ->label('Student ID No.')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('lname')
                     ->label('Last Name')
@@ -165,7 +175,7 @@ class StudentResource extends Resource
                     'pre-enrolled' => 'Pre-Enrolled',
                     'enrolled' => 'Enrolled',
                 ])
-            ])
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

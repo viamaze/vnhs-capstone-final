@@ -126,18 +126,18 @@ class FacultyResource extends Resource
                             Wizard\Step::make('Emergency Contact')
                     ->schema([
                         Forms\Components\TextInput::make('emergency_contactperson')
+                            ->label('Emergency Contact')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\TextInput::make('emergency_address')
+                        Forms\Components\TextInput::make('Address')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\TextInput::make('emergency_mobile')
+                        Forms\Components\TextInput::make('Mobile')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\TextInput::make('emergency_tel')
+                        Forms\Components\TextInput::make('Telephone')
                             ->tel()
-                            ->maxLength(255)
-                            ->required(),
+                            ->maxLength(255),
                     ]),
                     Wizard\Step::make('Subject Advisory')
                     ->schema([

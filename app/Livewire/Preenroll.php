@@ -4,18 +4,23 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Student;
+use Illuminate\Support\Carbon;
+
+
 
 class Preenroll extends Component
 {
+
     public $currentStep = 1;
-    public $lname, $fname, $mname, $mi, $ext, $gender, $dob, $pob, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $student_id, $lname, $fname, $mname, $mi, $ext, $gender, $dob, $pob, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
 
     public $father_lname, $father_fname, $father_mname, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_lname, $mother_fname, $mother_mname, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
     public $emergency_contact, $emergency_address, $emergency_mobile;
-
+    
     public $successMessage = '';
     public $status = 'pre-enrolled';
+    
 
     public function render()
     {
@@ -47,6 +52,7 @@ class Preenroll extends Component
             'zipcode' => 'required',
         ]);
         $this->currentStep = 2;
+        $this->student_id = "VNHS-" . Carbon::now()->year . random_int(1000000, 9999999);
     }
 
     public function secondStepSubmit()
@@ -90,7 +96,10 @@ class Preenroll extends Component
 
     public function submitForm()
     {
+        
+
         Student::create([
+            'student_id' => $this->student_id,
             'lname' => $this->lname,
             'fname' => $this->fname,
             'mname' => $this->mname,
@@ -155,6 +164,7 @@ class Preenroll extends Component
 
     public function clearForm()
     {
+        $this->student_id ='';
         $this->lname = '';
         $this->fname = '';
         $this->mname = '';

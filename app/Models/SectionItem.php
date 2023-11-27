@@ -12,6 +12,10 @@ class SectionItem extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'day' => 'array',
+    ];
+
     public function subject(): BelongsTo
     {
         return $this->BelongsTo(Subject::class);
