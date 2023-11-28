@@ -6,7 +6,7 @@ use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Models\Subject;
 use App\Models\Level;
-use App\Models\Faculty;
+use App\Models\Teacher;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -42,10 +42,10 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('faculty_id')
-                        ->relationship(name: 'faculty', titleAttribute: 'full_name')
-                            ->label('Faculty')
-                            ->options(fn (Get $get): Collection =>Faculty::query()
+                Forms\Components\Select::make('teacher_id')
+                        ->relationship(name: 'teacher', titleAttribute: 'full_name')
+                            ->label('Teacher')
+                            ->options(fn (Get $get): Collection =>Teacher::query()
                             ->where('level_id', $get('level_id'))
                             ->pluck('full_name', 'id'))
                             ->preload()
@@ -65,7 +65,7 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('level.level')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('faculty.full_name')
+                Tables\Columns\TextColumn::make('teacher.full_name')
                     ->searchable()
                     ->sortable(),
             ])

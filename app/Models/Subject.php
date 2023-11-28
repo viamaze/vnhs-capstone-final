@@ -11,9 +11,9 @@ class Subject extends Model
 {
     use HasFactory;
 
-    public function faculty(): BelongsTo
+    public function teacher(): BelongsTo
     {
-        return $this->BelongsTo(Faculty::class);
+        return $this->BelongsTo(Teacher::class);
     }
 
     public function level(): BelongsTo

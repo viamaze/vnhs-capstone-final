@@ -18,23 +18,23 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class FacultyPanelProvider extends PanelProvider
+class TeachersPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('faculty')
-            ->path('faculty')
+            ->id('teachers')
+            ->path('teachers')
             ->login()
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Faculty/Resources'), for: 'App\\Filament\\Faculty\\Resources')
-            ->discoverPages(in: app_path('Filament/Faculty/Pages'), for: 'App\\Filament\\Faculty\\Pages')
+            ->discoverResources(in: app_path('Filament/Teachers/Resources'), for: 'App\\Filament\\Teachers\\Resources')
+            ->discoverPages(in: app_path('Filament/Teachers/Pages'), for: 'App\\Filament\\Teachers\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Faculty/Widgets'), for: 'App\\Filament\\Faculty\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Teachers/Widgets'), for: 'App\\Filament\\Teachers\\Widgets')
             ->widgets([
 
             ])

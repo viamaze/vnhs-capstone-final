@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\FacultyResource\Pages;
+namespace App\Filament\Resources\TeacherResource\Pages;
 
-use App\Filament\Resources\FacultyResource;
+use App\Filament\Resources\TeacherResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListFaculties extends ListRecords
+class ListTeachers extends ListRecords
 {
-    protected static string $resource = FacultyResource::class;
+    protected static string $resource = TeacherResource::class;
 
     protected function getHeaderActions(): array
     {

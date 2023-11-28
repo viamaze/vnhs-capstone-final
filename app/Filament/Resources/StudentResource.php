@@ -27,27 +27,40 @@ class StudentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Student Management';
+
     
-    
+
+    public function mount(): void 
+    {
+        $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
+
+        $this->form->fill([
+            'student_id' => $this->student_id,
+        ]);
+    } 
 
     public static function form(Form $form): Form
     {
+
+        $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
+
         return $form
             ->schema([
                 Forms\Components\Wizard::make([
                     Wizard\Step::make('Student Information')
                     ->schema([
                         Forms\Components\TextInput::make('student_id')
-                        ->default(state:'VNHS' . Carbon::now()->year . random_int(1000000, 9999999))
-                        ->disabled()
+                        ->default($student_id)
                         ->maxLength(255),
-                        Forms\Components\Select::make('level_id')
-                        ->relationship(name: 'level', titleAttribute: 'level')
-                        ->label('Grade Level')
-                            ->preload()
-                            ->live()
-                            ->required(),
-                            
+                        Forms\Components\Select::make('grade_level')
+                        ->options([
+                            'Grade 7' => 'Grade 7',
+                            'Grade 8' => 'Grade 8',
+                            'Grade 9' => 'Grade 9',
+                            'Grade 10' => 'Grade 10',
+                            'Grade 11' => 'Grade 11',
+                            'Grade 12' => 'Grade 12',
+                        ]),
                         Forms\Components\TextInput::make('lname')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('fname')
@@ -82,6 +95,7 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('ethnicity')
                             ->maxLength(255),
+                        
                         
                     ])
                     ->icon('heroicon-m-user')

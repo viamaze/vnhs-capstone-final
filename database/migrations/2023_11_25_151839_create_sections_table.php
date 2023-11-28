@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('level_id')->nullable()->constrained();
             $table->foreignId('specialization_id')->nullable()->constrained();
             $table->string('section');
-            $table->foreignId('room_id')->nullable()->constrained();
-            $table->foreignId('faculty_id')->nullable()->constrained();
+            $table->foreignId('classroom_id')->nullable()->constrained();
+            $table->foreignId('teacher_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

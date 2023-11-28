@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\FacultyResource\Pages;
-use App\Filament\Resources\FacultyResource\RelationManagers;
-use App\Models\Faculty;
+use App\Filament\Resources\TeacherResource\Pages;
+use App\Filament\Resources\TeacherResource\RelationManagers;
+use App\Models\Teacher;
 use App\Models\Municipality;
 use App\Models\Barangay;
 
@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
@@ -30,9 +31,11 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Get;
 use Illuminate\Support\Collection;
 
-class FacultyResource extends Resource
+use Illuminate\Support\Carbon;
+
+class TeacherResource extends Resource
 {
-    protected static ?string $model = Faculty::class;
+    protected static ?string $model = Teacher::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -129,13 +132,13 @@ class FacultyResource extends Resource
                             ->label('Emergency Contact')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\TextInput::make('Address')
+                        Forms\Components\TextInput::make('emergency_address')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\TextInput::make('Mobile')
+                        Forms\Components\TextInput::make('emergency_mobile')
                             ->maxLength(255)
                             ->required(),
-                        Forms\Components\TextInput::make('Telephone')
+                        Forms\Components\TextInput::make('emergency_tel')
                             ->tel()
                             ->maxLength(255),
                     ]),
@@ -172,13 +175,12 @@ class FacultyResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('middle_name'),
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable()
                     ->sortable(),
                     Tables\Columns\TextColumn::make('level.level')
                     ->label('Advisory Level'),
-                Tables\Columns\ImageColumn::make('profile_image')
+                    Tables\Columns\TextColumn::make('subject_major'),   
             ])
             ->filters([
                 //
@@ -207,9 +209,9 @@ class FacultyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFaculties::route('/'),
-            'create' => Pages\CreateFaculty::route('/create'),
-            'edit' => Pages\EditFaculty::route('/{record}/edit'),
+            'index' => Pages\ListTeachers::route('/'),
+            'create' => Pages\CreateTeacher::route('/create'),
+            'edit' => Pages\EditTeacher::route('/{record}/edit'),
         ];
     }    
 }

@@ -43,18 +43,18 @@ class SectionResource extends Resource
                         'Section B' => 'Section B', 
                     ])
                     ->required(),
-                Forms\Components\Select::make('faculty_id')
-                    ->relationship(name: 'faculty', titleAttribute: 'full_name')
-                    ->label('Faculty')
+                Forms\Components\Select::make('teacher_id')
+                    ->relationship(name: 'teacher', titleAttribute: 'full_name')
+                    ->label('Teacher')
                     ->preload()
                     ->reactive()
                     ->required(),
-                Forms\Components\Select::make('room_id')
-                        ->relationship(name: 'room', titleAttribute: 'room')
-                        ->label('Room')
-                            ->preload()
-                            ->reactive()
-                            ->required(),
+                    Forms\Components\Select::make('classroom_id')
+                    ->relationship(name: 'classroom', titleAttribute: 'classroom')
+                    ->label('Classroom')
+                        ->preload()
+                        ->reactive()
+                        ->required(),
 
                 Forms\Components\Card::make()
                     ->schema([
@@ -117,7 +117,7 @@ class SectionResource extends Resource
                 Tables\Columns\TextColumn::make('faculty.full_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('room.room')
+                Tables\Columns\TextColumn::make('classroom')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sectionItems.time_start')

@@ -21,14 +21,14 @@ class Section extends Model
         return $this->BelongsTo(Specialization::class);
     }
 
-    public function room(): BelongsTo
+    public function classroom(): BelongsTo
     {
-        return $this->BelongsTo(Room::class);
+        return $this->BelongsTo(Classroom::class);
     }
 
-    public function faculty(): BelongsTo
+    public function teacher(): BelongsTo
     {
-        return $this->BelongsTo(Faculty::class);
+        return $this->BelongsTo(Teacher::class);
     }
 
     public function sectionItems(): HasMany
