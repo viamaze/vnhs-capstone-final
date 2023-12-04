@@ -2,24 +2,35 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
+
 use App\Filament\Resources\SectionResource\Pages;
 use App\Filament\Resources\SectionResource\RelationManagers;
-use App\Models\Section;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Forms\Get;
+use Filament\Forms\Components\Select;
+
+
+use App\Models\Section;
+use App\Models\Subject;
+use App\Models\Specialization;
+use App\Models\Teacher;
 
 class SectionResource extends Resource
 {
     protected static ?string $model = Section::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Student Management';
 
     public static function form(Form $form): Form
     {
@@ -29,14 +40,17 @@ class SectionResource extends Resource
                 ->relationship(name: 'level', titleAttribute: 'level')
                 ->label('Grade Level')
                     ->preload()
-                    ->reactive()
+                    ->live()
                     ->required(),
                 Forms\Components\Select::make('specialization_id')
                     ->relationship(name: 'specialization', titleAttribute: 'specialization')
                     ->label('Specialization')
-                        ->preload()
-                        ->reactive()
-                        ->required(),
+                    ->options(fn (Get $get): Collection =>Specialization::query()
+                    ->where('level_id', $get('level_id'))
+                    ->pluck('specialization', 'id'))
+                    ->preload()
+                    ->live()
+                    ->required(),
                 Forms\Components\Select::make('section')
                     ->options([
                         'Section A' => 'Section A',
@@ -45,10 +59,14 @@ class SectionResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->relationship(name: 'teacher', titleAttribute: 'full_name')
+                    ->options(fn (Get $get): Collection =>Teacher::query()
+                    ->where('level_id', $get('level_id'))
+                    ->pluck('full_name', 'id'))
                     ->label('Teacher')
                     ->preload()
                     ->reactive()
                     ->required(),
+                    
                     Forms\Components\Select::make('classroom_id')
                     ->relationship(name: 'classroom', titleAttribute: 'classroom')
                     ->label('Classroom')
@@ -63,11 +81,11 @@ class SectionResource extends Resource
                         ->relationship()
                         ->schema([
                             Forms\Components\Select::make('subject_id')
-                            ->relationship(name: 'subject', titleAttribute: 'subject')
                             ->label('Subject')
+                            ->relationship(name: 'subject', titleAttribute: 'subject')
                             ->preload()
-                            ->reactive()
-                            ->required(),
+                            ->live()
+                            ->required(),  
                             Forms\Components\CheckboxList::make('day')
                             ->options([
                                 'monday' => 'Monday',

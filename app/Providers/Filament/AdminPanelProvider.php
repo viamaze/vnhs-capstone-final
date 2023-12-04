@@ -61,11 +61,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Logout')
-                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                    ->url('', shouldOpenInNewTab: true)
                     ->icon('heroicon-o-presentation-chart-line')
                     ->group('User Management')
                     ->sort(3),
-                    
             ])
             ->authGuard('web')
             ->favicon(asset('images/favicon.png'))

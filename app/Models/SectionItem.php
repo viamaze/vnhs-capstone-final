@@ -20,4 +20,9 @@ class SectionItem extends Model
     {
         return $this->BelongsTo(Subject::class);
     }
+
+    public function level(): BelongsTo
+    {
+        return $this->BelongsTo(Level::class);
+    }
 }
