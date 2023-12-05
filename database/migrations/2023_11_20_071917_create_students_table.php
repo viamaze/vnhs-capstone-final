@@ -63,6 +63,7 @@ return new class extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('status')->nullable();
+            $table->string('full_name')->virtualAs('concat(fname, \' \', mname , \' \', lname)');
             $table->timestamps();
         });
     }

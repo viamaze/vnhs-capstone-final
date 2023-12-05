@@ -10,7 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Section extends Model
 {
     use HasFactory;
-
+    
+    protected $casts = [
+        'day' => 'array'
+      ];
+      
     public function level(): BelongsTo
     {
         return $this->BelongsTo(Level::class);

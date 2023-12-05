@@ -24,7 +24,7 @@ use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Specialization;
 use App\Models\Teacher;
-
+use App\Models\SectionItem;
 class SectionResource extends Resource
 {
     protected static ?string $model = Section::class;
@@ -112,6 +112,21 @@ class SectionResource extends Resource
                                 '12:00',
                             ]),
                             Forms\Components\TimePicker::make('time_end')
+                            ->datalist([
+                                '06:00',
+                                '06:30',
+                                '07:00',
+                                '07:30',
+                                '08:00',
+                                '08:30',
+                                '09:00',
+                                '09:30',
+                                '10:00',
+                                '10:30',
+                                '11:00',
+                                '11:30',
+                                '12:00',
+                            ]),
                         ])
                         ->addActionLabel('Add Subject')
                         ->columns(2),
@@ -132,12 +147,21 @@ class SectionResource extends Resource
                 Tables\Columns\TextColumn::make('section')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('faculty.full_name')
+                Tables\Columns\TextColumn::make('teacher.full_name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('classroom')
+                Tables\Columns\TextColumn::make('classroom.classroom')
                     ->numeric()
                     ->sortable(),
+
+
+                Tables\Columns\TextColumn::make('sectionItems.day')
+                    ->label('Day')
+                    ->getStateUsing(function ($record) {
+                        return $record->sectionItems->pluck('day')[0];
+                    })
+                    ->badge(),
+            
                 Tables\Columns\TextColumn::make('sectionItems.time_start')
                 ->label('Start'),
                 Tables\Columns\TextColumn::make('sectionItems.time_end')

@@ -173,11 +173,10 @@ class TeacherResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('first_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('last_name')
-                    ->searchable()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('full_name')
+                ->searchable()
+                ->sortable(),
+ 
                     Tables\Columns\TextColumn::make('level.level')
                     ->label('Advisory Level'),
                     Tables\Columns\TextColumn::make('subject_major'),   
