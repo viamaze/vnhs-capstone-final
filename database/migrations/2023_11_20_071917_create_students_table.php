@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
+            $table->id();
+            $table->string('student_type')->nullable();
             $table->string('student_id')->nullable();
             $table->string('status')->nullable();
             $table->string('grade_level');
@@ -26,7 +28,6 @@ return new class extends Migration
             $table->string('civil_status')->nullable();
             $table->string('nationality')->nullable();
             $table->string('religion')->nullable();
-            $table->string('email')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
@@ -62,8 +63,8 @@ return new class extends Migration
             $table->string('emergency_contact_person')->nullable();
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
-            $table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
             $table->string('full_name')->virtualAs('concat(firstname, \' \', middlename , \' \', lastname)');
+            $table->foreignId('user_id')->nullable()->cascadeOnDelete()->constrained();
             $table->timestamps();
         });
     }

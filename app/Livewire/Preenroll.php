@@ -15,7 +15,7 @@ class Preenroll extends Component
 
     public $currentStep = 1, $successMessage = '', $status = 'pre-enrolled';
 
-    public $student_id, $grade_level, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $student_id, $student_type, $grade_level, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
 
     public $father_last_name, $father_first_name, $father_middle_name, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
@@ -48,6 +48,7 @@ class Preenroll extends Component
     public function firstStepSubmit()
     {
         $validatedData = $this->validate([
+            'student_type' => 'required',
             'grade_level' => 'required',
             'lastname' => 'required',
             'firstname' => 'required',
@@ -116,6 +117,7 @@ class Preenroll extends Component
     public function submitForm()
     {
         Student::create([
+            'student_type' => $this->student_type,
             'student_id' => $this->student_id,
             'grade_level' => $this->grade_level,
             'lastname' => $this->lastname,
@@ -182,6 +184,7 @@ class Preenroll extends Component
 
     public function clearForm()
     {
+        $this->student_type ='';
         $this->student_id ='';
         $this->grade_level = '';
         $this->lastname = '';

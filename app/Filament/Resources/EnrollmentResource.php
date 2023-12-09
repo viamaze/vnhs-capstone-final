@@ -30,7 +30,6 @@ class EnrollmentResource extends Resource
     protected static ?string $model = Enrollment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Student Management';
 
     public function mount(): void 
     {
@@ -233,6 +232,7 @@ class EnrollmentResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'enrolled' => 'success',
+                        'pre-enrolled' => 'warning',
                     }),
             ])
             ->filters([

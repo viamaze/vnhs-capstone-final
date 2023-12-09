@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
@@ -28,16 +30,29 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if ($panel->getId() === 'admin') {
+        if (($panel->getId() === 'admin') || ($panel->getId() === 'teachers') || ($panel->getId() === 'students')) {
             return $this->isAdmin();
+        } else if ($panel->getId() === 'students') {
+            return $this->isStudent();
+        } else if ($panel->getId() === 'teachers') {
+            return $this->isTeacher();
         }
-
         return true;
     }
 
     public function isAdmin()
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isStudent()
+    {
+        return $this->role === self::ROLE_STUDENT;
+    }
+
+    public function isTeacher()
+    {
+        return $this->role === self::ROLE_FACULTY;
     }
 
     /**
@@ -71,4 +86,5 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
 }

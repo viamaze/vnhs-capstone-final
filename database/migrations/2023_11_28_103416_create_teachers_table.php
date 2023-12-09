@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('civil_status')->nullable();
             $table->string('nationality')->nullable();
             $table->string('religion')->nullable();
-            $table->string('email')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('address')->nullable();
             $table->foreignId('barangay_id')->constrained('barangays');
@@ -38,6 +37,7 @@ return new class extends Migration
             $table->string('subject_major')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('full_name')->virtualAs('concat(first_name, \' \', middle_name , \' \', last_name)');
+            $table->foreignId('user_id')->nullable()->cascadeOnDelete()->constrained();
             $table->timestamps();
         });
     }

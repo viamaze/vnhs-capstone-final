@@ -7,7 +7,7 @@ use App\Filament\Resources\TeacherResource\RelationManagers;
 use App\Models\Teacher;
 use App\Models\Municipality;
 use App\Models\Barangay;
-
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -33,6 +33,8 @@ use Illuminate\Support\Collection;
 use Filament\Actions\ReplicateAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\TextInput;
 
 use Illuminate\Support\Carbon;
 
@@ -41,6 +43,7 @@ class TeacherResource extends Resource
     protected static ?string $model = Teacher::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Teacher Management';
 
     public static function form(Form $form): Form
     {
@@ -109,10 +112,6 @@ class TeacherResource extends Resource
                     Forms\Components\TextInput::make('religion')
                         ->maxLength(255)
                         ->required(),
-                    Forms\Components\TextInput::make('email')
-                        ->email()
-                        ->maxLength(255)
-                        ->required(),
                     Forms\Components\TextInput::make('contact_number')
                         ->tel()
                         ->maxLength(255)
@@ -148,27 +147,49 @@ class TeacherResource extends Resource
                             ->required(),
                             ])->columns(2),
                             Wizard\Step::make('Emergency Contact')
-                    ->schema([
-                        Forms\Components\TextInput::make('emergency_contactperson')
-                            ->label('Emergency Contact')
-                            ->maxLength(255)
-                            ->required(),
-                        Forms\Components\TextInput::make('emergency_address')
-                            ->maxLength(255)
-                            ->required(),
-                        Forms\Components\TextInput::make('emergency_mobile')
-                            ->maxLength(255)
-                            ->required(),
-                        Forms\Components\TextInput::make('emergency_tel')
-                            ->tel()
-                            ->maxLength(255),
+                            ->schema([
+                                Forms\Components\TextInput::make('emergency_contactperson')
+                                    ->label('Emergency Contact')
+                                    ->maxLength(255)
+                                    ->required(),
+                                Forms\Components\TextInput::make('emergency_address')
+                                    ->maxLength(255)
+                                    ->required(),
+                                Forms\Components\TextInput::make('emergency_mobile')
+                                    ->maxLength(255)
+                                    ->required(),
+                                Forms\Components\TextInput::make('emergency_tel')
+                                    ->tel()
+                                    ->maxLength(255),
                     ]),
+                    Wizard\Step::make('Login Details')
+                    ->schema([
+                        Fieldset::make('Login')
+                        ->relationship('user')
+                        ->schema([
+                            Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('role')
+                            ->default(User::ROLE_FACULTY)
+                            ->required(),
+                        
+                        ]),
+                    ])->columns(2),
                     Wizard\Step::make('Profile Image')
                     ->schema([
                         Forms\Components\FileUpload::make('profile_image')
                     ]),
                 ])
-                ->columnSpan('full'),
+                ->columnSpan('full')->skippable(),
             ]);
     }
 

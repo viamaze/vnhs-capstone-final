@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Models\Student;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,8 +23,8 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-
-
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\TextInput;
 
 class StudentResource extends Resource
 {
@@ -62,7 +63,7 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('student_id')
                         ->default($student_id)
                         ->maxLength(255),
-                        
+
                         Forms\Components\Select::make('grade_level')
                         ->options([
                             'Grade 7' => 'Grade 7',
@@ -93,9 +94,6 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('nationality')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('religion')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->email()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('contact_number')
                             ->maxLength(255),
@@ -175,9 +173,32 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('emergency_mobile')
                             ->maxLength(255),
+                    ])->columns(2),
+                    Wizard\Step::make('Login Details')
+                    ->schema([
+                        Fieldset::make('Login')
+                        ->relationship('user')
+                        ->schema([
+                            Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('role')
+                            ->default(User::ROLE_STUDENT)
+                            ->required(),
+                        
+                        ]),
                     ])->columns(2)
                 ])
                 ->columnSpan('full')
+                ->skippable()
             ]);
     }
 
@@ -207,6 +228,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('grade_level')
                     ->label('Grade Level')
                     ->searchable(),
+                
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
@@ -233,7 +255,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+           
         ];
     }
     
