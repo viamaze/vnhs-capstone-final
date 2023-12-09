@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('grade_level');
             $table->string('student_id')->nullable();
-            $table->string('lname')->nullable();
-            $table->string('fname')->nullable();
-            $table->string('mname')->nullable();
+            $table->string('status')->nullable();
+            $table->string('grade_level');
+            $table->string('lastname')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('middlename')->nullable();
             $table->string('mi')->nullable();
             $table->string('ext')->nullable();
             $table->string('gender')->nullable();
-            $table->date('dob')->nullable();
-            $table->string('pob')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('place_of_birth')->nullable();
             $table->string('civil_status')->nullable();
             $table->string('nationality')->nullable();
             $table->string('religion')->nullable();
@@ -37,9 +37,9 @@ return new class extends Migration
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();
             $table->string('zipcode')->nullable();
-            $table->string('father_lname')->nullable();
-            $table->string('father_fname')->nullable();
-            $table->string('father_mname')->nullable();
+            $table->string('father_last_name')->nullable();
+            $table->string('father_first_name')->nullable();
+            $table->string('father_middle_name')->nullable();
             $table->string('father_ext')->nullable();
             $table->date('father_dob')->nullable();
             $table->string('father_occupation')->nullable();
@@ -48,9 +48,9 @@ return new class extends Migration
             $table->string('father_contactno')->nullable();
             $table->string('father_educational')->nullable();
             $table->string('father_address')->nullable();
-            $table->string('mother_lname')->nullable();
-            $table->string('mother_fname')->nullable();
-            $table->string('mother_mname')->nullable();
+            $table->string('mother_last_name')->nullable();
+            $table->string('mother_first_name')->nullable();
+            $table->string('mother_middle_name')->nullable();
             $table->string('mother_ext')->nullable();
             $table->date('mother_dob')->nullable();
             $table->string('mother_occupation')->nullable();
@@ -59,11 +59,11 @@ return new class extends Migration
             $table->string('mother_contactno')->nullable();
             $table->string('mother_educational')->nullable();
             $table->string('mother_address')->nullable();
-            $table->string('emergency_contact')->nullable();
+            $table->string('emergency_contact_person')->nullable();
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
-            $table->string('status')->nullable();
-            $table->string('full_name')->virtualAs('concat(fname, \' \', mname , \' \', lname)');
+            $table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
+            $table->string('full_name')->virtualAs('concat(firstname, \' \', middlename , \' \', lastname)');
             $table->timestamps();
         });
     }

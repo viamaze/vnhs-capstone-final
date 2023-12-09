@@ -51,14 +51,14 @@ class StudentResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('status')
                         ->options([
-                            'pre-enrolled' => 'pre-enrolled',
-                            'reviewing' => 'reviewing',
-                            'enrolled' => 'enrolled',
+                            'pre-enrolled' => 'Pre-Enroll',
+                            'reviewing' => 'Reviewing',
+                            'enrolled' => 'Enrolled',
                         ]),
-                        
                         Forms\Components\TextInput::make('student_id')
                         ->default($student_id)
                         ->maxLength(255),
+                        
                         Forms\Components\Select::make('grade_level')
                         ->options([
                             'Grade 7' => 'Grade 7',
@@ -68,11 +68,11 @@ class StudentResource extends Resource
                             'Grade 11' => 'Grade 11',
                             'Grade 12' => 'Grade 12',
                         ]),
-                        Forms\Components\TextInput::make('lname')
+                        Forms\Components\TextInput::make('firstname')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('fname')
+                        Forms\Components\TextInput::make('lastname')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mname')
+                        Forms\Components\TextInput::make('middlename')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mi')
                             ->maxLength(255),
@@ -80,9 +80,9 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('gender')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('dob')
+                        Forms\Components\DatePicker::make('date_of_birth')
                         ->native(false),
-                        Forms\Components\TextInput::make('pob')
+                        Forms\Components\TextInput::make('place_of_birth')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('civil_status')
                             ->maxLength(255),
@@ -124,11 +124,11 @@ class StudentResource extends Resource
                     ->columns(3),
                     Wizard\Step::make('Parents Information')
                     ->schema([
-                        Forms\Components\TextInput::make('father_lname')
+                        Forms\Components\TextInput::make('father_last_name')
                         ->maxLength(255),
-                        Forms\Components\TextInput::make('father_fname')
+                        Forms\Components\TextInput::make('father_first_name')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('father_mname')
+                        Forms\Components\TextInput::make('father_middle_name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_ext')
                             ->maxLength(255),
@@ -143,11 +143,11 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_educational')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_lname')
+                        Forms\Components\TextInput::make('mother_last_name')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_fname')
+                        Forms\Components\TextInput::make('mother_first_name')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_mname')
+                        Forms\Components\TextInput::make('mother_middle_name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mother_ext')
                             ->maxLength(255),
@@ -165,7 +165,7 @@ class StudentResource extends Resource
                     ])->columns(2),
                     Wizard\Step::make('Emergency Contact')
                     ->schema([
-                        Forms\Components\TextInput::make('emergency_contact')
+                        Forms\Components\TextInput::make('emergency_contact_person')
                         ->maxLength(255),
                         Forms\Components\TextInput::make('emergency_address')
                             ->maxLength(255),
@@ -185,6 +185,7 @@ class StudentResource extends Resource
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                     'pre-enrolled' => 'info',
+                    'reviewing' => 'warning',
                     'enrolled' => 'success',
                 }),
                 Tables\Columns\TextColumn::make('student_id')
@@ -192,12 +193,15 @@ class StudentResource extends Resource
                     ->searchable()
                     ->badge()
                     ->color('success'),
-                Tables\Columns\TextColumn::make('lname')
+                Tables\Columns\TextColumn::make('lastname')
                     ->label('Last Name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fname')
+                Tables\Columns\TextColumn::make('firstname')
                     ->label('First Name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('grade_level')
+                    ->label('Grade Level')
                     ->searchable(),
             ])
             ->filters([

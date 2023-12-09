@@ -1,5 +1,5 @@
 <div class="mb-6" >
-    <h2 class="text-2xl text-center font-bold">VNHS Pre-Enrollment</h2>
+    <h2 class="text-2xl text-center font-bold">VNHS PRE-Enrollment</h2>
     @if(!empty($successMessage))
     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
         <span class="font-bold">{{ $successMessage }}</span>
@@ -47,27 +47,27 @@
                 </div>
 
                 <div class="mb-6 px-2">
-                        <label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                        <input type="text" wire:model="fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('fname') 
+                        <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                        <input type="text" wire:model="firstname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('firstname') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="mname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
-                        <input type="text" wire:model="mname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('mname') 
+                        <label for="middlename" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
+                        <input type="text" wire:model="middlename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('middlename') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="lname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                        <input type="text" wire:model="lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('lname') 
+                        <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                        <input type="text" wire:model="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('lastname') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
@@ -130,22 +130,20 @@
             
             </div>
             <div class="grid grid-cols-4">
-
-
                 <div class="mb-6 px-2">
-                        <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
+                        <label for="date_of_birth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
 
-                        <input type="date" placeholder="dd-mm-yyyy" min="1997-01-01" max="2023-12-31" wire:model="dob" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('dob') 
+                        <input type="date" placeholder="dd-mm-yyyy" min="1980-01-01" max="2023-12-31" wire:model="date_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('date_of_birth') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
                          @enderror
-                </div>
+                </div>w
                 <div class="mb-6 px-2">
-                    <label for="pob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth</label>
-                    <input type="text" wire:model="pob" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('pob') 
+                    <label for="place_of_birth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth</label>
+                    <input type="text" wire:model="place_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('place_of_birth') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
@@ -335,27 +333,27 @@
             </div>
              <div class="grid grid-cols-4">
                     <div class="mb-6 px-2">
-                        <label for="father_fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                        <input type="text" wire:model="father_fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('father_fname')
+                        <label for="father_first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                        <input type="text" wire:model="father_first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('father_first_name')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
                         @enderror
                     </div>
                     <div class="mb-6 px-2">
-                        <label for="father_mname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
-                        <input type="text" wire:model="father_mname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('father_mname')
+                        <label for="father_middle_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
+                        <input type="text" wire:model="father_middle_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('father_middle_name')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
                         @enderror
                     </div>
                     <div class="mb-6 px-2">
-                        <label for="father_lname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                        <input type="text" wire:model="father_lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('father_lname')
+                        <label for="father_last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                        <input type="text" wire:model="father_last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @error('father_last_name')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
@@ -446,27 +444,27 @@
             </div>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                    <label for="mother_fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                    <input type="text" wire:model="mother_fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('mother_fname')
+                    <label for="mother_first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                    <input type="text" wire:model="mother_first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('mother_first_name')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
                     @enderror
                 </div>
                 <div class="mb-6 px-2">
-                    <label for="mother_mname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
-                    <input type="text" wire:model="mother_mname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('mother_mname')
+                    <label for="mother_middle_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
+                    <input type="text" wire:model="mother_middle_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('mother_middle_name')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
                     @enderror
                 </div>
                 <div class="mb-6 px-2">
-                    <label for="mother_lname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                    <input type="text" wire:model="mother_lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('mother_lname')
+                    <label for="mother_last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                    <input type="text" wire:model="mother_last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('mother_last_name')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
@@ -557,9 +555,9 @@
             <h3 class="mb-2 text-2xl text-center font-bold">Emergency Contact Details</h3>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                    <label for="emergency_contact" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Person</label>
-                    <input type="text" wire:model="emergency_contact" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('emergency_contact')
+                    <label for="emergency_contact_person" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Person</label>
+                    <input type="text" wire:model="emergency_contact_person" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('emergency_contact_person')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
@@ -598,7 +596,7 @@
                     <table class="table">
                         <tr>
                             <td>Name</td>
-                            <td><strong>{{$fname}}</strong></td>
+                            <td><strong>{{$firstname}}</strong></td>
                         </tr>
     
                         <tr>
@@ -610,7 +608,7 @@
                     <div class="my-10">
                     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" wire:click="back(3)">Back</button>
 
-                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" wire:click="submitForm" type="button">Finish!</button>
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" wire:click.prevent="submitForm" type="button">Finish!</button>
                     </div>
                 </div>
             </div>

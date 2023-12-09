@@ -15,11 +15,11 @@ class Preenroll extends Component
 
     public $currentStep = 1, $successMessage = '', $status = 'pre-enrolled';
 
-    public $student_id, $grade_level, $lname, $fname, $mname, $mi, $ext, $gender, $dob, $pob, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $student_id, $grade_level, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
 
-    public $father_lname, $father_fname, $father_mname, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_lname, $mother_fname, $mother_mname, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
+    public $father_last_name, $father_first_name, $father_middle_name, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
-    public $emergency_contact, $emergency_address, $emergency_mobile;
+    public $emergency_contact_person, $emergency_address, $emergency_mobile;
     
     public $provinces, $municipalities, $barangays;
     
@@ -35,20 +35,30 @@ class Preenroll extends Component
         return view('livewire.preenroll');
     }   
 
+    protected $rules = [
+        'firstname' => 'required|min:6',
+        'email' => 'required|email',
+    ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function firstStepSubmit()
     {
         $validatedData = $this->validate([
             'grade_level' => 'required',
-            'lname' => 'required',
-            'fname' => 'required',
+            'lastname' => 'required',
+            'firstname' => 'required',
             'ext' => 'required',
             'gender' => 'required',
-            'dob' => 'required',
-            'pob' => 'required',
+            'date_of_birth' => 'required',
+            'place_of_birth' => 'required',
             'civil_status' => 'required',
             'nationality' => 'required',
             'religion' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'contact_number' => 'required',
             'height' => 'required',
             'weight' => 'required',
@@ -61,15 +71,15 @@ class Preenroll extends Component
             'zipcode' => 'required',
         ]);
         $this->currentStep = 2;
-        $this->student_id = "VNHS" . Carbon::now()->year . random_int(1000000, 9999999);
+        $this->student_id = "VNHS" . Carbon::now()->year . random_int(100000, 999999);
     }
 
     public function secondStepSubmit()
     {
         $validatedData = $this->validate([
-            'father_lname' => 'required',
-            'father_fname' => 'required',
-            'father_mname' => 'required',
+            'father_last_name' => 'required',
+            'father_first_name' => 'required',
+            'father_middle_name' => 'required',
             'father_ext' => 'required',
             'father_dob' => 'required',
             'father_occupation' => 'required',
@@ -78,9 +88,9 @@ class Preenroll extends Component
             'father_contactno' => 'required',
             'father_educational' => 'required',
             'father_address' => 'required',
-            'mother_lname' => 'required',
-            'mother_fname' => 'required',
-            'mother_mname' => 'required',
+            'mother_last_name' => 'required',
+            'mother_first_name' => 'required',
+            'mother_middle_name' => 'required',
             'mother_ext' => 'required',
             'mother_dob' => 'required',
             'mother_occupation' => 'required',
@@ -96,7 +106,7 @@ class Preenroll extends Component
     public function thirdStepSubmit()
     {
         $validatedData = $this->validate([
-            'emergency_contact' => 'required',
+            'emergency_contact_person' => 'required',
             'emergency_address' => 'required',
             'emergency_mobile' => 'required',
         ]);
@@ -105,19 +115,17 @@ class Preenroll extends Component
 
     public function submitForm()
     {
-        
-
         Student::create([
             'student_id' => $this->student_id,
             'grade_level' => $this->grade_level,
-            'lname' => $this->lname,
-            'fname' => $this->fname,
-            'mname' => $this->mname,
+            'lastname' => $this->lastname,
+            'firstname' => $this->firstname,
+            'middlename' => $this->middlename,
             'mi' => $this->mi,
             'ext' => $this->ext,
             'gender' => $this->gender,
-            'dob' => $this->dob,
-            'pob' => $this->pob,
+            'date_of_birth' => $this->date_of_birth,
+            'place_of_birth' => $this->place_of_birth,
             'civil_status' => $this->civil_status,
             'nationality' => $this->nationality,
             'religion' => $this->religion,
@@ -133,9 +141,9 @@ class Preenroll extends Component
             'barangay' => $this->barangay,
             'zipcode' => $this->zipcode,
 
-            'father_lname' => $this->father_lname,
-            'father_fname' => $this->father_fname,
-            'father_mname' => $this->father_mname,
+            'father_last_name' => $this->father_last_name,
+            'father_first_name' => $this->father_first_name,
+            'father_middle_name' => $this->father_middle_name,
             'father_ext' => $this->father_ext,
             'father_dob' => $this->father_dob,
             'father_occupation' => $this->father_occupation,
@@ -144,9 +152,9 @@ class Preenroll extends Component
             'father_contactno' => $this->father_contactno,
             'father_educational' => $this->father_educational,
             'father_address' => $this->father_address,
-            'mother_lname' => $this->mother_lname,
-            'mother_fname' => $this->mother_fname,
-            'mother_mname' => $this->mother_mname,
+            'mother_last_name' => $this->mother_last_name,
+            'mother_first_name' => $this->mother_first_name,
+            'mother_middle_name' => $this->mother_middle_name,
             'mother_ext' => $this->mother_ext,
             'mother_dob' => $this->mother_dob,
             'mother_occupation' => $this->mother_occupation,
@@ -156,13 +164,13 @@ class Preenroll extends Component
             'mother_educational' => $this->mother_educational,
             'mother_address' => $this->mother_address,
 
-            'emergency_contact' => $this->emergency_contact,
+            'emergency_contact_person' => $this->emergency_contact_person,
             'emergency_address' => $this->emergency_address,
             'emergency_mobile' => $this->emergency_mobile,
 
             'status' => $this->status
         ]);
-        $this->successMessage = 'PRE Enrolled Successfully.';
+        $this->successMessage = 'Student PRE-Enrolled Successfully';
         $this->clearForm();
         $this->currentStep = 1;
     }
@@ -175,13 +183,14 @@ class Preenroll extends Component
     public function clearForm()
     {
         $this->student_id ='';
-        $this->lname = '';
-        $this->fname = '';
-        $this->mname = '';
+        $this->grade_level = '';
+        $this->lastname = '';
+        $this->firstname = '';
+        $this->middlename = '';
         $this->mi = '';
         $this->ext = '';
         $this->gender = '';
-        $this->dob = '';
+        $this->date_of_birth = '';
         $this->civil_status = '';
         $this->nationality = '';
         $this->religion = '';
@@ -196,9 +205,9 @@ class Preenroll extends Component
         $this->municipality = '';
         $this->barangay = '';
         $this->zipcode = '';
-        $this->father_lname = '';
-        $this->father_fname = '';
-        $this->father_mname = '';
+        $this->father_last_name = '';
+        $this->father_first_name = '';
+        $this->father_middle_name = '';
         $this->father_ext = '';
         $this->father_dob = '';
         $this->father_occupation = '';
@@ -207,9 +216,9 @@ class Preenroll extends Component
         $this->father_contactno = '';
         $this->father_educational = '';
         $this->father_address = '';
-        $this->mother_lname = '';
-        $this->mother_fname = '';
-        $this->mother_mname = '';
+        $this->mother_last_name = '';
+        $this->mother_first_name = '';
+        $this->mother_middle_name = '';
         $this->mother_ext = '';
         $this->mother_dob = '';
         $this->mother_occupation = '';
@@ -218,8 +227,10 @@ class Preenroll extends Component
         $this->mother_contactno = '';
         $this->mother_educational = '';
         $this->mother_address = '';
-        $this->emergency_contact = '';
+        $this->emergency_contact_person = '';
         $this->emergency_address = '';
         $this->emergency_mobile = '';
     }
+
+
 }
