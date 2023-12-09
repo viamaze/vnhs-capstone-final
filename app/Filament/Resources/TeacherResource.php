@@ -31,6 +31,8 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Get;
 use Illuminate\Support\Collection;
 use Filament\Actions\ReplicateAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 use Illuminate\Support\Carbon;
 
@@ -186,8 +188,9 @@ class TeacherResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
                 Tables\Actions\ReplicateAction::make()
                 ->excludeAttributes(['full_name']),
             ])
