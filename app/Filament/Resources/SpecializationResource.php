@@ -24,12 +24,9 @@ class SpecializationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('level_id')
-                ->relationship(name: 'level', titleAttribute: 'level')
-                ->label('Grade Level')
-                    ->preload()
-                    ->reactive()
-                    ->required(),
+                Forms\Components\TextInput::make('specialization_code')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('specialization')
                     ->required()
                     ->maxLength(255),
@@ -43,22 +40,16 @@ class SpecializationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('level.level')
-                    ->label('Grade Level')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('specialization_code')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('specialization')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

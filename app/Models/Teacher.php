@@ -30,4 +30,9 @@ class Teacher extends Model
     {
         return $this->BelongsTo(Level::class);
     }
+
+    public function advisory(): BelongsTo
+    {
+        return $this->BelongsTo(Advisory::class);
+    }
 }

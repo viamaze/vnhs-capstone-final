@@ -58,8 +58,12 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('subject')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('level.level')
@@ -83,6 +87,7 @@ class SubjectResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ReplicateAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -108,5 +113,6 @@ class SubjectResource extends Resource
             'create' => Pages\CreateSubject::route('/create'),
             'edit' => Pages\EditSubject::route('/{record}/edit'),
         ];
-    }    
+    }
+
 }

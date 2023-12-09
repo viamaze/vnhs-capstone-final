@@ -26,6 +26,7 @@ class TeachersPanelProvider extends PanelProvider
             ->id('teachers')
             ->path('teachers')
             ->login()
+            ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])

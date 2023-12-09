@@ -16,4 +16,9 @@ class ListEnrollments extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+
+
+    #[On('enrollment-created')] 
+    public function refresh() {}
 }

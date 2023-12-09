@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('level_id')->nullable()->constrained();
-            $table->foreignId('specialization_id')->nullable()->constrained();
+            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('specialization_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('teacher_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('classroom_id')->nullable()->nullOnDelete()->constrained();
             $table->string('section');
-            $table->foreignId('classroom_id')->nullable()->constrained();
-            $table->foreignId('teacher_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

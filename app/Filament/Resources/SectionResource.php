@@ -43,94 +43,27 @@ class SectionResource extends Resource
                     ->live()
                     ->required(),
                 Forms\Components\Select::make('specialization_id')
-                    ->relationship(name: 'specialization', titleAttribute: 'specialization')
+                    ->relationship(name: 'specialization', titleAttribute: 'specialization_code')
                     ->label('Specialization')
-                    ->options(fn (Get $get): Collection =>Specialization::query()
-                    ->where('level_id', $get('level_id'))
-                    ->pluck('specialization', 'id'))
                     ->preload()
-                    ->live()
-                    ->required(),
-                Forms\Components\Select::make('section')
-                    ->options([
-                        'Section A' => 'Section A',
-                        'Section B' => 'Section B', 
-                    ])
-                    ->required(),
+                    ->live(),
+
                 Forms\Components\Select::make('teacher_id')
                     ->relationship(name: 'teacher', titleAttribute: 'full_name')
-                    ->options(fn (Get $get): Collection =>Teacher::query()
-                    ->where('level_id', $get('level_id'))
-                    ->pluck('full_name', 'id'))
-                    ->label('Teacher')
-                    ->preload()
-                    ->reactive()
-                    ->required(),
-                    
-                    Forms\Components\Select::make('classroom_id')
-                    ->relationship(name: 'classroom', titleAttribute: 'classroom')
-                    ->label('Classroom')
+                        ->label('Adviser')
+                        ->options(fn (Get $get): Collection =>Teacher::query()
+                        ->where('level_id', $get('level_id'))
+                        ->pluck('full_name', 'id'))
                         ->preload()
-                        ->reactive()
+                        ->live()
                         ->required(),
-
-                Forms\Components\Card::make()
-                    ->schema([
-                        Forms\Components\Repeater::make(name: 'sectionItems')
-                        ->label(label: 'Subjects')
-                        ->relationship()
-                        ->schema([
-                            Forms\Components\Select::make('subject_id')
-                            ->label('Subject')
-                            ->relationship(name: 'subject', titleAttribute: 'subject')
-                            ->preload()
-                            ->live()
-                            ->required(),  
-                            Forms\Components\CheckboxList::make('day')
-                            ->options([
-                                'monday' => 'Monday',
-                                'tuesday' => 'Tuesday',
-                                'wednesday' => 'Wednesday',
-                                'thursday' => 'Thursday',
-                                'friday' => 'Friday',
-                                'saturday' => 'Saturday',
-                            ])->columns(2),
-                            Forms\Components\TimePicker::make('time_start')
-                            ->datalist([
-                                '06:00',
-                                '06:30',
-                                '07:00',
-                                '07:30',
-                                '08:00',
-                                '08:30',
-                                '09:00',
-                                '09:30',
-                                '10:00',
-                                '10:30',
-                                '11:00',
-                                '11:30',
-                                '12:00',
-                            ]),
-                            Forms\Components\TimePicker::make('time_end')
-                            ->datalist([
-                                '06:00',
-                                '06:30',
-                                '07:00',
-                                '07:30',
-                                '08:00',
-                                '08:30',
-                                '09:00',
-                                '09:30',
-                                '10:00',
-                                '10:30',
-                                '11:00',
-                                '11:30',
-                                '12:00',
-                            ]),
-                        ])
-                        ->addActionLabel('Add Subject')
-                        ->columns(2),
-                    ])
+                Forms\Components\Select::make('classroom_id')
+                        ->relationship(name: 'classroom', titleAttribute: 'classroom')
+                        ->label('Classroom')
+                        ->preload()
+                        ->live(),
+                Forms\Components\TextInput::make('section')
+                    ->maxLength(255),
             ]);
     }
 
@@ -139,33 +72,18 @@ class SectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('level.level')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('specialization.specialization')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('section')
-                    ->searchable(),
-
+                    ->searchable()
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('teacher.full_name')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Adviser')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('classroom.classroom')
-                    ->numeric()
                     ->sortable(),
-
-
-                Tables\Columns\TextColumn::make('sectionItems.day')
-                    ->label('Day')
-                    ->getStateUsing(function ($record) {
-                        return $record->sectionItems->pluck('day')[0];
-                    })
-                    ->badge(),
-            
-                Tables\Columns\TextColumn::make('sectionItems.time_start')
-                ->label('Start'),
-                Tables\Columns\TextColumn::make('sectionItems.time_end')
-                ->label('End')
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
@@ -179,6 +97,7 @@ class SectionResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ReplicateAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

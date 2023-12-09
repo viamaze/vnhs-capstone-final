@@ -30,6 +30,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Get;
 use Illuminate\Support\Collection;
+use Filament\Actions\ReplicateAction;
 
 use Illuminate\Support\Carbon;
 
@@ -44,6 +45,24 @@ class TeacherResource extends Resource
         return $form
             ->schema([
                 Wizard::make([
+                    Wizard\Step::make('Subject Advisory')
+                    ->schema([
+                        Forms\Components\Select::make('level_id')
+                        ->label('Grade Level Advisory')
+                        ->relationship(name: 'level', titleAttribute: 'level')
+                        ->preload()
+                        ->live()
+                        ->required(),
+                        Forms\Components\Select::make('subject_major')
+                        ->options([
+                            'math' => 'math',
+                            'science' => 'science',
+                            'english' => 'english',
+                            'filipino' => 'filipino',
+                        ])
+                        ->required()
+                        ->searchable(),
+                    ]),
                     Wizard\Step::make('Personal Information')
                     ->schema([
                         Forms\Components\TextInput::make('first_name')
@@ -142,24 +161,6 @@ class TeacherResource extends Resource
                             ->tel()
                             ->maxLength(255),
                     ]),
-                    Wizard\Step::make('Subject Advisory')
-                    ->schema([
-                        Forms\Components\Select::make('level_id')
-                        ->label('Grade Level Advisory')
-                        ->relationship(name: 'level', titleAttribute: 'level')
-                        ->preload()
-                        ->live()
-                        ->required(),
-                        Forms\Components\Select::make('subject_major')
-                        ->options([
-                            'math' => 'math',
-                            'science' => 'science',
-                            'english' => 'english',
-                            'filipino' => 'filipino',
-                        ])
-                        ->required()
-                        ->searchable(),
-                    ]),
                     Wizard\Step::make('Profile Image')
                     ->schema([
                         Forms\Components\FileUpload::make('profile_image')
@@ -187,6 +188,8 @@ class TeacherResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ReplicateAction::make()
+                ->excludeAttributes(['full_name']),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

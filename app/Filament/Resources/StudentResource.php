@@ -28,7 +28,7 @@ class StudentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Student Management';
 
-    
+    protected static ?string $navigationLabel = 'Student Data Information';
 
     public function mount(): void 
     {
@@ -49,6 +49,13 @@ class StudentResource extends Resource
                 Forms\Components\Wizard::make([
                     Wizard\Step::make('Student Information')
                     ->schema([
+                        Forms\Components\Select::make('status')
+                        ->options([
+                            'pre-enrolled' => 'pre-enrolled',
+                            'reviewing' => 'reviewing',
+                            'enrolled' => 'enrolled',
+                        ]),
+                        
                         Forms\Components\TextInput::make('student_id')
                         ->default($student_id)
                         ->maxLength(255),
@@ -73,7 +80,8 @@ class StudentResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('gender')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('dob'),
+                        Forms\Components\DatePicker::make('dob')
+                        ->native(false),
                         Forms\Components\TextInput::make('pob')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('civil_status')
@@ -173,9 +181,17 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'pre-enrolled' => 'info',
+                    'enrolled' => 'success',
+                }),
                 Tables\Columns\TextColumn::make('student_id')
                     ->label('Student ID No.')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('lname')
                     ->label('Last Name')
                     ->sortable()
@@ -183,12 +199,6 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('fname')
                     ->label('First Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                ->badge()
-                ->color(fn (string $state): string => match ($state) {
-                    'pre-enrolled' => 'info',
-                    'enrolled' => 'success',
-                })
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')

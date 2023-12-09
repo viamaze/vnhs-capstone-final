@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\EnrollmentResource\Widgets;
 
-use App\Filament\Resources\EnrollmentResource\Pages;
-use App\Filament\Resources\EnrollmentResource\RelationManagers;
-
-use App\Models\Enrollment;
-use App\Models\Specialization;
-use App\Models\Section;
-use App\Models\Student;
-
-use Filament\Forms;
+use Filament\Widgets\Widget;
 use Filament\Forms\Form;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Illuminate\Support\Carbon;
+use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,27 +16,27 @@ use Filament\Forms\Get;
 use Filament\Forms\Components\Wizard;
 use Filament\Tables\Enums\FiltersLayout;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Carbon;
+use App\Models\Enrollment;
+use App\Models\Specialization;
+use App\Models\Section;
+use App\Models\Student;
+use App\Models\Level;
 
-
-class EnrollmentResource extends Resource
+class CreateEnrollmentWidget extends Widget implements HasForms
 {
-    protected static ?string $model = Enrollment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Student Management';
+    use InteractsWithForms;
 
-    public function mount(): void 
+    protected static string $view = 'filament.resources.enrollment-resource.widgets.create-enrollment-widget';
+
+    protected int | string | array $columnSpan = 'full';
+ 
+    public ?array $data = [];
+ 
+    public function mount(): void
     {
-        $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
-
-        $this->form->fill([
-            'student_id' => $this->student_id,
-        ]);
-    } 
+        $this->form->fill();
+    }
 
     public static function form(Form $form): Form
     {
@@ -204,87 +201,15 @@ class EnrollmentResource extends Resource
                     ->preload()
                     ->live()
                     ->required(),
-            ]);
+            ])->statePath('data');
+            
     }
 
-    public static function table(Table $table): Table
+    public function create(): void
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('student.student_id')
-                    ->label('Student ID No.')
-                    ->badge()
-                    ->color('success')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('school_year')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('student.full_name')
-                    ->label('Full Name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('level.level')
-                    ->label('Grade Level')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('specialization.specialization')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('section.section')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('student.status')
-                    ->label('Status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'enrolled' => 'success',
-                    }),
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('school_year')
-                ->options([
-                    '2023-2024' => '2023-2024',
-                    '2024-2025' => '2024-2025',
-                    '2025-2026' => '2025-2026',
-                    '2027-2028' => '2027-2028',
-                ]),
-                Tables\Filters\SelectFilter::make('level')
-                ->relationship('level', 'level')
-                ->preload(),
-                Tables\Filters\SelectFilter::make('specialization')
-                ->relationship('specialization', 'specialization')
-                ->preload()
-                
-            ], layout: FiltersLayout::AboveContent)
-            ->filtersFormColumns(3)
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ])
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
-            ]);
+        Enrollment::create($this->form->getState());
+        $this->form->fill();
+        $this->dispatch('enrollment-created');
     }
     
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-    
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListEnrollments::route('/'),
-            'create' => Pages\CreateEnrollment::route('/create'),
-            'edit' => Pages\EditEnrollment::route('/{record}/edit'),
-        ];
-    }
-    
-    public static function getWidgets(): array
-    {
-        return [
-            EnrollmentResource\Widgets\CreateEnrollmentWidget::class,
-        ];
-    }
 }

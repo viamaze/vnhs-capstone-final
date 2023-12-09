@@ -29,6 +29,9 @@ class StudentsPanelProvider extends PanelProvider
                 'primary' => Color::Red,
             ])
             ->login()
+            ->registration()
+            ->profile()
+            
             ->discoverResources(in: app_path('Filament/Students/Resources'), for: 'App\\Filament\\Students\\Resources')
             ->discoverPages(in: app_path('Filament/Students/Pages'), for: 'App\\Filament\\Students\\Pages')
             ->pages([

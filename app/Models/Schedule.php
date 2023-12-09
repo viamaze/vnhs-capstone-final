@@ -7,9 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Section extends Model
+class Schedule extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'day' => 'array',
+        'start_time' => 'array',
+        'end_time' => 'array',
+    ];
     
     public function level(): BelongsTo
     {
@@ -21,13 +27,13 @@ class Section extends Model
         return $this->BelongsTo(Specialization::class);
     }
 
-    public function teacher(): BelongsTo
+    public function section(): BelongsTo
     {
-        return $this->BelongsTo(Teacher::class);
+        return $this->BelongsTo(Section::class);
     }
 
-    public function classroom(): BelongsTo
+    public function scheduleItems(): HasMany
     {
-        return $this->BelongsTo(Classroom::class);
+        return $this->HasMany(related: scheduleItems::class);
     }
 }
