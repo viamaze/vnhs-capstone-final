@@ -28,20 +28,6 @@
         <div class="{{ $currentStep != 1 ? 'hidden' : '' }} " id="step-1">
             <h3 class="mb-2 text-2xl text-center font-bold">Student Information</h3>
             <div class="grid grid-cols-4">
-                <div class="mb-6 px-2">
-                    <label for="student_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Student Type</label>
-                    <select wire:model="student_type" name="student_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="" selected>Select Student Type</option>
-                        <option value="New Student">New Student</option>
-                        <option value="Old Student">Old Student</option>
-                        <option value="Returning Student">Returning Student</option>
-                    </select>
-                    @error('grade_level') 
-                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-bold">{{ $message }}</span> 
-                        </div>
-                    @enderror
-                </div>
 
                 <div class="mb-6 px-2">
                     <label for="grade_level" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade Level</label>

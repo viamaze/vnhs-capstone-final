@@ -143,7 +143,7 @@ class ScheduleResource extends Resource
                 Tables\Columns\TextColumn::make('scheduleItems.day')
                     ->label('Day')
                     ->getStateUsing(function ($record) {
-                        return $record->scheduleItems->pluck('day')[0];
+                        return $record->scheduleItems->pluck('day')[1];
                     })
                     ->badge()
                     ->searchable(),

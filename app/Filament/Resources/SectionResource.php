@@ -95,9 +95,9 @@ class SectionResource extends Resource
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(3)
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ReplicateAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

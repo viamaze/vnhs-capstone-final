@@ -8,20 +8,22 @@ use Illuminate\Support\Carbon;
 use App\Models\Province;
 use App\Models\Municipality;
 use App\Models\Barangay;
-
+use App\Models\User;
 
 class Preenroll extends Component
 {
 
     public $currentStep = 1, $successMessage = '', $status = 'pre-enrolled';
 
-    public $student_id, $student_type, $grade_level, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $student_id, $grade_level, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
 
     public $father_last_name, $father_first_name, $father_middle_name, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
     public $emergency_contact_person, $emergency_address, $emergency_mobile;
     
     public $provinces, $municipalities, $barangays;
+
+    public $password = 'vnhs', $student_role = 'STUDENT';
     
     public function mount()
     {
@@ -48,7 +50,6 @@ class Preenroll extends Component
     public function firstStepSubmit()
     {
         $validatedData = $this->validate([
-            'student_type' => 'required',
             'grade_level' => 'required',
             'lastname' => 'required',
             'firstname' => 'required',
@@ -117,7 +118,6 @@ class Preenroll extends Component
     public function submitForm()
     {
         Student::create([
-            'student_type' => $this->student_type,
             'student_id' => $this->student_id,
             'grade_level' => $this->grade_level,
             'lastname' => $this->lastname,
@@ -131,7 +131,6 @@ class Preenroll extends Component
             'civil_status' => $this->civil_status,
             'nationality' => $this->nationality,
             'religion' => $this->religion,
-            'email' => $this->email,
             'contact_number' => $this->contact_number,
             'height' => $this->height,
             'weight' => $this->weight,
@@ -172,6 +171,14 @@ class Preenroll extends Component
 
             'status' => $this->status
         ]);
+
+        User::create([
+            'email' => $this->email,
+            'name' => $this->firstname,
+            'password' => $this->password,
+            'role' => $this->student_role,
+        ]);
+
         $this->successMessage = 'Student PRE-Enrolled Successfully';
         $this->clearForm();
         $this->currentStep = 1;
@@ -184,7 +191,7 @@ class Preenroll extends Component
 
     public function clearForm()
     {
-        $this->student_type ='';
+        
         $this->student_id ='';
         $this->grade_level = '';
         $this->lastname = '';
