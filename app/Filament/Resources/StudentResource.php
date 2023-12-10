@@ -176,7 +176,7 @@ class StudentResource extends Resource
                     ])->columns(2),
                     Wizard\Step::make('Login Details')
                     ->schema([
-                        Fieldset::make('Login')
+                        Fieldset::make('User Details')
                         ->relationship('user')
                         ->schema([
                             Forms\Components\TextInput::make('name')

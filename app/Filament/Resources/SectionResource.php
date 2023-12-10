@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Collection;
 
+use Illuminate\Support\Collection;
 use App\Filament\Resources\SectionResource\Pages;
 use App\Filament\Resources\SectionResource\RelationManagers;
 
@@ -19,12 +19,12 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Get;
 use Filament\Forms\Components\Select;
 
-
 use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Specialization;
 use App\Models\Teacher;
 use App\Models\SectionItem;
+
 class SectionResource extends Resource
 {
     protected static ?string $model = Section::class;
