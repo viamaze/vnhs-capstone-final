@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Enums\FiltersLayout;
 
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Select;
@@ -206,8 +207,11 @@ class TeacherResource extends Resource
                     Tables\Columns\TextColumn::make('subject_major'),   
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('level')
+                ->relationship('level', 'level')
+                ->preload(),
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(3)
             ->actions([
                     ViewAction::make(),
                     EditAction::make(),
