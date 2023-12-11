@@ -1,5 +1,5 @@
 <div class="mb-6" >
-    <h2 class="text-2xl text-center font-bold">VNHS PRE-Enrollment</h2>
+    <h2 class="text-3xl text-center font-bold my-5">VNHS Student Registration</h2>
     @if(!empty($successMessage))
     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
         <span class="font-bold">{{ $successMessage }}</span>

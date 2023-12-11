@@ -10,7 +10,7 @@ use App\Models\Municipality;
 use App\Models\Barangay;
 use App\Models\User;
 
-class Preenroll extends Component
+class StudentRegistration extends Component
 {
 
     public $currentStep = 1, $successMessage = '', $status = 'pre-enrolled';
@@ -34,7 +34,7 @@ class Preenroll extends Component
     
     public function render()
     {
-        return view('livewire.preenroll');
+        return view('livewire.student-registration');
     }   
 
     protected $rules = [
@@ -179,7 +179,7 @@ class Preenroll extends Component
             'role' => $this->student_role,
         ]);
 
-        $this->successMessage = 'Student PRE-Enrolled Successfully';
+        $this->successMessage = 'Student Registration Successfull';
         $this->clearForm();
         $this->currentStep = 1;
     }

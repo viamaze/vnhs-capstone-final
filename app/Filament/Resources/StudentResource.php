@@ -64,7 +64,7 @@ class StudentResource extends Resource
                         ->default($student_id)
                         ->maxLength(255),
 
-                        Forms\Components\Select::make('grade_level')
+                        Select::make('grade_level')
                         ->options([
                             'Grade 7' => 'Grade 7',
                             'Grade 8' => 'Grade 8',

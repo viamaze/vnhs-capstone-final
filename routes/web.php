@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/enrollment', function () {
-    return view('enrollment');
+Route::get('/student-registration', function () {
+    return view('student-registration');
 });
