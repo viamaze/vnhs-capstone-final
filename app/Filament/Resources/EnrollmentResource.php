@@ -31,6 +31,7 @@ class EnrollmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    
     public function mount(): void 
     {
         $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
@@ -196,13 +197,14 @@ class EnrollmentResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('section_id')
                     ->relationship(name: 'section', titleAttribute: 'section')
-                    ->label('Section')
-                    ->options(fn (Get $get): Collection =>Section::query()
-                    ->where('specialization_id', $get('specialization_id'))
-                    ->pluck('section', 'id'))
-                    ->preload()
-                    ->live()
-                    ->required(),
+                            ->label('Section')
+                            ->options(fn (Get $get): Collection =>Section::query()
+                            ->where('level_id', $get('level_id'))
+                            ->where('specialization_id', $get('specialization_id'))
+                            ->pluck('section', 'id'))
+                            ->preload()
+                            ->live()
+                            ->required(),
             ]);
     }
 
@@ -253,7 +255,9 @@ class EnrollmentResource extends Resource
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(3)
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

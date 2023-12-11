@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
@@ -18,8 +20,10 @@ return new class extends Migration
             $table->foreignId('teacher_id')->nullable()->nullOnDelete()->constrained();
             $table->foreignId('classroom_id')->nullable()->nullOnDelete()->constrained();
             $table->string('section');
-            $table->timestamps();
+            $table->timestamps(); 
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

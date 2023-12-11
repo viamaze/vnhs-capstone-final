@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Schema::create('teachers', function (Blueprint $table) {
             $table->id('id');
             $table->string('first_name')->nullable();
@@ -26,20 +28,22 @@ return new class extends Migration
             $table->string('religion')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('address')->nullable();
-            $table->foreignId('barangay_id')->constrained('barangays');
-            $table->foreignId('municipality_id')->constrained('municipalities');
-            $table->foreignId('province_id')->constrained('provinces');
+            $table->foreignId('barangay_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('municipality_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('province_id')->nullable()->nullOnDelete()->constrained();
             $table->string('emergency_contactperson')->nullable();
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('emergency_tel')->nullable();
-            $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
+            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
             $table->string('subject_major')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('full_name')->virtualAs('concat(first_name, \' \', middle_name , \' \', last_name)');
-            $table->foreignId('user_id')->nullable()->cascadeOnDelete()->constrained();
+            $table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
             $table->timestamps();
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

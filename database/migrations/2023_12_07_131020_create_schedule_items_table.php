@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Schema::create('schedule_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('schedule_id')->nullable()->nullOnDelete()->constrained();
@@ -18,8 +20,10 @@ return new class extends Migration
             $table->string('day')->nullable();
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
-            $table->timestamps();
+            $table->timestamps();  
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

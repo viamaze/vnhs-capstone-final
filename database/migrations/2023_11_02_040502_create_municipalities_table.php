@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
             $table->string('municipality');
-            $table->foreignId('province_id')->constrained('provinces')->cascadeOnDelete();
+            $table->foreignId('province_id')->nullable()->nullOnDelete()->constrained();
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

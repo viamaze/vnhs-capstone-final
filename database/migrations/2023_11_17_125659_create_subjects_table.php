@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->string('subject');
             $table->string('description');
-            $table->foreignId('level_id')->constrained();
-            $table->foreignId('teacher_id')->constrained();
+            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('teacher_id')->nullable()->nullOnDelete()->constrained();
             $table->timestamps();
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

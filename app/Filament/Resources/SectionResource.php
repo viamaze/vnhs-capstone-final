@@ -63,6 +63,7 @@ class SectionResource extends Resource
                         ->preload()
                         ->live(),
                 Forms\Components\TextInput::make('section')
+                    ->label('Section Name')
                     ->maxLength(255),
             ]);
     }

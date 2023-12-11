@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
             $table->string('school_year');
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
-            $table->foreignId('specialization_id')->constrained('specializations')->cascadeOnDelete();
-            $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
+            $table->foreignId('student_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('specialization_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('section_id')->nullable()->nullOnDelete()->constrained();
             $table->timestamps();
+      
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('student_type')->nullable();
@@ -64,9 +66,11 @@ return new class extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('full_name')->virtualAs('concat(firstname, \' \', middlename , \' \', lastname)');
-            $table->foreignId('user_id')->nullable()->cascadeOnDelete()->constrained();
+            $table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
             $table->timestamps();
         });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
