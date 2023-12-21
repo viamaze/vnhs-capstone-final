@@ -51,7 +51,7 @@ class TeacherResource extends Resource
         return $form
             ->schema([
                 Wizard::make([
-                    Wizard\Step::make('Subject Advisory')
+                    Wizard\Step::make('Advisory')
                     ->schema([
                         Forms\Components\Select::make('level_id')
                         ->label('Grade Level Advisory')
@@ -59,43 +59,56 @@ class TeacherResource extends Resource
                         ->preload()
                         ->live()
                         ->required(),
-                        Forms\Components\Select::make('subject_major')
-                        ->label('Subject Advisory')
-                        ->options([
-                            'math' => 'math',
-                            'science' => 'science',
-                            'english' => 'english',
-                            'filipino' => 'filipino',
-                        ])
-                        ->required()
-                        ->searchable(),
+                        Forms\Components\Select::make('department_id')
+                        ->label('Department')
+                        ->relationship(name: 'department', titleAttribute: 'department')
+                        ->preload()
+                        ->live()
+                        ->required(),
+                        Forms\Components\TextInput::make('remarks')
+                        ->label('Remarks')
+                        ->maxLength(255),
                     ]),
                     Wizard\Step::make('Personal Information')
                     ->schema([
                         Forms\Components\TextInput::make('first_name')
+                        ->label('First Name')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\TextInput::make('middle_name')
+                        ->label('Middle Name')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('last_name')
+                        ->label('Last Name')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\TextInput::make('middle_initial')
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('ext')
-                        ->maxLength(255),
+                        ->label('Middle Initial')
+                        ->length(1)
+                        ->maxLength(1),
+                    Forms\Components\Select::make('suffix')
+                        ->options([
+                            'Jr.' => 'Jr.',
+                            'Sr.' => 'Sr.',
+                            'II' => 'II',
+                            'III' => 'III',
+                            'IV' => 'IV',
+                        ])->searchable(),
                     Forms\Components\Select::make('gender')
                         ->options([
                             'male' => 'Male',
                             'female' => 'Female',
                         ])->searchable(),
                         Forms\Components\DatePicker::make('date_of_birth')
+                        ->label('Date of Birth')
                         ->format('m/d/Y')
                         ->required(),
                     Forms\Components\TextInput::make('place_of_birth')
+                        ->label('Place of Birth')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\Select::make('civil_status')
+                        ->label('Civil Status')
                         ->options([
                             'single' => 'Single',
                             'married' => 'Married',
@@ -111,16 +124,33 @@ class TeacherResource extends Resource
                         ])
                         ->required()
                         ->searchable(),
-                    Forms\Components\TextInput::make('religion')
-                        ->maxLength(255)
-                        ->required(),
+                    Forms\Components\Select::make('religion')
+                        ->options([
+                            'Roman Catholic' => 'Roman Catholic',
+                            'Islam' => 'Islam',
+                            'Iglesia ni Cristo' => 'Iglesia ni Cristo',
+                            'Philippine Independent Church' => 'Philippine Independent Church',
+                            'Seventh-day Adventist' => 'Seventh-day Adventist',
+                            'Bible Baptist Church' => 'Bible Baptist Church',
+                            'United Church of Christ in the Philippines' => 'United Church of Christ in the Philippines',
+                            'Jehovah\'s Witnesses' => 'Jehovah\'s Witnesses',
+                            'Church of Christ' => 'Church of Christ',
+                            'Others' => 'Others',
+                        ])
+                        ->required()
+                        ->searchable(),
                     Forms\Components\TextInput::make('contact_number')
+                        ->label('Contact Number')
                         ->tel()
                         ->maxLength(255)
                         ->required(),
                     ])->columns(2),
                     Wizard\Step::make('Address')
                     ->schema([
+                        Forms\Components\TextInput::make('address')
+                            ->maxLength(255)
+                            ->required(),
+
                         Forms\Components\Select::make('province_id')
                         ->relationship(name: 'province', titleAttribute: 'province')
                             ->preload()
@@ -144,25 +174,21 @@ class TeacherResource extends Resource
                                 ->preload()
                                 ->live()
                                 ->required(),
-                        Forms\Components\TextInput::make('address')
-                            ->maxLength(255)
-                            ->required(),
                             ])->columns(2),
                             Wizard\Step::make('Emergency Contact')
                             ->schema([
                                 Forms\Components\TextInput::make('emergency_contactperson')
-                                    ->label('Emergency Contact')
+                                    ->label('Emergency Contact Person')
                                     ->maxLength(255)
                                     ->required(),
                                 Forms\Components\TextInput::make('emergency_address')
+                                    ->label('Address')
                                     ->maxLength(255)
                                     ->required(),
                                 Forms\Components\TextInput::make('emergency_mobile')
+                                    ->label('Emergency Mobile Number')
                                     ->maxLength(255)
                                     ->required(),
-                                Forms\Components\TextInput::make('emergency_tel')
-                                    ->tel()
-                                    ->maxLength(255),
                     ]),
                     Wizard\Step::make('Login Details')
                     ->schema([
@@ -186,10 +212,6 @@ class TeacherResource extends Resource
                         
                         ]),
                     ])->columns(2),
-                    Wizard\Step::make('Profile Image')
-                    ->schema([
-                        Forms\Components\FileUpload::make('profile_image')
-                    ]),
                 ])
                 ->columnSpan('full')->skippable(),
             ]);
@@ -199,13 +221,16 @@ class TeacherResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('level.level')
+                    ->label('Advisory'),
+                Tables\Columns\TextColumn::make('department.department'),
                 Tables\Columns\TextColumn::make('full_name')
                 ->searchable()
                 ->sortable(),
- 
-                    Tables\Columns\TextColumn::make('level.level')
-                    ->label('Advisory Level'),
-                    Tables\Columns\TextColumn::make('subject_major'),   
+                Tables\Columns\TextColumn::make('contact_number')
+                ->searchable()
+                ->sortable(),
+  
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('level')

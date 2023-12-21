@@ -32,8 +32,15 @@ class Schedule extends Model
         return $this->BelongsTo(Section::class);
     }
 
+    public function teacher(): BelongsTo
+    {
+        return $this->BelongsTo(Teacher::class);
+    }
+
     public function scheduleItems(): HasMany
     {
         return $this->HasMany(related: scheduleItems::class);
     }
+
+
 }

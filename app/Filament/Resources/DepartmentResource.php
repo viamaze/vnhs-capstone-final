@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ClassroomResource\Pages;
-use App\Filament\Resources\ClassroomResource\RelationManagers;
-use App\Models\Classroom;
+use App\Filament\Resources\DepartmentResource\Pages;
+use App\Filament\Resources\DepartmentResource\RelationManagers;
+use App\Models\Department;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,24 +13,18 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClassroomResource extends Resource
+class DepartmentResource extends Resource
 {
-    protected static ?string $model = Classroom::class;
+    protected static ?string $model = Department::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    
-    protected static ?string $navigationGroup = 'Teacher Management';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('classroom')
+                Forms\Components\TextInput::make('department')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('building_location')
                     ->maxLength(255),
             ]);
     }
@@ -39,20 +33,10 @@ class ClassroomResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('classroom')
+                Tables\Columns\TextColumn::make('department')
                     ->searchable()
                     ->badge()
                     ->color('success'),
-                Tables\Columns\TextColumn::make('building_location')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -82,9 +66,9 @@ class ClassroomResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListClassrooms::route('/'),
-            'create' => Pages\CreateClassroom::route('/create'),
-            'edit' => Pages\EditClassroom::route('/{record}/edit'),
+            'index' => Pages\ListDepartments::route('/'),
+            'create' => Pages\CreateDepartment::route('/create'),
+            'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
     }    
 }

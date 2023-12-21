@@ -51,8 +51,6 @@ class SpecializationResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color('success'),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
             ])
             ->filters([
                 //

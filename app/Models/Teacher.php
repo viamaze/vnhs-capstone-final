@@ -26,6 +26,11 @@ class Teacher extends Model
         return $this->BelongsTo(Barangay::class);
     }
 
+    public function department(): BelongsTo
+    {
+        return $this->BelongsTo(Department::class);
+    }
+
     public function level(): BelongsTo
     {
         return $this->BelongsTo(Level::class);

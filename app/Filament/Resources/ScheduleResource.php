@@ -26,6 +26,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 class ScheduleResource extends Resource
 {
@@ -135,22 +137,7 @@ class ScheduleResource extends Resource
                 Tables\Columns\TextColumn::make('section.section')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('scheduleItems.subject.subject')
-                    ->sortable()
-                    ->badge(),
-                Tables\Columns\TextColumn::make('scheduleItems.day')
-                    ->label('Day')
-                    ->getStateUsing(function ($record) {
-                        return $record->scheduleItems->pluck('day')[1];
-                    })
-                    ->badge()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('scheduleItems.start_time')
-                    ->label('Start Time')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('scheduleItems.end_time')
-                    ->label('End Time')
-                    ->searchable(),
+
             ])
             ->filters([
                 //
@@ -169,6 +156,19 @@ class ScheduleResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('level.level'),
+                Infolists\Components\TextEntry::make('specialization.specialization'),
+                Infolists\Components\TextEntry::make('section.teacher.full_name')
+                ->label('Adviser'),
+                Infolists\Components\TextEntry::make('section.section')
+                ->columnSpan(2),
+            ]);
+    }
     
     public static function getRelations(): array
     {
@@ -182,6 +182,7 @@ class ScheduleResource extends Resource
         return [
             'index' => Pages\ListSchedules::route('/'),
             'create' => Pages\CreateSchedule::route('/create'),
+            'view' => Pages\ViewSchedule::route('/{record}'),
             'edit' => Pages\EditSchedule::route('/{record}/edit'),
         ];
     }    

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('middle_initial')->nullable();
-            $table->string('ext')->nullable();
+            $table->string('suffix')->nullable();
             $table->string('gender')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('place_of_birth')->nullable();
@@ -34,12 +34,11 @@ return new class extends Migration
             $table->string('emergency_contactperson')->nullable();
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
-            $table->string('emergency_tel')->nullable();
-            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
-            $table->string('subject_major')->nullable();
-            $table->string('profile_image')->nullable();
             $table->string('full_name')->virtualAs('concat(first_name, \' \', middle_name , \' \', last_name)');
+            $table->string('remarks')->nullable();
             $table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('department_id')->nullable()->nullOnDelete()->constrained();
             $table->timestamps();
         });
 

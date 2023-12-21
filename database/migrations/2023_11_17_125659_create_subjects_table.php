@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('subject')->nullable();
             $table->string('description')->nullable();
+            $table->foreignId('department_id')->nullable()->nullOnDelete()->constrained();
             $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
             $table->foreignId('teacher_id')->nullable()->nullOnDelete()->constrained();
             $table->timestamps();
