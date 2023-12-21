@@ -65,7 +65,7 @@ return new class extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('full_name')->virtualAs('concat(firstname, \' \', middlename , \' \', lastname)');
-            $table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('user_id')->nullable()->cascadeOnDelete()->constrained();
             $table->timestamps();
         });
 

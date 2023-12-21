@@ -117,6 +117,13 @@ class StudentRegistration extends Component
 
     public function submitForm()
     {
+        User::create([
+            'email' => $this->email,
+            'name' => $this->firstname,
+            'password' => $this->password,
+            'role' => $this->student_role,
+        ]);
+        
         Student::create([
             'student_id' => $this->student_id,
             'grade_level' => $this->grade_level,
@@ -170,13 +177,6 @@ class StudentRegistration extends Component
             'emergency_mobile' => $this->emergency_mobile,
 
             'status' => $this->status
-        ]);
-
-        User::create([
-            'email' => $this->email,
-            'name' => $this->firstname,
-            'password' => $this->password,
-            'role' => $this->student_role,
         ]);
 
         $this->successMessage = 'Student Registration Successfull';

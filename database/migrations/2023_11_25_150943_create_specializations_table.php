@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
-            $table->string('specialization_code');
-            $table->string('specialization');
-            $table->string('description');
+            $table->string('specialization_code')->nullable();
+            $table->string('specialization')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

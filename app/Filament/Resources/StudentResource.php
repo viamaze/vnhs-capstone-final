@@ -25,6 +25,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 
 class StudentResource extends Resource
 {
@@ -62,6 +63,7 @@ class StudentResource extends Resource
                         ]),
                         Forms\Components\TextInput::make('student_id')
                         ->default($student_id)
+                        ->label('Student ID')
                         ->maxLength(255),
 
                         Select::make('grade_level')
@@ -74,14 +76,19 @@ class StudentResource extends Resource
                             'Grade 12' => 'Grade 12',
                         ]),
                         Forms\Components\TextInput::make('firstname')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('lastname')
+                            ->label('First Name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('middlename')
+                            ->label('Middle Name')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('lastname')
+                            ->label('Last Name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mi')
+                            ->label('Middle Initial')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('ext')
+                            ->label('Extension(\'Sr\', \'Jr\')')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('gender')
                             ->maxLength(255),
@@ -96,6 +103,7 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('religion')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('contact_number')
+                            ->label('Contact Number')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('height')
                             ->maxLength(255),
@@ -127,27 +135,40 @@ class StudentResource extends Resource
                     Wizard\Step::make('Parents Information')
                     ->schema([
                         Forms\Components\TextInput::make('father_last_name')
+                        ->label('Father Last Name')
                         ->maxLength(255),
                         Forms\Components\TextInput::make('father_first_name')
+                        ->label('Father First Name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_middle_name')
+                            ->label('Father Middle Name')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('father_ext')
+                        Forms\Components\TextInput::make
+                        ('father_ext')
+                        ->label('Extension(\'Sr\', \'Jr\')')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('father_dob'),
+                        Forms\Components\DatePicker::make('father_dob')
+                        ->label('Date of Birth'),
                         Forms\Components\TextInput::make('father_occupation')
+                        ->label('Occupation')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_monthlyincome')
+                        ->label('Monthly Income')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_yearlycomp')
+                        ->label('Yearly Compensation')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_contactno')
+                        ->label('Contact Number')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('father_educational')
+                        ->label('Educational Attainment')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mother_last_name')
+                        ->label('Mother Last Name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mother_first_name')
+                        ->label('Mother First Name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mother_middle_name')
                             ->maxLength(255),

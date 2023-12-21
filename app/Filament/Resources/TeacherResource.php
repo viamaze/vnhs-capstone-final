@@ -60,6 +60,7 @@ class TeacherResource extends Resource
                         ->live()
                         ->required(),
                         Forms\Components\Select::make('subject_major')
+                        ->label('Subject Advisory')
                         ->options([
                             'math' => 'math',
                             'science' => 'science',

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('specialization_id')->nullable()->nullOnDelete()->constrained();
             $table->foreignId('teacher_id')->nullable()->nullOnDelete()->constrained();
             $table->foreignId('classroom_id')->nullable()->nullOnDelete()->constrained();
-            $table->string('section');
+            $table->string('section')->nullable();
             $table->timestamps(); 
         });
 

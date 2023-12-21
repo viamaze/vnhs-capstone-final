@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('advisories', function (Blueprint $table) {
             $table->id();
-            $table->string('subject');
+            $table->string('subject')->nullable();
             $table->timestamps();
         });
     }

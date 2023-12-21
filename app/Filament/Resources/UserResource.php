@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 
 class UserResource extends Resource
 {
@@ -64,8 +67,14 @@ class UserResource extends Resource
                 
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('role')
+                ->options([
+                    'ADMIN' => 'Admin',
+                    'STUDENT' => 'Student',
+                    'FACULTY' => 'Faculty'
+                ])
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(3)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),

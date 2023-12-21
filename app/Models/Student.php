@@ -22,4 +22,19 @@ class Student extends Model
     {
         return $this->BelongsTo(Level::class);
     }
+
+    public function province(): BelongsTo
+    {
+        return $this->BelongsTo(Province::class);
+    }
+
+    public function municipality(): BelongsTo
+    {
+        return $this->BelongsTo(Municipality::class);
+    }
+
+    public function barangay(): BelongsTo
+    {
+        return $this->BelongsTo(Barangay::class);
+    }
 }

@@ -29,10 +29,8 @@ class ClassroomResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
-                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('building_location')
-                    ->required()
                     ->maxLength(255),
             ]);
     }
@@ -42,8 +40,6 @@ class ClassroomResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('classroom')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('building_location')
                     ->searchable(),

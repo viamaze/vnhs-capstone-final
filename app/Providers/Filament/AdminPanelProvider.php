@@ -21,7 +21,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
-
+use Filament\Navigation\NavigationGroup;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -70,6 +70,12 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('images/favicon.png'))
             ->userMenuItems([
                 'logout' => MenuItem::make()->label('Signout'),
+            ])
+            ->navigationGroups([
+                'Student Management',
+                'Teacher Management',
+                'Subject Management',
+                'User Management'
             ]);
     }
 }
