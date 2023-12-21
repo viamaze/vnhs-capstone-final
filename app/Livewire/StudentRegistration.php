@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Province;
 use App\Models\Municipality;
 use App\Models\Barangay;
+use App\Models\Level;
 use App\Models\User;
 
 class StudentRegistration extends Component
@@ -21,7 +22,7 @@ class StudentRegistration extends Component
 
     public $emergency_contact_person, $emergency_address, $emergency_mobile;
     
-    public $provinces, $municipalities, $barangays;
+    public $levels, $provinces, $municipalities, $barangays;
 
     public $password = 'vnhs', $student_role = 'STUDENT';
     
@@ -30,6 +31,7 @@ class StudentRegistration extends Component
         $this->provinces = Province::all();
         $this->municipalities = Municipality::all();
         $this->barangays = Barangay::all();
+        $this->levels = Level::all();
     }
     
     public function render()

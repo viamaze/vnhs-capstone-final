@@ -28,6 +28,9 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\Fieldset;
 
 class ScheduleResource extends Resource
 {
@@ -98,6 +101,7 @@ class ScheduleResource extends Resource
                                         '11:00',
                                         '11:30',
                                         '12:00',
+                                        '13:00'
                                     ])
                                     ->seconds(false),
                                 Forms\Components\TimePicker::make('end_time')
@@ -134,9 +138,31 @@ class ScheduleResource extends Resource
                 Tables\Columns\TextColumn::make('specialization.specialization')
                     ->numeric()
                     ->sortable(),
+                    
                 Tables\Columns\TextColumn::make('section.section')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('scheduleItems.subject.subject')
+                    ->numeric()
+                    ->listWithLineBreaks()
+                    ->sortable(),
+                
+                Tables\Columns\TextColumn::make('scheduleItems.start_time')
+                    ->numeric()
+                    ->label('Start Time')
+                    ->listWithLineBreaks()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('scheduleItems.end_time')
+                    ->numeric()
+                    ->label('End Time')
+                    ->listWithLineBreaks()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('scheduleItems.subject.teacher.full_name')
+                    ->numeric()
+                    ->listWithLineBreaks()
+                    ->sortable(),
+                    
 
             ])
             ->filters([
@@ -167,6 +193,21 @@ class ScheduleResource extends Resource
                 ->label('Adviser'),
                 Infolists\Components\TextEntry::make('section.section')
                 ->columnSpan(2),
+    
+                Fieldset::make('Subjects')
+                ->schema([
+                    TextEntry::make('scheduleItems.subject.subject')
+                    ->label('Subject')
+                    ->listWithLineBreaks(),
+                    TextEntry::make('scheduleItems.start_time')
+                    ->listWithLineBreaks(),
+                    TextEntry::make('scheduleItems.end_time')
+                    ->listWithLineBreaks(),
+                    TextEntry::make('scheduleItems.subject.teacher.full_name')
+                        ->label('Teacher')
+                        ->listWithLineBreaks()
+                ])
+                ->columns(4)
             ]);
     }
     

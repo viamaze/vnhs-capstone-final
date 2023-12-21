@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('student_id')->nullable();
             $table->string('status')->nullable();
-            $table->string('grade_level');
+            $table->foreignId('level_id')->nullable()->cascadeOnDelete()->constrained();
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();

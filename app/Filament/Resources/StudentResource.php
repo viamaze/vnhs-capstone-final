@@ -66,15 +66,12 @@ class StudentResource extends Resource
                         ->label('Student ID')
                         ->maxLength(255),
 
-                        Select::make('grade_level')
-                        ->options([
-                            'Grade 7' => 'Grade 7',
-                            'Grade 8' => 'Grade 8',
-                            'Grade 9' => 'Grade 9',
-                            'Grade 10' => 'Grade 10',
-                            'Grade 11' => 'Grade 11',
-                            'Grade 12' => 'Grade 12',
-                        ]),
+                        Forms\Components\Select::make('level_id')
+                        ->relationship(name: 'level', titleAttribute: 'level')
+                        ->label('Grade Level')
+                            ->preload()
+                            ->live()
+                            ->required(),
                         Forms\Components\TextInput::make('firstname')
                             ->label('First Name')
                             ->maxLength(255),
@@ -246,7 +243,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('firstname')
                     ->label('First Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('grade_level')
+                Tables\Columns\TextColumn::make('level.level')
                     ->label('Grade Level')
                     ->searchable(),
                 

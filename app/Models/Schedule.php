@@ -42,5 +42,5 @@ class Schedule extends Model
         return $this->HasMany(related: scheduleItems::class);
     }
 
-
+    
 }

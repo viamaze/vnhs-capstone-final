@@ -63,7 +63,7 @@ class EnrollmentResource extends Resource
                 Forms\Components\Select::make('student_id')
                 ->relationship(name: 'student', titleAttribute: 'full_name')
                 ->options(fn (Get $get): Collection =>Student::query()
-                ->where('grade_level', $get('level_id'))
+                ->where('level_id', $get('level_id'))
                 ->where('status', 'enrolled')
                 ->pluck('full_name', 'id'))
                 ->label('Student')
