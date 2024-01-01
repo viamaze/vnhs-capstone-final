@@ -31,19 +31,23 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\Fieldset;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Columns\ViewColumn;
 
 class ScheduleResource extends Resource
 {
     protected static ?string $model = Schedule::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+   
+    protected static ?string $navigationGroup = 'Schedule Management';
+    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('level_id')
-                ->label('Grade Level Advisory')
+                ->label('Grade Level')
                 ->relationship(name: 'level', titleAttribute: 'level')
                 ->preload()
                 ->live()
@@ -74,55 +78,36 @@ class ScheduleResource extends Resource
                                 Forms\Components\Select::make('subject_id')
                                 ->label('Subject')
                                 ->relationship(name: 'subject', titleAttribute: 'subject')
+                                ->options(fn (Get $get): Collection =>Subject::query()
+                                ->where('level_id', $get('../../level_id'))
+                                ->pluck('subject', 'id'))
                                 ->preload()
                                 ->live()
-                                ->required(), 
+                                ->required(),
                                 Forms\Components\CheckboxList::make('day')
                                     ->options([
-                                            'monday' => 'Monday',
-                                            'tuesday' => 'Tuesday',
-                                            'wednesday' => 'Wednesday',
-                                            'thursday' => 'Thursday',
-                                            'friday' => 'Friday',
-                                            'saturday' => 'Saturday',
-                                        ])->columns(2),
-                                Forms\Components\TimePicker::make('start_time')
-                                    ->datalist([
-                                        '06:00',
-                                        '06:30',
-                                        '07:00',
-                                        '07:30',
-                                        '08:00',
-                                        '08:30',
-                                        '09:00',
-                                        '09:30',
-                                        '10:00',
-                                        '10:30',
-                                        '11:00',
-                                        '11:30',
-                                        '12:00',
-                                        '13:00'
-                                    ])
-                                    ->seconds(false),
-                                Forms\Components\TimePicker::make('end_time')
-                                    ->datalist([
-                                        '06:00',
-                                        '06:30',
-                                        '07:00',
-                                        '07:30',
-                                        '08:00',
-                                        '08:30',
-                                        '09:00',
-                                        '09:30',
-                                        '10:00',
-                                        '10:30',
-                                        '11:00',
-                                        '11:30',
-                                        '12:00',
-                                    ])
-                                    ->seconds(false),
+                                            'M' => 'M',
+                                            'T' => 'T',
+                                            'W' => 'W',
+                                            'TH' => 'TH',
+                                            'F' => 'F',
+                                            'S' => 'S',
+                                        ])->columns(3),
+
+                                Select::make('start_time')
+                                    ->options([
+                                        '6:00AM' => '6:00AM',
+                                        '6:30AM' => '6:30AM',
+                                        '7:00AM' => '7:00AM',
+                                ]),
+                                Select::make('end_time')
+                                    ->options([
+                                        '6:00AM' => '6:00AM',
+                                        '6:30AM' => '6:30AM',
+                                        '7:00AM' => '7:00AM',
+                                ]),
                         ])
-                        ->columns(2)
+                        ->columns(4)
                         ->columnSpan('full')
                     ]),
             ]);
@@ -133,41 +118,36 @@ class ScheduleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('level.level')
-                    ->numeric()
+                    ->label('Grade Level')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('specialization.specialization')
-                    ->numeric()
                     ->sortable(),
-                    
                 Tables\Columns\TextColumn::make('section.section')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('scheduleItems.subject.subject')
-                    ->numeric()
-                    ->listWithLineBreaks()
-                    ->sortable(),
+                    ->listWithLineBreaks(),
                 
+                ViewColumn::make('Day')->view('tables.columns.subject-viewer'),
+             
                 Tables\Columns\TextColumn::make('scheduleItems.start_time')
-                    ->numeric()
                     ->label('Start Time')
-                    ->listWithLineBreaks()
-                    ->sortable(),
-
+                    ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('scheduleItems.end_time')
-                    ->numeric()
                     ->label('End Time')
-                    ->listWithLineBreaks()
-                    ->sortable(),
+                    ->listWithLineBreaks(), 
                 Tables\Columns\TextColumn::make('scheduleItems.subject.teacher.full_name')
-                    ->numeric()
-                    ->listWithLineBreaks()
-                    ->sortable(),
-                    
-
+                    ->listWithLineBreaks(),
+                
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('level')
+                ->relationship('level', 'level')
+                ->preload(),
+                Tables\Filters\SelectFilter::make('specialization')
+                ->relationship('specialization', 'specialization')
+                ->preload(),
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(3)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -187,27 +167,35 @@ class ScheduleResource extends Resource
     {
         return $infolist
             ->schema([
-                Infolists\Components\TextEntry::make('level.level'),
+                Infolists\Components\TextEntry::make('level.level')
+                ->label('Grade Level'),
                 Infolists\Components\TextEntry::make('specialization.specialization'),
                 Infolists\Components\TextEntry::make('section.teacher.full_name')
                 ->label('Adviser'),
                 Infolists\Components\TextEntry::make('section.section')
                 ->columnSpan(2),
-    
+
                 Fieldset::make('Subjects')
                 ->schema([
                     TextEntry::make('scheduleItems.subject.subject')
                     ->label('Subject')
                     ->listWithLineBreaks(),
+                    TextEntry::make('scheduleItems.day')
+                    ->getStateUsing(function ($record) {
+                        return $record->scheduleItems->pluck('day', 'subject_id')->collapse();
+                    })
+                    ->label('Day'),
                     TextEntry::make('scheduleItems.start_time')
+                    ->label('Start Time')
                     ->listWithLineBreaks(),
                     TextEntry::make('scheduleItems.end_time')
+                    ->label('End Time')
                     ->listWithLineBreaks(),
                     TextEntry::make('scheduleItems.subject.teacher.full_name')
                         ->label('Teacher')
                         ->listWithLineBreaks()
                 ])
-                ->columns(4)
+                ->columns(5)
             ]);
     }
     

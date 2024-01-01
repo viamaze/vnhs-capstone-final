@@ -39,7 +39,7 @@ class Schedule extends Model
 
     public function scheduleItems(): HasMany
     {
-        return $this->HasMany(related: scheduleItems::class);
+        return $this->HasMany(scheduleItems::class);
     }
 
     

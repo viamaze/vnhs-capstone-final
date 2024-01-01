@@ -75,6 +75,7 @@ class AdminPanelProvider extends PanelProvider
                 'Student Management',
                 'Teacher Management',
                 'Subject Management',
+                'Schedule Management',
                 'User Management'
             ]);
     }

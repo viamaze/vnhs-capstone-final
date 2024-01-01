@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LevelResource\Pages;
-use App\Filament\Resources\LevelResource\RelationManagers;
-use App\Models\Level;
+use App\Filament\Resources\ChecklistResource\Pages;
+use App\Filament\Resources\ChecklistResource\RelationManagers;
+use App\Models\Checklist;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,22 +12,33 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 
-class LevelResource extends Resource
+class ChecklistResource extends Resource
 {
-    protected static ?string $model = Level::class;
+    protected static ?string $model = Checklist::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static bool $shouldRegisterNavigation = false;
-    
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('level')
+                    Forms\Components\TextInput::make('subjects')
                     ->required()
                     ->maxLength(255),
+                    CheckboxList::make('day')
+                    ->options([
+                        'tailwind' => 'Tailwind CSS',
+                        'alpine' => 'Alpine.js',
+                        'laravel' => 'Laravel',
+                        'livewire' => 'Laravel Livewire',
+                    ])
             ]);
     }
 
@@ -35,8 +46,11 @@ class LevelResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('level')
+                Tables\Columns\TextColumn::make('subjects')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('day')
+                    ->searchable()
+                    ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -50,9 +64,7 @@ class LevelResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -74,9 +86,9 @@ class LevelResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLevels::route('/'),
-            'create' => Pages\CreateLevel::route('/create'),
-            'edit' => Pages\EditLevel::route('/{record}/edit'),
+            'index' => Pages\ListChecklists::route('/'),
+            'create' => Pages\CreateChecklist::route('/create'),
+            'edit' => Pages\EditChecklist::route('/{record}/edit'),
         ];
     }    
 }

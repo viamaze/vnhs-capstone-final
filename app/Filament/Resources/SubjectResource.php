@@ -37,18 +37,11 @@ class SubjectResource extends Resource
                     ->preload()
                     ->live()
                     ->required(),
-                Forms\Components\Select::make('department_id')
-                    ->label('Department')
-                    ->relationship(name: 'department', titleAttribute: 'department')
-                    ->preload()
-                    ->live()
-                    ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->relationship(name: 'teacher', titleAttribute: 'full_name')
                     ->label('Teacher')
                     ->options(fn (Get $get): Collection =>Teacher::query()
                     ->where('level_id', $get('level_id'))
-                    ->where('department_id', $get('department_id'))
                     ->pluck('full_name', 'id'))
                     ->preload()
                     ->live()
@@ -70,9 +63,6 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('level.level')
                 ->searchable()
                 ->sortable(),
-                Tables\Columns\TextColumn::make('department.department')
-                ->searchable()
-                ->sortable(),
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable()
                     ->badge()
@@ -83,9 +73,6 @@ class SubjectResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
                 ->relationship('level', 'level')
-                ->preload(),
-                Tables\Filters\SelectFilter::make('department')
-                ->relationship('department', 'department')
                 ->preload(),
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(3)

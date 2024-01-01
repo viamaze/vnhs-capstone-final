@@ -15,10 +15,14 @@ return new class extends Migration
 
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
-            $table->foreignId('specialization_id')->nullable()->nullOnDelete()->constrained();
-            $table->foreignId('teacher_id')->nullable()->nullOnDelete()->constrained();
-            $table->foreignId('classroom_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('level_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('specialization_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('teacher_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('classroom_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->string('section')->nullable();
             $table->timestamps(); 
         });

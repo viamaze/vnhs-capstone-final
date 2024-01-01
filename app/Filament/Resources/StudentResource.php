@@ -249,12 +249,16 @@ class StudentResource extends Resource
                 
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('level')
+                ->relationship('level', 'level')
+                ->preload(),
                 Tables\Filters\SelectFilter::make('status')
                 ->options([
                     'pre-enrolled' => 'Pre-Enrolled',
                     'enrolled' => 'Enrolled',
                 ])
             ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(3)
             ->actions([
                     ViewAction::make(),
                     EditAction::make(),

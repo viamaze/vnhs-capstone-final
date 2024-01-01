@@ -16,6 +16,11 @@ class Teacher extends Model
         return $this->BelongsTo(Province::class);
     }
 
+    public function section(): HasMany
+    {
+        return $this->HasMany(Section::class);
+    }
+
     public function municipality(): BelongsTo
     {
         return $this->BelongsTo(Municipality::class);

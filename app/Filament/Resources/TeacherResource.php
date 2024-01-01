@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Select;
@@ -43,8 +45,9 @@ class TeacherResource extends Resource
 {
     protected static ?string $model = Teacher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Teacher Management';
+    protected static ?string $navigationLabel = 'Teacher Information';
 
     public static function form(Form $form): Form
     {
@@ -190,7 +193,7 @@ class TeacherResource extends Resource
                                     ->maxLength(255)
                                     ->required(),
                     ]),
-                    Wizard\Step::make('Login Details')
+/*                     Wizard\Step::make('Login Details')
                     ->schema([
                         Fieldset::make('Login')
                         ->relationship('user')
@@ -211,7 +214,7 @@ class TeacherResource extends Resource
                             ->required(),
                         
                         ]),
-                    ])->columns(2),
+                    ])->columns(2), */
                 ])
                 ->columnSpan('full')->skippable(),
             ]);
@@ -230,7 +233,6 @@ class TeacherResource extends Resource
                 Tables\Columns\TextColumn::make('contact_number')
                 ->searchable()
                 ->sortable(),
-  
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
@@ -252,6 +254,16 @@ class TeacherResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
+            ]);
+    }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('level.level')
+                ->label('Grade Level'),
+                Infolists\Components\TextEntry::make('section.section')
+                ->columnSpan(2),
             ]);
     }
     
