@@ -38,7 +38,7 @@ class User extends Authenticatable implements FilamentUser
             return $this->isStudent();
         
         if ($panel->getId() === 'teachers')
-            return $this->isFaculty();
+            return $this->isTeacher();
         
         return true;
     }
@@ -90,5 +90,15 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(Teacher::class);
+    }
 
 }

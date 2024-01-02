@@ -14,7 +14,7 @@ return new class extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         Schema::create('teachers', function (Blueprint $table) {
-            $table->id('id');
+            $table->id()->from(10000);
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();

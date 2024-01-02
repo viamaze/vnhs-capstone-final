@@ -14,9 +14,9 @@ use App\Models\User;
 class StudentRegistration extends Component
 {
 
-    public $currentStep = 1, $successMessage = '', $status = 'pre-enrolled';
+    public $currentStep = 1, $successMessage = '', $student_status = 'New Student', $enrollment_status = 'Pre-Enrolled';
 
-    public $student_id, $grade_level, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $student_id, $level_id, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
 
     public $father_last_name, $father_first_name, $father_middle_name, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
@@ -24,7 +24,7 @@ class StudentRegistration extends Component
     
     public $levels, $provinces, $municipalities, $barangays;
 
-    public $password = 'vnhs', $student_role = 'STUDENT';
+    public $password = 'vnhs', $student_role = 'STUDENT', $active_student=0;
     
     public function mount()
     {
@@ -52,7 +52,7 @@ class StudentRegistration extends Component
     public function firstStepSubmit()
     {
         $validatedData = $this->validate([
-            'grade_level' => 'required',
+            'level_id' => 'required',
             'lastname' => 'required',
             'firstname' => 'required',
             'ext' => 'required',
@@ -119,16 +119,10 @@ class StudentRegistration extends Component
 
     public function submitForm()
     {
-        User::create([
-            'email' => $this->email,
-            'name' => $this->firstname,
-            'password' => $this->password,
-            'role' => $this->student_role,
-        ]);
-        
+
         Student::create([
             'student_id' => $this->student_id,
-            'grade_level' => $this->grade_level,
+            'level_id' => $this->level_id,
             'lastname' => $this->lastname,
             'firstname' => $this->firstname,
             'middlename' => $this->middlename,
@@ -178,7 +172,9 @@ class StudentRegistration extends Component
             'emergency_address' => $this->emergency_address,
             'emergency_mobile' => $this->emergency_mobile,
 
-            'status' => $this->status
+            'student_status' => $this->student_status,
+            'active_student' => $this->active_student,
+            'enrollment_status' => $this->enrollment_status
         ]);
 
         $this->successMessage = 'Student Registration Successfull';
@@ -195,7 +191,7 @@ class StudentRegistration extends Component
     {
         
         $this->student_id ='';
-        $this->grade_level = '';
+        $this->level_id = '';
         $this->lastname = '';
         $this->firstname = '';
         $this->middlename = '';

@@ -38,6 +38,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Hidden;
 
 use Illuminate\Support\Carbon;
 
@@ -51,6 +52,7 @@ class TeacherResource extends Resource
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Wizard::make([
@@ -193,28 +195,6 @@ class TeacherResource extends Resource
                                     ->maxLength(255)
                                     ->required(),
                     ]),
-/*                     Wizard\Step::make('Login Details')
-                    ->schema([
-                        Fieldset::make('Login')
-                        ->relationship('user')
-                        ->schema([
-                            Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('password')
-                            ->password()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('role')
-                            ->default(User::ROLE_FACULTY)
-                            ->required(),
-                        
-                        ]),
-                    ])->columns(2), */
                 ])
                 ->columnSpan('full')->skippable(),
             ]);
@@ -270,7 +250,7 @@ class TeacherResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\UsersRelationManager::class,
         ];
     }
     

@@ -28,4 +28,7 @@
         </div>
     </div>
   </section>
+  <section class="bg-white dark:bg-gray-900">
+  @livewire('create-student')
+    </section>
 @endsection

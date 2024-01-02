@@ -68,9 +68,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authGuard('web')
             ->favicon(asset('images/favicon.png'))
-            ->userMenuItems([
-                'logout' => MenuItem::make()->label('Signout'),
-            ])
             ->navigationGroups([
                 'Student Management',
                 'Teacher Management',

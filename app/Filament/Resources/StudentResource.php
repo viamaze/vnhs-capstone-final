@@ -26,6 +26,9 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Hidden;
+
 
 class StudentResource extends Resource
 {
@@ -36,18 +39,8 @@ class StudentResource extends Resource
 
     protected static ?string $navigationLabel = 'Student Data Information';
 
-    public function mount(): void 
-    {
-        $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
-
-        $this->form->fill([
-            'student_id' => $this->student_id,
-        ]);
-    } 
-
     public static function form(Form $form): Form
     {
-
         $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
 
         return $form
@@ -55,17 +48,22 @@ class StudentResource extends Resource
                 Forms\Components\Wizard::make([
                     Wizard\Step::make('Student Information')
                     ->schema([
-                        Forms\Components\Select::make('status')
+                        Forms\Components\Select::make('student_status')
                         ->options([
-                            'pre-enrolled' => 'Pre-Enroll',
-                            'reviewing' => 'Reviewing',
-                            'enrolled' => 'Enrolled',
+                            'New Student' => 'New Student',
+                            'Transferee' => 'Transferee',
+                            'Old Student' => 'Old Student',
+                        ]),
+                        Forms\Components\Select::make('enrollment_status')
+                        ->options([
+                            'Enrolled' => 'Enrolled',
+                            'Pre-Enrolled' => 'Pre-Enrolled',
+                            'Reviewing' => 'Reviewing',
                         ]),
                         Forms\Components\TextInput::make('student_id')
                         ->default($student_id)
                         ->label('Student ID')
                         ->maxLength(255),
-
                         Forms\Components\Select::make('level_id')
                         ->relationship(name: 'level', titleAttribute: 'level')
                         ->label('Grade Level')
@@ -84,34 +82,97 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('mi')
                             ->label('Middle Initial')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('ext')
-                            ->label('Extension(\'Sr\', \'Jr\')')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('gender')
-                            ->maxLength(255),
+                        Forms\Components\Select::make('ext')
+                            ->label('Suffix')
+                            ->options([
+                                'Jr.' => 'Jr.',
+                                'Sr.' => 'Sr.',
+                                'II' => 'II',
+                                'III' => 'III',
+                                'IV' => 'IV',
+                            ]),
+                        Forms\Components\Select::make('gender')
+                            ->options([
+                                'male' => 'Male',
+                                'female' => 'Female',
+                            ]),
                         Forms\Components\DatePicker::make('date_of_birth')
-                        ->native(false),
+                            ->label('Date of Birth')
+                            ->format('Y/m/d')
+                            ->required(),
                         Forms\Components\TextInput::make('place_of_birth')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('civil_status')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('nationality')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('religion')
-                            ->maxLength(255),
+                        Forms\Components\Select::make('civil_status')
+                            ->label('Civil Status')
+                            ->options([
+                                'single' => 'Single',
+                                'married' => 'Married',
+                                'divorce' => 'Divorce',
+                                'widower' => 'Widower',
+                            ])
+                            ->searchable()
+                            ->required(),
+                        Forms\Components\Select::make('nationality')
+                            ->options([
+                                'filipino' => 'Filipino',
+                                'american' => 'American',
+                            ])
+                            ->searchable()
+                            ->required(),
+                        Forms\Components\Select::make('religion')
+                            ->options([
+                                'Roman Catholic' => 'Roman Catholic',
+                                'Islam' => 'Islam',
+                                'Iglesia ni Cristo' => 'Iglesia ni Cristo',
+                                'Philippine Independent Church' => 'Philippine Independent Church',
+                                'Seventh-day Adventist' => 'Seventh-day Adventist',
+                                'Bible Baptist Church' => 'Bible Baptist Church',
+                                'United Church of Christ in the Philippines' => 'United Church of Christ in the Philippines',
+                                'Jehovah\'s Witnesses' => 'Jehovah\'s Witnesses',
+                                'Church of Christ' => 'Church of Christ',
+                                'Others' => 'Others',
+                            ])
+                            ->required()
+                            ->searchable(),
                         Forms\Components\TextInput::make('contact_number')
                             ->label('Contact Number')
-                            ->maxLength(255),
+                            ->tel()
+                            
+                            ->maxLength(255)
+                            ->required(),
                         Forms\Components\TextInput::make('height')
-                            ->maxLength(255),
+                            ->label('Height(cm)')
+                            ->numeric()
+                            ->inputMode('decimal'),
                         Forms\Components\TextInput::make('weight')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('bloodtype')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('ethnicity')
-                            ->maxLength(255),
-                        
-                        
+                            ->label('Weight(kg)')
+                            ->numeric()
+                            ->inputMode('decimal'),
+                        Forms\Components\Select::make('bloodtype')
+                            ->options([
+                                'A+' => 'A+',
+                                'A-' => 'A-',
+                                'B+' => 'B+',
+                                'B-' => 'B-',
+                                'AB+' => 'AB+',
+                                'AB-' => 'AB-',
+                                'O+' => 'O+',
+                                'O-' => 'O-',
+                            ])
+                            ->required()
+                            ->searchable(),
+                        Forms\Components\Select::make('ethnicity')
+                            ->options([
+                                'Cebuano' => 'A+',
+                                'Ilonggo' => 'A-',
+                                'Tagalog' => 'B+',
+                                'Ilocano' => 'B-',
+                                'Bisaya' => 'AB+',
+                            ])
+                            ->required()
+                            ->searchable(),
+                        Checkbox::make('active_student')
+                        ->inline(false),
                     ])
                     ->icon('heroicon-m-user')
                     ->columns(3),
@@ -192,28 +253,6 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('emergency_mobile')
                             ->maxLength(255),
                     ])->columns(2),
-                    Wizard\Step::make('Login Details')
-                    ->schema([
-                        Fieldset::make('User Details')
-                        ->relationship('user')
-                        ->schema([
-                            Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('password')
-                            ->password()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('role')
-                            ->default(User::ROLE_STUDENT)
-                            ->required(),
-                        
-                        ]),
-                    ])->columns(2)
                 ])
                 ->columnSpan('full')
                 ->skippable()
@@ -224,12 +263,20 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('enrollment_status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
-                    'pre-enrolled' => 'info',
-                    'reviewing' => 'warning',
-                    'enrolled' => 'success',
+                    'Enrolled' => 'success',
+                    'Pre-Enrolled' => 'gray',
+                    'Reviewing' => 'warning',
+                }),
+
+                Tables\Columns\TextColumn::make('student_status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'New Student' => 'success',
+                    'Transferee' => 'warning',
+                    'Old Student' => 'info',
                 }),
                 Tables\Columns\TextColumn::make('student_id')
                     ->label('Student ID No.')
@@ -252,10 +299,17 @@ class StudentResource extends Resource
                 Tables\Filters\SelectFilter::make('level')
                 ->relationship('level', 'level')
                 ->preload(),
-                Tables\Filters\SelectFilter::make('status')
+                Tables\Filters\SelectFilter::make('student_status')
                 ->options([
-                    'pre-enrolled' => 'Pre-Enrolled',
-                    'enrolled' => 'Enrolled',
+                    'New Student' => 'New Student',
+                    'Transferee' => 'Transferee',
+                    'Old Student' => 'Old Student'
+                ]),
+                Tables\Filters\SelectFilter::make('enrollment_status')
+                ->options([
+                    'Enrolled' => 'Enrolled',
+                    'Pre-Enrolled' => 'Pre-Enrolled',
+                    'Reviewing' => 'Reviewing',
                 ])
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(3)
@@ -277,7 +331,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-           
+            RelationManagers\UsersRelationManager::class,
         ];
     }
     

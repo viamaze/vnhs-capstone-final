@@ -12,10 +12,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Student extends Model
 {
     use HasFactory;
+    
+    protected $casts = [
+        'active_student' => 'boolean',
+    ];
 
-    public function user(): BelongsTo
+    public function users(): hasMany
     {
-        return $this->BelongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 
     public function level(): BelongsTo
@@ -37,4 +41,6 @@ class Student extends Model
     {
         return $this->BelongsTo(Barangay::class);
     }
+
+
 }

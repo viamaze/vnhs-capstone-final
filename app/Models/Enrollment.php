@@ -37,5 +37,4 @@ class Enrollment extends Model
         return $this->BelongsTo(User::class);
     }
 
-    
 }

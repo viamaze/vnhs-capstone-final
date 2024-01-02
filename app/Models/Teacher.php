@@ -46,8 +46,8 @@ class Teacher extends Model
         return $this->BelongsTo(Advisory::class);
     }
 
-    public function user(): BelongsTo
+    public function users(): hasMany
     {
-        return $this->BelongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }

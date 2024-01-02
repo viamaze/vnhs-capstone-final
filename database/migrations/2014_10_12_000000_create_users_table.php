@@ -18,6 +18,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('ADMIN');
+            $table->foreignId('student_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('teacher_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
