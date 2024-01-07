@@ -16,10 +16,14 @@ return new class extends Migration
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
             $table->string('school_year')->nullable();
-            $table->foreignId('student_id')->nullable()->nullOnDelete()->constrained();
-            $table->foreignId('level_id')->nullable()->nullOnDelete()->constrained();
-            $table->foreignId('specialization_id')->nullable()->nullOnDelete()->constrained();
-            $table->foreignId('section_id')->nullable()->nullOnDelete()->constrained();
+            $table->foreignId('student_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('level_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('specialization_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('section_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
       
         });

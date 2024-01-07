@@ -15,31 +15,37 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubjectResource extends Resource
 {
-    protected static ?string $model = User::class;
+    // protected static ?string $model = User::class;
 
     protected static ?string $modelLabel = 'Subjects';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getEloquentQuery(): Builder
+/*     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->join('students', 'users.student_id', '=', 'students.id')->join('enrollments', 'users.student_id', '=', 'enrollments.student_id')->select('enrollments.*', 'students.*','users.*')->where('users.id', auth()->id());
-    }
+        return parent::getEloquentQuery()->join('students', 'users.student_id', '=', 'students.id')->join('enrollments', 'users.student_id', '=', 'enrollments.student_id')->join('schedules', 'enrollments.section_id', '=', 'schedules.section_id')->join('schedule_items', 'schedules.id', '=', 'schedule_items.schedule_id')->join('subjects', 'schedule_items.subject_id', '=', 'subjects.id')->join('teachers', 'subjects.teacher_id', '=', 'teachers.id')->select('enrollments.*', 'students.*','users.*', 'schedules.*', 'schedule_items.*', 'subjects.*', 'teachers.*')->where('users.id', auth()->id());
+    } */
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(User::query()->join('students', 'users.student_id', '=', 'students.id')->join('enrollments', 'users.student_id', '=', 'enrollments.student_id')->join('schedules', 'enrollments.section_id', '=', 'schedules.section_id')->join('schedule_items', 'schedules.id', '=', 'schedule_items.schedule_id')->join('subjects', 'schedule_items.subject_id', '=', 'subjects.id')->join('teachers', 'subjects.teacher_id', '=', 'teachers.id')->select('enrollments.*', 'students.*','users.*', 'schedules.*', 'schedule_items.*', 'subjects.*', 'teachers.*')->where('users.id', auth()->id()))
             ->columns([
+                Tables\Columns\TextColumn::make('subject')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('day')
+                    
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('start_time')
+                    ->listWithLineBreaks()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('end_time')
+                    ->listWithLineBreaks()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('full_name')
+                    ->label('Teacher')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('specialization_id')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('section_id')
-                    ->sortable(),
+
             ])
             ->filters([
                 //
@@ -47,13 +53,17 @@ class SubjectResource extends Resource
             ->actions([
                 
             ])
+            ->headerActions([
+                Action::make('export')
+                ->openUrlInNewTab(),
+                Action::make('print')
+                ->openUrlInNewTab()
+            ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                
             ]);
     }
     

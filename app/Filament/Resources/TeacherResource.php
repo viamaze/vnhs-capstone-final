@@ -179,11 +179,14 @@ class TeacherResource extends Resource
                                 ->preload()
                                 ->live()
                                 ->required(),
+                        Forms\Components\TextInput::make('zip_code')
+                                ->maxLength(255)
+                                ->required(),
                             ])->columns(2),
                             Wizard\Step::make('Emergency Contact')
                             ->schema([
                                 Forms\Components\TextInput::make('emergency_contactperson')
-                                    ->label('Emergency Contact Person')
+                                    ->label('Contact Person')
                                     ->maxLength(255)
                                     ->required(),
                                 Forms\Components\TextInput::make('emergency_address')
@@ -191,7 +194,7 @@ class TeacherResource extends Resource
                                     ->maxLength(255)
                                     ->required(),
                                 Forms\Components\TextInput::make('emergency_mobile')
-                                    ->label('Emergency Mobile Number')
+                                    ->label('Mobile Number')
                                     ->maxLength(255)
                                     ->required(),
                     ]),

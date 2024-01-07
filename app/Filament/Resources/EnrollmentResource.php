@@ -19,11 +19,11 @@ use Filament\Tables\Table;
 use Filament\Forms\Get;
 use Filament\Forms\Components\Wizard;
 use Filament\Tables\Enums\FiltersLayout;
-
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
 
 class EnrollmentResource extends Resource
 {
@@ -38,10 +38,13 @@ class EnrollmentResource extends Resource
             ->schema([
                 
                 Forms\Components\Select::make('school_year')
+                ->label('For School Year')
                 ->options([
                     '2023-2024' => '2023-2024',
                     '2024-2025' => '2024-2025',
+                    '2025-2026' => '2025-2026',
                     '2026-2027' => '2026-2027',
+                    '2027-2028' => '2027-2028'
                 ]),
                 
                 Forms\Components\Select::make('level_id')
@@ -55,6 +58,7 @@ class EnrollmentResource extends Resource
                     ->options(fn (Get $get): Collection =>Student::query()
                     ->where('level_id', $get('level_id'))
                     ->where('enrollment_status', 'enrolled')
+                    ->where('active_student', 1)
                     ->pluck('full_name', 'id'))
                     ->label('Student')
                         ->preload()
@@ -77,6 +81,27 @@ class EnrollmentResource extends Resource
                             ->preload()
                             ->live()
                             ->required(),
+            ]);
+    }
+    
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('student.student_id')
+                ->label('Student ID No.')
+                ->badge()
+                ->color('success'),
+                TextEntry::make('school_year')
+                ->label('School Year'),
+                TextEntry::make('level.level')
+                ->label('Grade Level'),
+                TextEntry::make('student.full_name')
+                ->label('Full Name'),
+                TextEntry::make('section.section')
+                ->columnSpan(2),
+                TextEntry::make('specialization.specialization')
+                ->columnSpan(2),
             ]);
     }
 
@@ -140,7 +165,8 @@ class EnrollmentResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
+
     public static function getRelations(): array
     {
         return [
@@ -153,6 +179,7 @@ class EnrollmentResource extends Resource
         return [
             'index' => Pages\ListEnrollments::route('/'),
             'create' => Pages\CreateEnrollment::route('/create'),
+            'view' => Pages\ViewEnrollment::route('/{record}'),
             'edit' => Pages\EditEnrollment::route('/{record}/edit'),
         ];
     }

@@ -16,7 +16,7 @@ use Illuminate\Support\Carbon;
 class CreateStudent extends Component implements HasForms
 {
     use InteractsWithForms;
-    public $status = 'pre-enrolled', $student_id;
+    public $enrollment_status = 'Pre-Enrolled', $student_status = 'New Student', $student_id;
 
     public ?array $data = [];
 
@@ -39,10 +39,12 @@ class CreateStudent extends Component implements HasForms
                                 ->relationship('level', 'level'),
                             Forms\Components\TextInput::make('student_id')
                                 ->maxLength(255)
-                                ->default($this->student_id),
-                            Forms\Components\TextInput::make('status')
-                                ->maxLength(255)
-                                ->default($this->status),
+                                ->default($this->student_id)
+                                ->readOnly(),
+                            Forms\Components\Hidden::make('student_status')
+                                ->default($this->student_status),
+                            Forms\Components\Hidden::make('enrollment_status')
+                                ->default($this->enrollment_status),
                             Forms\Components\TextInput::make('lastname')
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('firstname')
@@ -51,7 +53,7 @@ class CreateStudent extends Component implements HasForms
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('mi')
                                 ->maxLength(255),
-                            Forms\Components\TextInput::make('ext')
+                            Forms\Components\TextInput::make('suffix')
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('gender')
                                 ->maxLength(255),
@@ -96,8 +98,6 @@ class CreateStudent extends Component implements HasForms
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('father_middle_name')
                                 ->maxLength(255),
-                            Forms\Components\TextInput::make('father_ext')
-                                ->maxLength(255),
                             Forms\Components\DatePicker::make('father_dob'),
                             Forms\Components\TextInput::make('father_occupation')
                                 ->maxLength(255),
@@ -116,8 +116,6 @@ class CreateStudent extends Component implements HasForms
                             Forms\Components\TextInput::make('mother_first_name')
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('mother_middle_name')
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('mother_ext')
                                 ->maxLength(255),
                             Forms\Components\DatePicker::make('mother_dob'),
                             Forms\Components\TextInput::make('mother_occupation')

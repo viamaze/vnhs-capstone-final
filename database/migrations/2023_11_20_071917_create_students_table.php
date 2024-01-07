@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->boolean('active_student');
+            $table->boolean('active_student')->nullable();
             $table->string('student_id')->nullable();
             $table->string('student_status')->nullable();
             $table->string('enrollment_status')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('mi')->nullable();
-            $table->string('ext')->nullable();
+            $table->string('suffix')->nullable();
             $table->string('gender')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('place_of_birth')->nullable();
@@ -38,14 +38,13 @@ return new class extends Migration
             $table->string('bloodtype')->nullable();
             $table->string('ethnicity')->nullable();
             $table->string('address')->nullable();
-            $table->string('province')->nullable();
-            $table->string('municipality')->nullable();
-            $table->string('barangay')->nullable();
+            $table->foreignId('barangay_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('municipality_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('province_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('zipcode')->nullable();
             $table->string('father_last_name')->nullable();
             $table->string('father_first_name')->nullable();
             $table->string('father_middle_name')->nullable();
-            $table->string('father_ext')->nullable();
             $table->date('father_dob')->nullable();
             $table->string('father_occupation')->nullable();
             $table->string('father_monthlyincome')->nullable();
@@ -56,7 +55,6 @@ return new class extends Migration
             $table->string('mother_last_name')->nullable();
             $table->string('mother_first_name')->nullable();
             $table->string('mother_middle_name')->nullable();
-            $table->string('mother_ext')->nullable();
             $table->date('mother_dob')->nullable();
             $table->string('mother_occupation')->nullable();
             $table->string('mother_monthlyincome')->nullable();

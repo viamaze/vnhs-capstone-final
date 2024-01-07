@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Forms\Components\Textarea;
 
 class SpecializationResource extends Resource
 {
@@ -33,9 +34,7 @@ class SpecializationResource extends Resource
                 Forms\Components\TextInput::make('specialization')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Textarea::make('description'),
             ]);
     }
 
@@ -45,12 +44,12 @@ class SpecializationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('specialization_code')
                     ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('specialization')
-                    ->searchable()
                     ->sortable()
                     ->badge()
                     ->color('success'),
+                Tables\Columns\TextColumn::make('specialization')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //

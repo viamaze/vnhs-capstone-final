@@ -99,12 +99,57 @@ class ScheduleResource extends Resource
                                         '6:00AM' => '6:00AM',
                                         '6:30AM' => '6:30AM',
                                         '7:00AM' => '7:00AM',
+                                        '7:30AM' => '7:30AM',
+                                        '8:00AM' => '8:00AM',
+                                        '8:30AM' => '8:30AM',
+                                        '9:00AM' => '9:00AM',
+                                        '9:30AM' => '9:30AM',
+                                        '10:00AM' => '10:00AM',
+                                        '10:30AM' => '10:30AM',
+                                        '11:00AM' => '11:00AM',
+                                        '11:30AM' => '11:30AM',
+                                        '12:00PM' => '12:00PM',
+                                        '12:30PM' => '12:30PM',
+                                        '1:00PM' => '1:00PM',
+                                        '1:30PM' => '1:30PM',
+                                        '2:00PM' => '2:00PM',
+                                        '2:30PM' => '2:30PM',
+                                        '3:00PM' => '3:00PM',
+                                        '3:30PM' => '3:30PM',
+                                        '4:00PM' => '4:00PM',
+                                        '4:30PM' => '4:30PM',
+                                        '5:00PM' => '5:00PM',
+                                        '5:30PM' => '5:30PM',
+                                        '6:00PM' => '6:00PM',
+
                                 ]),
                                 Select::make('end_time')
                                     ->options([
                                         '6:00AM' => '6:00AM',
                                         '6:30AM' => '6:30AM',
                                         '7:00AM' => '7:00AM',
+                                        '7:30AM' => '7:30AM',
+                                        '8:00AM' => '8:00AM',
+                                        '8:30AM' => '8:30AM',
+                                        '9:00AM' => '9:00AM',
+                                        '9:30AM' => '9:30AM',
+                                        '10:00AM' => '10:00AM',
+                                        '10:30AM' => '10:30AM',
+                                        '11:00AM' => '11:00AM',
+                                        '11:30AM' => '11:30AM',
+                                        '12:00PM' => '12:00PM',
+                                        '12:30PM' => '12:30PM',
+                                        '1:00PM' => '1:00PM',
+                                        '1:30PM' => '1:30PM',
+                                        '2:00PM' => '2:00PM',
+                                        '2:30PM' => '2:30PM',
+                                        '3:00PM' => '3:00PM',
+                                        '3:30PM' => '3:30PM',
+                                        '4:00PM' => '4:00PM',
+                                        '4:30PM' => '4:30PM',
+                                        '5:00PM' => '5:00PM',
+                                        '5:30PM' => '5:30PM',
+                                        '6:00PM' => '6:00PM',
                                 ]),
                         ])
                         ->columns(4)
@@ -126,9 +171,8 @@ class ScheduleResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('scheduleItems.subject.subject')
                     ->listWithLineBreaks(),
-                
                 ViewColumn::make('Day')->view('tables.columns.subject-viewer'),
-             
+                
                 Tables\Columns\TextColumn::make('scheduleItems.start_time')
                     ->label('Start Time')
                     ->listWithLineBreaks(),

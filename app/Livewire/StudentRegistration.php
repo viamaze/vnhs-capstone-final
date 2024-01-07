@@ -16,9 +16,9 @@ class StudentRegistration extends Component
 
     public $currentStep = 1, $successMessage = '', $student_status = 'New Student', $enrollment_status = 'Pre-Enrolled';
 
-    public $student_id, $level_id, $lastname, $firstname, $middlename, $mi, $ext, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province, $municipality, $barangay, $zipcode;
+    public $student_id, $level_id, $lastname, $firstname, $middlename, $mi, $suffix, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province_id, $municipality_id, $barangay_id, $zipcode;
 
-    public $father_last_name, $father_first_name, $father_middle_name, $father_ext, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_ext, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
+    public $father_last_name, $father_first_name, $father_middle_name, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
     public $emergency_contact_person, $emergency_address, $emergency_mobile;
     
@@ -55,7 +55,6 @@ class StudentRegistration extends Component
             'level_id' => 'required',
             'lastname' => 'required',
             'firstname' => 'required',
-            'ext' => 'required',
             'gender' => 'required',
             'date_of_birth' => 'required',
             'place_of_birth' => 'required',
@@ -69,9 +68,9 @@ class StudentRegistration extends Component
             'bloodtype' => 'required',
             'ethnicity' => 'required',
             'address' => 'required',
-            'province' => 'required',
-            'municipality' => 'required',
-            'barangay' => 'required',
+            'province_id' => 'required',
+            'municipality_id' => 'required',
+            'barangay_id' => 'required',
             'zipcode' => 'required',
         ]);
         $this->currentStep = 2;
@@ -84,7 +83,6 @@ class StudentRegistration extends Component
             'father_last_name' => 'required',
             'father_first_name' => 'required',
             'father_middle_name' => 'required',
-            'father_ext' => 'required',
             'father_dob' => 'required',
             'father_occupation' => 'required',
             'father_monthlyincome' => 'required',
@@ -95,7 +93,6 @@ class StudentRegistration extends Component
             'mother_last_name' => 'required',
             'mother_first_name' => 'required',
             'mother_middle_name' => 'required',
-            'mother_ext' => 'required',
             'mother_dob' => 'required',
             'mother_occupation' => 'required',
             'mother_monthlyincome' => 'required',
@@ -127,7 +124,7 @@ class StudentRegistration extends Component
             'firstname' => $this->firstname,
             'middlename' => $this->middlename,
             'mi' => $this->mi,
-            'ext' => $this->ext,
+            'suffix' => $this->suffix,
             'gender' => $this->gender,
             'date_of_birth' => $this->date_of_birth,
             'place_of_birth' => $this->place_of_birth,
@@ -140,15 +137,14 @@ class StudentRegistration extends Component
             'bloodtype' => $this->bloodtype,
             'ethnicity' => $this->ethnicity,
             'address' => $this->address,
-            'province' => $this->province,
-            'municipality' => $this->municipality,
-            'barangay' => $this->barangay,
+            'province_id' => $this->province_id,
+            'municipality_id' => $this->municipality_id,
+            'barangay_id' => $this->barangay_id,
             'zipcode' => $this->zipcode,
 
             'father_last_name' => $this->father_last_name,
             'father_first_name' => $this->father_first_name,
             'father_middle_name' => $this->father_middle_name,
-            'father_ext' => $this->father_ext,
             'father_dob' => $this->father_dob,
             'father_occupation' => $this->father_occupation,
             'father_monthlyincome' => $this->father_monthlyincome,
@@ -159,7 +155,6 @@ class StudentRegistration extends Component
             'mother_last_name' => $this->mother_last_name,
             'mother_first_name' => $this->mother_first_name,
             'mother_middle_name' => $this->mother_middle_name,
-            'mother_ext' => $this->mother_ext,
             'mother_dob' => $this->mother_dob,
             'mother_occupation' => $this->mother_occupation,
             'mother_monthlyincome' => $this->mother_monthlyincome,
@@ -196,7 +191,7 @@ class StudentRegistration extends Component
         $this->firstname = '';
         $this->middlename = '';
         $this->mi = '';
-        $this->ext = '';
+        $this->suffix = '';
         $this->gender = '';
         $this->date_of_birth = '';
         $this->civil_status = '';
@@ -209,14 +204,13 @@ class StudentRegistration extends Component
         $this->bloodtype = '';
         $this->ethnicity = '';
         $this->address = '';
-        $this->province = '';
-        $this->municipality = '';
-        $this->barangay = '';
+        $this->province_id = '';
+        $this->municipality_id = '';
+        $this->barangay_id = '';
         $this->zipcode = '';
         $this->father_last_name = '';
         $this->father_first_name = '';
         $this->father_middle_name = '';
-        $this->father_ext = '';
         $this->father_dob = '';
         $this->father_occupation = '';
         $this->father_monthlyincome = '';
@@ -227,7 +221,6 @@ class StudentRegistration extends Component
         $this->mother_last_name = '';
         $this->mother_first_name = '';
         $this->mother_middle_name = '';
-        $this->mother_ext = '';
         $this->mother_dob = '';
         $this->mother_occupation = '';
         $this->mother_monthlyincome = '';

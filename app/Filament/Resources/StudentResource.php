@@ -28,7 +28,13 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Hidden;
-
+use Filament\Forms\Components\Radio;
+use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Forms\Get;
+use Illuminate\Support\Collection;
+use App\Models\Municipality;
+use App\Models\Barangay;
+use Filament\Forms\Components\Section;
 
 class StudentResource extends Resource
 {
@@ -48,28 +54,39 @@ class StudentResource extends Resource
                 Forms\Components\Wizard::make([
                     Wizard\Step::make('Student Information')
                     ->schema([
-                        Forms\Components\Select::make('student_status')
-                        ->options([
-                            'New Student' => 'New Student',
-                            'Transferee' => 'Transferee',
-                            'Old Student' => 'Old Student',
-                        ]),
-                        Forms\Components\Select::make('enrollment_status')
-                        ->options([
-                            'Enrolled' => 'Enrolled',
-                            'Pre-Enrolled' => 'Pre-Enrolled',
-                            'Reviewing' => 'Reviewing',
-                        ]),
                         Forms\Components\TextInput::make('student_id')
                         ->default($student_id)
-                        ->label('Student ID')
-                        ->maxLength(255),
+                        ->label('Student ID Number')
+                        ->maxLength(255)
+                        ->readonly(),
+
                         Forms\Components\Select::make('level_id')
                         ->relationship(name: 'level', titleAttribute: 'level')
                         ->label('Grade Level')
                             ->preload()
                             ->live()
                             ->required(),
+
+                        Radio::make('student_status')
+                        ->label('Student Status')
+                        ->options([
+                            'New Student' => 'New Student',
+                            'Transferee' => 'Transferee',
+                            'Old Student' => 'Old Student',
+                        ]),
+                        Radio::make('enrollment_status')
+                        ->label('Enrollment Status')
+                        ->options([
+                            'Enrolled' => 'Enrolled',
+                            'Pre-Enrolled' => 'Pre-Enrolled',
+                            'Reviewing' => 'Reviewing',
+                        ]),
+                        Checkbox::make('active_student')->inline(false),
+                    ])
+                    ->icon('heroicon-m-user')
+                    ->columns(2),
+                    Wizard\Step::make('Personal Data Information')
+                    ->schema([
                         Forms\Components\TextInput::make('firstname')
                             ->label('First Name')
                             ->maxLength(255),
@@ -82,7 +99,7 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('mi')
                             ->label('Middle Initial')
                             ->maxLength(255),
-                        Forms\Components\Select::make('ext')
+                        Forms\Components\Select::make('suffix')
                             ->label('Suffix')
                             ->options([
                                 'Jr.' => 'Jr.',
@@ -93,8 +110,8 @@ class StudentResource extends Resource
                             ]),
                         Forms\Components\Select::make('gender')
                             ->options([
-                                'male' => 'Male',
-                                'female' => 'Female',
+                                'Male' => 'Male',
+                                'Female' => 'Female',
                             ]),
                         Forms\Components\DatePicker::make('date_of_birth')
                             ->label('Date of Birth')
@@ -105,19 +122,17 @@ class StudentResource extends Resource
                         Forms\Components\Select::make('civil_status')
                             ->label('Civil Status')
                             ->options([
-                                'single' => 'Single',
-                                'married' => 'Married',
-                                'divorce' => 'Divorce',
-                                'widower' => 'Widower',
+                                'Single' => 'Single',
+                                'Married' => 'Married',
+                                'Divorce' => 'Divorce',
+                                'Widower' => 'Widower',
                             ])
-                            ->searchable()
                             ->required(),
                         Forms\Components\Select::make('nationality')
                             ->options([
-                                'filipino' => 'Filipino',
-                                'american' => 'American',
+                                'Filipino' => 'Filipino',
+                                'American' => 'American',
                             ])
-                            ->searchable()
                             ->required(),
                         Forms\Components\Select::make('religion')
                             ->options([
@@ -132,12 +147,12 @@ class StudentResource extends Resource
                                 'Church of Christ' => 'Church of Christ',
                                 'Others' => 'Others',
                             ])
-                            ->required()
                             ->searchable(),
                         Forms\Components\TextInput::make('contact_number')
                             ->label('Contact Number')
+                            ->mask('+63999-999-9999')
+                            ->placeholder('+639XX-XXX-XXXX')
                             ->tel()
-                            
                             ->maxLength(255)
                             ->required(),
                         Forms\Components\TextInput::make('height')
@@ -163,94 +178,140 @@ class StudentResource extends Resource
                             ->searchable(),
                         Forms\Components\Select::make('ethnicity')
                             ->options([
-                                'Cebuano' => 'A+',
-                                'Ilonggo' => 'A-',
-                                'Tagalog' => 'B+',
-                                'Ilocano' => 'B-',
-                                'Bisaya' => 'AB+',
+                                'Cebuano' => 'Cebuano',
+                                'Ilonggo' => 'Ilonggo',
+                                'Tagalog' => 'Tagalog',
+                                'Ilocano' => 'Ilocano',
+                                'Bisaya' => 'Bisaya',
                             ])
                             ->required()
                             ->searchable(),
-                        Checkbox::make('active_student')
-                        ->inline(false),
                     ])
                     ->icon('heroicon-m-user')
                     ->columns(3),
                     Wizard\Step::make('Address')
                     ->schema([
                         Forms\Components\TextInput::make('address')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('province')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('municipality')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('barangay')
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->required(),
+                            Forms\Components\Select::make('province_id')
+                        ->relationship(name: 'province', titleAttribute: 'province')
+                            ->preload()
+                            ->live()
+                            ->required(),
+                        Forms\Components\Select::make('municipality_id')
+                            ->relationship(name: 'municipality', titleAttribute: 'municipality')
+                                ->label('Municipality')
+                                ->options(fn (Get $get): Collection =>Municipality::query()
+                                ->where('province_id', $get('province_id'))
+                                ->pluck('municipality', 'id'))
+                                ->preload()
+                                ->live()
+                                ->required(),
+                        Forms\Components\Select::make('barangay_id')
+                                ->relationship(name: 'barangay', titleAttribute: 'barangay')
+                                ->label('Barangay')
+                                ->options(fn (Get $get): Collection =>Barangay::query()
+                                ->where('municipality_id', $get('municipality_id'))
+                                ->pluck('barangay', 'id'))
+                                ->preload()
+                                ->live()
+                                ->required(),
                         Forms\Components\TextInput::make('zipcode')
                             ->maxLength(255),
                     ])->icon('heroicon-m-map')
                     ->columns(3),
-                    Wizard\Step::make('Parents Information')
+                    Wizard\Step::make('Parent/Guardian Information')
                     ->schema([
-                        Forms\Components\TextInput::make('father_last_name')
-                        ->label('Father Last Name')
-                        ->maxLength(255),
-                        Forms\Components\TextInput::make('father_first_name')
-                        ->label('Father First Name')
+                        Section::make('Father\'s Information')
+                        ->schema([
+                            Forms\Components\TextInput::make('father_last_name')
+                            ->label('Father\'s Last Name')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('father_middle_name')
-                            ->label('Father Middle Name')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make
-                        ('father_ext')
-                        ->label('Extension(\'Sr\', \'Jr\')')
-                            ->maxLength(255),
-                        Forms\Components\DatePicker::make('father_dob')
-                        ->label('Date of Birth'),
-                        Forms\Components\TextInput::make('father_occupation')
-                        ->label('Occupation')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('father_monthlyincome')
-                        ->label('Monthly Income')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('father_yearlycomp')
-                        ->label('Yearly Compensation')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('father_contactno')
-                        ->label('Contact Number')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('father_educational')
-                        ->label('Educational Attainment')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_last_name')
-                        ->label('Mother Last Name')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_first_name')
-                        ->label('Mother First Name')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_middle_name')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_ext')
-                            ->maxLength(255),
-                        Forms\Components\DatePicker::make('mother_dob'),
-                        Forms\Components\TextInput::make('mother_occupation')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_monthlyincome')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_yearlycomp')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_contactno')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('mother_educational')
-                            ->maxLength(255),
+                            Forms\Components\TextInput::make('father_first_name')
+                            ->label('Father\'s First Name')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('father_middle_name')
+                                ->label('Father\'s Middle Name')
+                                ->maxLength(255),
+                            Forms\Components\DatePicker::make('father_dob')
+                            ->label('Date of Birth'),
+                            Forms\Components\TextInput::make('father_occupation')
+                            ->label('Occupation')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('father_monthlyincome')
+                            ->label('Monthly Income')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('father_yearlycomp')
+                            ->label('Yearly Compensation')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('father_contactno')
+                                ->label('Contact Number')
+                                ->mask('+63999-999-9999')
+                                ->placeholder('+639XX-XXX-XXXX')
+                                ->maxLength(255),
+                            Forms\Components\Select::make('father_educational')
+                            ->label('Educational Attainment')
+                             ->options([
+                                'College Graduate' => 'College Graduate',
+                                'College Undergraduate' => 'College Undergraduate',
+                                'Highschool Graduate' => 'Highschool Graduate',
+                                'Highschool Undergraduate' => 'Highschool Undergraduate',
+                                'Elementary Graduate' => 'Elementary Graduate',
+                                'Elementary Undergraduate' => 'Elementary Undergraduate',
+                                'Others' => 'Others',
+                                ]),
+                        ])
+                        ->columns(2),
+                        Section::make('Mother Information')
+                            ->schema([
+                                Forms\Components\TextInput::make('mother_last_name')
+                            ->label('Mother\'s Last Name')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('mother_first_name')
+                            ->label('Mother\'s First Name')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('mother_middle_name')
+                            ->label('Mother\'s Middle Name')
+                                ->maxLength(255),
+                            Forms\Components\DatePicker::make('mother_dob')
+                            ->label('Date of Birth'),
+                            Forms\Components\TextInput::make('mother_occupation')
+                            ->label('Occupation')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('mother_monthlyincome')
+                            ->label('Monthly Income')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('mother_yearlycomp')
+                            ->label('Yearly Compensation')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('mother_contactno')
+                            ->label('Contact Number')
+                            ->mask('+63999-999-9999')
+                            ->placeholder('+639XX-XXX-XXXX')
+                                ->maxLength(255),
+                            Forms\Components\Select::make('mother_educational')
+                            ->label('Educational Attainment')
+                             ->options([
+                                'College Graduate' => 'College Graduate',
+                                'College Undergraduate' => 'College Undergraduate',
+                                'Highschool Graduate' => 'Highschool Graduate',
+                                'Highschool Undergraduate' => 'Highschool Undergraduate',
+                                'Elementary Graduate' => 'Elementary Graduate',
+                                'Elementary Undergraduate' => 'Elementary Undergraduate',
+                                'Others' => 'Others',
+                                ]),
+                            ])->columns(2)
                     ])->columns(2),
-                    Wizard\Step::make('Emergency Contact')
+                    Wizard\Step::make('Emergency Contact Details')
                     ->schema([
                         Forms\Components\TextInput::make('emergency_contact_person')
                         ->maxLength(255),
                         Forms\Components\TextInput::make('emergency_address')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('emergency_mobile')
+                            ->mask('+63999-999-9999')
+                            ->placeholder('+639XX-XXX-XXXX')
                             ->maxLength(255),
                     ])->columns(2),
                 ])
@@ -293,6 +354,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('level.level')
                     ->label('Grade Level')
                     ->searchable(),
+                CheckboxColumn::make('active_student'),
                 
             ])
             ->filters([
@@ -300,19 +362,27 @@ class StudentResource extends Resource
                 ->relationship('level', 'level')
                 ->preload(),
                 Tables\Filters\SelectFilter::make('student_status')
+                ->label('Student Status')
                 ->options([
                     'New Student' => 'New Student',
                     'Transferee' => 'Transferee',
                     'Old Student' => 'Old Student'
                 ]),
                 Tables\Filters\SelectFilter::make('enrollment_status')
+                ->label('Enrollment Status')
                 ->options([
                     'Enrolled' => 'Enrolled',
                     'Pre-Enrolled' => 'Pre-Enrolled',
                     'Reviewing' => 'Reviewing',
+                ]),
+                Tables\Filters\SelectFilter::make('active_student')
+                ->label('Status')
+                ->options([
+                    '1' => 'Active',
+                    '0' => 'Inactive',
                 ])
             ], layout: FiltersLayout::AboveContent)
-            ->filtersFormColumns(3)
+            ->filtersFormColumns(4)
             ->actions([
                     ViewAction::make(),
                     EditAction::make(),
@@ -348,4 +418,5 @@ class StudentResource extends Resource
     {
         return static::getModel()::count();
     }
+
 }

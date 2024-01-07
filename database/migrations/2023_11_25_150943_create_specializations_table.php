@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('specialization_code')->nullable();
             $table->string('specialization')->nullable();
-            $table->string('description')->nullable();
-            $table->timestamps();
+            $table->longText('description')->nullable();
         });
     }
 

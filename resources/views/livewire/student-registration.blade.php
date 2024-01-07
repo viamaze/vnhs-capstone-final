@@ -30,7 +30,7 @@
             <div class="grid grid-cols-4">
 
                 <div class="mb-6 px-2">
-                    <label for="level_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade Level</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade Level</label>
                     <select wire:model="level_id" name="level_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Select Grade Level</option>
                         @foreach($levels as $level)
@@ -47,7 +47,7 @@
             <div class="grid grid-cols-4">
                 
                 <div class="mb-6 px-2">
-                        <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
                         <input type="text" wire:model="firstname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('firstname') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -56,7 +56,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="middlename" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middle Name</label>
                         <input type="text" wire:model="middlename" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('middlename') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -65,7 +65,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
                         <input type="text" wire:model="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('lastname') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="mb-6 px-2">
-                    <label for="mi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">MI</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">M.I.</label>
                     <input type="text" wire:model="mi" maxlength="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('mi') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -89,9 +89,16 @@
 
 
                 <div class="mb-6 px-2">
-                    <label for="ext" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ext.</label>
-                    <input type="text" wire:model="ext" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('ext') 
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Suffix</label>
+                    <select wire:model="suffix" name="suffix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Select Suffix</option>
+                        <option value="Jr.">Jr.</option>
+                        <option value="Sr.">Sr.</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>    
+                    </select>
+                    @error('suffix') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
@@ -100,13 +107,13 @@
                 </div>
 
                 <div class="mb-6 px-2">
-                    <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status</label>
                     <select wire:model="civil_status" name="civil_status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Select Civil Status</option>
-                        <option value="Single" selected>Single</option>
-                        <option value="Single">Married</option>
-                        <option value="Single">Divorce</option>
-                        <option value="Single">Widower</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorce">Divorce</option>
+                        <option value="Widower">Widower</option>
                     </select>
                     @error('civil_status') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -116,7 +123,7 @@
                 </div>
 
                 <div class="mb-6 px-2">
-                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
                     
                     <select wire:model="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Select Gender</option>
@@ -133,9 +140,9 @@
             </div>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                        <label for="date_of_birth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
 
-                        <input type="date" placeholder="dd-mm-yyyy" min="1980-01-01" max="2023-12-31" wire:model="date_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" min="1980-01-01" max="2023-12-31" wire:model="date_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('date_of_birth') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
@@ -143,7 +150,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                    <label for="place_of_birth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth</label>
                     <input type="text" wire:model="place_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('place_of_birth') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -156,7 +163,7 @@
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
                         <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality</label>
-                        <select wire:model="nationality" name="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="nationality" wire:model="nationality" name="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Nationality</option>
                             <option value="Filipino">Filipino</option>
                             <option value="American">American</option>
@@ -171,7 +178,7 @@
                 <div class="mb-6 px-2">
                         <label for="religion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Religion</label>
 
-                        <select wire:model="religion" name="religion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="religion" wire:model="religion" name="religion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Religion</option>
                             <option value="Roman Catholic">Roman Catholic</option>
                             <option value="Baptist">Baptist</option>
@@ -187,7 +194,7 @@
                 </div>
                 <div class="mb-6 px-2">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
-                        <input type="email" wire:model="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input id="email" type="email" wire:model="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('email') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
@@ -225,7 +232,7 @@
                 </div>
                 <div class="mb-6 px-2">
                         <label for="bloodtype" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blood Type</label>
-                        <select wire:model="bloodtype" name="bloodtype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="bloodtype" wire:model="bloodtype" name="bloodtype" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Blood Type</option>
                             <option value="Type A">Type A</option>
                             <option value="Type B">Type B</option>
@@ -244,7 +251,7 @@
                 <div class="mb-6 px-2">
                         <label for="ethnicity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ethnicity</label>
                         
-                        <select wire:model="ethnicity" name="ethnicity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="ethnicity" wire:model="ethnicity" name="ethnicity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Ethnicity</option>
                             <option value="Cebuano">Cebuano</option>
                             <option value="Ilonggo">Ilonggo</option>
@@ -270,11 +277,11 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="barangay" name="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay</label>
-                        <select wire:model="barangay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="barangay_id" name="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay</label>
+                        <select id="barangay_id" wire:model="barangay_id" name="barangay_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Barangay</option>
                             @foreach($barangays as $barangay)
-                                <option value="{{ $barangay->barangay }}">{{ $barangay->barangay }}</option>
+                                <option value="{{ $barangay->id }}">{{ $barangay->barangay }}</option>
                             @endforeach
                         </select>
                         @error('barangay') 
@@ -284,12 +291,12 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="municipality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipality</label>
+                        <label for="municipality_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipality</label>
                        
-                        <select wire:model="municipality" name="municipality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="municipality_id" wire:model="municipality_id" name="municipality_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Municipality</option>
                             @foreach($municipalities as $municipality)
-                                <option value="{{ $municipality->municipality }}">{{ $municipality->municipality }}</option>
+                                <option value="{{ $municipality->id }}">{{ $municipality->municipality }}</option>
                             @endforeach
                         </select>
                         @error('municipality') 
@@ -299,14 +306,14 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province</label>
-                        <select wire:model="province" name="province" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="province_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province</label>
+                        <select id="province_id" wire:model="province_id" name="province_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Province</option>
                             @foreach($provinces as $province)
-                                <option value="{{ $province->province }}">{{ $province->province }}</option>
+                                <option value="{{ $province->id }}">{{ $province->province }}</option>
                             @endforeach
                         </select>
-                        @error('province') 
+                        @error('province_id') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
@@ -356,15 +363,6 @@
                         <label for="father_last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
                         <input type="text" wire:model="father_last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('father_last_name')
-                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-bold">{{ $message }}</span> 
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-6 px-2">
-                        <label for="father_ext" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ext</label>
-                        <input type="text" wire:model="father_ext" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('father_ext')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 
                             </div>
@@ -467,15 +465,6 @@
                     <label for="mother_last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
                     <input type="text" wire:model="mother_last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('mother_last_name')
-                        <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            <span class="font-bold">{{ $message }}</span> 
-                        </div>
-                    @enderror
-                </div>
-                <div class="mb-6 px-2">
-                    <label for="mother_ext" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ext</label>
-                    <input type="text" wire:model="mother_ext" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('mother_ext')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>

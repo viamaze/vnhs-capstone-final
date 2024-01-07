@@ -19,6 +19,7 @@ class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_FACULTY = 'FACULTY';
     const ROLE_STUDENT = 'STUDENT';
@@ -89,6 +90,9 @@ class User extends Authenticatable implements FilamentUser
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'day' => 'array',
+        'start_time' => 'array',
+        'end_time' => 'array',
     ];
 
     public function student(): BelongsTo

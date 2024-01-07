@@ -19,15 +19,16 @@ class NumberOfUsers extends BaseWidget
             ->chart([7, 5, 10, 3, 15, 4, 17])
             ->color('success'),
 
-            Stat::make('No. of Students', Student::query()->count())
+            Stat::make('Total No. of Students', Student::query()->count())
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->chart([7, 5, 10, 3, 15, 4, 17])
             ->color('success'),
 
-            Stat::make('No. of Subjects', Subject::query()->count()),
-            Stat::make('No. of Teachers', Teacher::query()->count()),
-            
-
+            Stat::make('No. of Teachers', Teacher::query()->count())
+            ->descriptionIcon('heroicon-m-arrow-trending-up')
+            ->chart([7, 5, 10, 3, 15, 4, 17])
+            ->color('success'),
+  
         ];
     }
 }

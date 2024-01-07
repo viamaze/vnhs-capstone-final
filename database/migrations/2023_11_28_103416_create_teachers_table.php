@@ -31,12 +31,12 @@ return new class extends Migration
             $table->foreignId('barangay_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('municipality_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('province_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('zip_code')->nullable();
             $table->string('emergency_contactperson')->nullable();
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('full_name')->virtualAs('concat(first_name, \' \', middle_name , \' \', last_name)');
             $table->string('remarks')->nullable();
-            //table->foreignId('user_id')->nullable()->nullOnDelete()->constrained();
             $table->foreignId('level_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('department_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();

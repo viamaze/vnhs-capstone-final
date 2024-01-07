@@ -31,7 +31,8 @@ class UsersRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('role')
-                    ->default(User::ROLE_STUDENT)    
+                    ->default(User::ROLE_STUDENT)
+                    ->readOnly()
             ]);
     }
 
