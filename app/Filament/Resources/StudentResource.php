@@ -35,6 +35,7 @@ use Illuminate\Support\Collection;
 use App\Models\Municipality;
 use App\Models\Barangay;
 use Filament\Forms\Components\Section;
+use Illuminate\Support\Facades\Hash;
 
 class StudentResource extends Resource
 {
@@ -314,6 +315,30 @@ class StudentResource extends Resource
                             ->placeholder('+639XX-XXX-XXXX')
                             ->maxLength(255),
                     ])->columns(2),
+                    Wizard\Step::make('Login Details')
+                    ->schema([
+                        Fieldset::make('Login')
+                        ->relationship('user')
+                        ->schema([
+                            Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                            ->dehydrated(fn (?string $state): bool => filled($state))
+                            ->required(fn (string $operation): bool => $operation === 'create'),
+                        Forms\Components\TextInput::make('role')
+                            ->default(User::ROLE_STUDENT)
+                            ->readOnly()
+                            ->required(),
+                        ]),
+                    ])->columns(2),
+                    
                 ])
                 ->columnSpan('full')
                 ->skippable()
@@ -401,7 +426,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\UsersRelationManager::class,
+            
         ];
     }
     

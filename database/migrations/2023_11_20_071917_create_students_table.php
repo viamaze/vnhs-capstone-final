@@ -15,6 +15,7 @@ return new class extends Migration
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean('active_student')->nullable();
             $table->string('student_id')->nullable();
             $table->string('student_status')->nullable();

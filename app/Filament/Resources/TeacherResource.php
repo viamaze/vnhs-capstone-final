@@ -198,6 +198,28 @@ class TeacherResource extends Resource
                                     ->maxLength(255)
                                     ->required(),
                     ]),
+                    Wizard\Step::make('User Details')
+                    ->schema([
+                        Fieldset::make('Login')
+                        ->relationship('user')
+                        ->schema([
+                            Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('role')
+                            ->default(User::ROLE_FACULTY)
+                            ->readOnly()
+                            ->required(),
+                        ]),
+                    ]),
                 ])
                 ->columnSpan('full')->skippable(),
             ]);
@@ -253,7 +275,7 @@ class TeacherResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\UsersRelationManager::class,
+           
         ];
     }
     

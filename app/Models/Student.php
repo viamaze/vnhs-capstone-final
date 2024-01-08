@@ -17,9 +17,9 @@ class Student extends Model
         'active_student' => 'boolean',
     ];
 
-    public function users(): hasMany
+    public function user(): belongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function level(): BelongsTo
