@@ -5,6 +5,7 @@ namespace App\Filament\Teachers\Resources;
 use App\Filament\Teachers\Resources\AdvisoryResource\Pages;
 use App\Filament\Teachers\Resources\AdvisoryResource\RelationManagers;
 use App\Models\User;
+use App\Models\Section;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,13 +17,13 @@ use Filament\Tables\Actions\Action;
 
 class AdvisoryResource extends Resource
 {
-    // protected static ?string $model = User::class;
+    protected static ?string $model = Section::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $modelLabel = 'Section';
 
-/*     public static function getEloquentQuery(): Builder
+    /* public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->join('teachers', 'users.teacher_id', '=', 'teachers.id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*')->where('users.id', auth()->id());
     } */
@@ -30,7 +31,7 @@ class AdvisoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(User::query()->join('teachers', 'users.teacher_id', '=', 'teachers.id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*')->where('users.id', auth()->id()))
+            ->query(User::query()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*')->where('users.id', auth()->id()))
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->sortable(),
