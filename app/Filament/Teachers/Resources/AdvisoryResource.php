@@ -31,10 +31,8 @@ class AdvisoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(User::query()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*')->where('users.id', auth()->id()))
+            ->query(User::query()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->join('classrooms','sections.classroom_id', '=','classrooms.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*', 'classrooms.*')->where('users.id', auth()->id()))
             ->columns([
-                Tables\Columns\TextColumn::make('full_name')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('level')
                     ->label('Grade Level')
                     ->sortable(),
@@ -43,13 +41,15 @@ class AdvisoryResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('section')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('subject')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('day')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_time')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subject')
+                    ->sortable(),
+                   Tables\Columns\TextColumn::make('classroom')
                     ->sortable(),
             ])
             ->filters([

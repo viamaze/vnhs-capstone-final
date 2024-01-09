@@ -171,7 +171,12 @@ class ScheduleResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('scheduleItems.subject.subject')
                     ->listWithLineBreaks(),
-                ViewColumn::make('Day')->view('tables.columns.subject-viewer'),
+                Tables\Columns\TextColumn::make('scheduleItems.day')
+                    ->label('Day')
+                    ->getStateUsing(function ($record) {
+                        return $record->scheduleItems->pluck('day')->flatten();
+                    })
+                    ->listWithLineBreaks(),
                 
                 Tables\Columns\TextColumn::make('scheduleItems.start_time')
                     ->label('Start Time')

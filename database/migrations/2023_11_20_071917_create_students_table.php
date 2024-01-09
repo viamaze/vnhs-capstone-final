@@ -16,12 +16,13 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->boolean('active_student')->nullable();
             $table->string('student_id')->nullable();
+            $table->string('lrn')->nullable();
             $table->string('student_status')->nullable();
             $table->string('enrollment_status')->nullable();
             $table->foreignId('level_id')->nullable()->constrained()->onUpdate('cascade')
             ->onDelete('cascade');
+            $table->boolean('active_student')->nullable();
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
@@ -67,6 +68,13 @@ return new class extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_mobile')->nullable();
             $table->string('full_name')->virtualAs('concat(firstname, \' \', middlename , \' \', lastname)');
+            $table->boolean('psa_birth')->nullable();
+            $table->boolean('form_138')->nullable();
+            $table->boolean('form_137')->nullable();
+            $table->boolean('good_moral')->nullable();
+            $table->boolean('id_picture')->nullable();
+            $table->boolean('med_cert')->nullable();
+            $table->boolean('e_signature')->nullable();
             $table->timestamps();
         });
 

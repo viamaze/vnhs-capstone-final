@@ -36,6 +36,8 @@ use App\Models\Municipality;
 use App\Models\Barangay;
 use Filament\Forms\Components\Section;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Toggle;
 
 class StudentResource extends Resource
 {
@@ -55,34 +57,78 @@ class StudentResource extends Resource
                 Forms\Components\Wizard::make([
                     Wizard\Step::make('Student Information')
                     ->schema([
-                        Forms\Components\TextInput::make('student_id')
-                        ->default($student_id)
-                        ->label('Student ID Number')
-                        ->maxLength(255)
-                        ->readonly(),
+                        Section::make('Student Information')
+                        ->schema([
+                            Forms\Components\TextInput::make('student_id')
+                            ->default($student_id)
+                            ->label('Student ID Number')
+                            ->maxLength(255)
+                            ->readonly(),
+                            Forms\Components\TextInput::make('lrn')
+                            ->label('Student LRN')
+                            ->maxLength(255),
+                            Forms\Components\Select::make('level_id')
+                            ->relationship(name: 'level', titleAttribute: 'level')
+                            ->label('Grade Level')
+                                ->preload()
+                                ->live()
+                                ->required(),
+                        ])->columns(3),
+                        
+                        Section::make('Status')
+                        ->schema([
+                            Radio::make('student_status')
+                            ->label('Student Status')
+                            ->options([
+                                'New Student' => 'New Student',
+                                'Transferee' => 'Transferee',
+                                'Old Student' => 'Old Student',
+                            ]),
+                            Radio::make('enrollment_status')
+                            ->label('Enrollment Status')
+                            ->options([
+                                'Enrolled' => 'Enrolled',
+                                'Pre-Enrolled' => 'Pre-Enrolled',
+                                'Reviewing' => 'Reviewing',
+                            ]),
+                            Toggle::make('active_student')
+                            ->onColor('success')
+                            ->offColor('danger')
+                            ->label('Active'),
+                        ])->columns(3),
 
-                        Forms\Components\Select::make('level_id')
-                        ->relationship(name: 'level', titleAttribute: 'level')
-                        ->label('Grade Level')
-                            ->preload()
-                            ->live()
-                            ->required(),
-
-                        Radio::make('student_status')
-                        ->label('Student Status')
-                        ->options([
-                            'New Student' => 'New Student',
-                            'Transferee' => 'Transferee',
-                            'Old Student' => 'Old Student',
-                        ]),
-                        Radio::make('enrollment_status')
-                        ->label('Enrollment Status')
-                        ->options([
-                            'Enrolled' => 'Enrolled',
-                            'Pre-Enrolled' => 'Pre-Enrolled',
-                            'Reviewing' => 'Reviewing',
-                        ]),
-                        Checkbox::make('active_student')->inline(false),
+                        Section::make('Requirements')
+                        ->description('Please submit if available')
+                        ->schema([
+                            Toggle::make('psa_birth')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('PSA Birth Certificate'),
+                            Toggle::make('form_138')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('FORM 138'),
+                            Toggle::make('form_137')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('FORM 137'),
+                            Toggle::make('good_moral')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('Good Moral'),
+                            Toggle::make('id_picture')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('2x2 ID Picture'),
+                            Toggle::make('med_cert')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('Medical Certificate'),
+                            Toggle::make('e_signature')
+                            ->onColor('info')
+                            ->offColor('gray')
+                            ->label('E-Signature')
+                            ])->columns(3)
                     ])
                     ->icon('heroicon-m-user')
                     ->columns(2),
@@ -321,11 +367,9 @@ class StudentResource extends Resource
                         ->relationship('user')
                         ->schema([
                             Forms\Components\TextInput::make('name')
-                            ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('email')
                             ->email()
-                            ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('password')
                             ->password()
@@ -334,8 +378,7 @@ class StudentResource extends Resource
                             ->required(fn (string $operation): bool => $operation === 'create'),
                         Forms\Components\TextInput::make('role')
                             ->default(User::ROLE_STUDENT)
-                            ->readOnly()
-                            ->required(),
+                            ->readOnly(),
                         ]),
                     ])->columns(2),
                     
@@ -364,17 +407,17 @@ class StudentResource extends Resource
                     'Transferee' => 'warning',
                     'Old Student' => 'info',
                 }),
-                Tables\Columns\TextColumn::make('student_id')
-                    ->label('Student ID No.')
+                Tables\Columns\TextColumn::make('lrn')
+                    ->label('Student LRN')
                     ->searchable()
                     ->badge()
                     ->color('success'),
+                Tables\Columns\TextColumn::make('firstname')
+                    ->label('First Name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('lastname')
                     ->label('Last Name')
                     ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('firstname')
-                    ->label('First Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('level.level')
                     ->label('Grade Level')

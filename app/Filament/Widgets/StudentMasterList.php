@@ -18,18 +18,20 @@ class StudentMasterList extends BaseWidget
             ->query(Student::query())
             ->defaultPaginationPageOption(5)
             ->columns([
-                Tables\Columns\TextColumn::make('student_id')
-                    ->label('Student ID No.')
+                Tables\Columns\TextColumn::make('lrn')
+                    ->label('Student LRN')
                     ->searchable()
                     ->badge()
                     ->color('success'),
+                Tables\Columns\TextColumn::make('firstname')
+                    ->label('First Name')
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('lastname')
                     ->label('Last Name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('firstname')
-                    ->label('First Name')
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('level.level')
                     ->label('Grade Level')
                     ->searchable(),
