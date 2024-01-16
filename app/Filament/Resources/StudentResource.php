@@ -422,7 +422,8 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('level.level')
                     ->label('Grade Level')
                     ->searchable(),
-                CheckboxColumn::make('active_student'),
+                CheckboxColumn::make('active_student')
+                ->label('Active'),
                 
             ])
             ->filters([

@@ -40,7 +40,7 @@ class ScheduleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
    
-    protected static ?string $navigationGroup = 'Schedule Management';
+    protected static ?string $navigationGroup = 'Class Management';
     
     public static function form(Form $form): Form
     {
@@ -86,12 +86,12 @@ class ScheduleResource extends Resource
                                 ->required(),
                                 Forms\Components\CheckboxList::make('day')
                                     ->options([
-                                            'M' => 'M',
-                                            'T' => 'T',
-                                            'W' => 'W',
-                                            'TH' => 'TH',
-                                            'F' => 'F',
-                                            'S' => 'S',
+                                            'Mon' => 'Mon',
+                                            'Tue' => 'Tue',
+                                            'Wed' => 'Wed',
+                                            'Thu' => 'Thu',
+                                            'Fri' => 'Fri',
+                                            'Sat' => 'Sat',
                                         ])->columns(3),
 
                                 Select::make('start_time')
@@ -165,7 +165,7 @@ class ScheduleResource extends Resource
                 Tables\Columns\TextColumn::make('level.level')
                     ->label('Grade Level')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('specialization.specialization')
+                Tables\Columns\TextColumn::make('specialization.specialization_code')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('section.section')
                     ->sortable(),
@@ -173,10 +173,12 @@ class ScheduleResource extends Resource
                     ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('scheduleItems.day')
                     ->label('Day')
-                    ->getStateUsing(function ($record) {
+                    ->view('tables.columns.subject-viewer'),
+                   /*  ->getStateUsing(function ($record) {
                         return $record->scheduleItems->pluck('day')->flatten();
                     })
-                    ->listWithLineBreaks(),
+                    ->listWithLineBreaks(), */
+                    
                 
                 Tables\Columns\TextColumn::make('scheduleItems.start_time')
                     ->label('Start Time')
@@ -230,10 +232,11 @@ class ScheduleResource extends Resource
                     ->label('Subject')
                     ->listWithLineBreaks(),
                     TextEntry::make('scheduleItems.day')
-                    ->getStateUsing(function ($record) {
+                    ->label('Day')
+                    /* ->getStateUsing(function ($record) {
                         return $record->scheduleItems->pluck('day', 'subject_id')->collapse();
-                    })
-                    ->label('Day'),
+                    }), */
+                    ->view('tables.columns.infolist-day'),
                     TextEntry::make('scheduleItems.start_time')
                     ->label('Start Time')
                     ->listWithLineBreaks(),

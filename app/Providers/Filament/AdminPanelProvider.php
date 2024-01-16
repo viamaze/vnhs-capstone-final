@@ -65,6 +65,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-presentation-chart-line')
                     ->group('User Management')
                     ->sort(3),
+                
             ])
             ->authGuard('web')
             ->favicon(asset('images/favicon.png'))
@@ -72,8 +73,9 @@ class AdminPanelProvider extends PanelProvider
                 'Student Management',
                 'Teacher Management',
                 'Subject Management',
-                'Schedule Management',
-                'User Management'
+                'Class Management',
+                'User Management',
+                'Reporting Management'
             ]);
     }
 }

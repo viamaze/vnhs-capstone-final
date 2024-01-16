@@ -190,4 +190,5 @@ class EnrollmentResource extends Resource
             EnrollmentResource\Widgets\CreateEnrollmentWidget::class,
         ];
     }
+
 }

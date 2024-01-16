@@ -19,7 +19,7 @@ class ClassroomResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
     
-    protected static ?string $navigationGroup = 'Schedule Management';
+    protected static ?string $navigationGroup = 'Class Management';
 
     public static function form(Form $form): Form
     {

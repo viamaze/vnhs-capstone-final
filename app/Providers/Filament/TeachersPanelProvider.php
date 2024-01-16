@@ -33,7 +33,7 @@ class TeachersPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Teachers/Resources'), for: 'App\\Filament\\Teachers\\Resources')
             ->discoverPages(in: app_path('Filament/Teachers/Pages'), for: 'App\\Filament\\Teachers\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Teachers/Widgets'), for: 'App\\Filament\\Teachers\\Widgets')
             ->widgets([

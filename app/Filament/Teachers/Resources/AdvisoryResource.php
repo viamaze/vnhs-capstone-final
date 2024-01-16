@@ -14,14 +14,18 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
 
 class AdvisoryResource extends Resource
 {
-    protected static ?string $model = Section::class;
+    protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $modelLabel = 'Section';
+
+    protected static ?string $slug = 'sections';
 
     /* public static function getEloquentQuery(): Builder
     {
@@ -52,11 +56,12 @@ class AdvisoryResource extends Resource
                    Tables\Columns\TextColumn::make('classroom')
                     ->sortable(),
             ])
+           
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make()
             ])
             ->headerActions([
                 Action::make('export')
@@ -71,7 +76,15 @@ class AdvisoryResource extends Resource
                 
             ]);
     }
-    
+
+    public static function infolist(Infolist $infolist): Infolist
+{
+    return $infolist
+        ->schema([
+            TextEntry::make('name')
+        ]);
+}
+
     public static function getRelations(): array
     {
         return [

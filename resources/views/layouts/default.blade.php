@@ -17,6 +17,7 @@
  
         @filamentStyles
         @vite('resources/css/app.css')
+
     </head>
  
     <body class="antialiased">
@@ -30,7 +31,7 @@
 
                 <!-- Page Content -->
                 <main class="flex">
-                    <div class="w-full p-2 m-2 min-h-screen overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1 ">
+                    <div class="w-full p-2 min-h-screen overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1 ">
             @yield('content')
                     </div>
                 </main>

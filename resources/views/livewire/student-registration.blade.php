@@ -4,9 +4,13 @@
     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
         <span class="font-bold">{{ $successMessage }}</span>
     </div>
+
     @endif
     <div class="table w-full relative p-2">
+
+
         <div class="table-row before:top-6 before:bottom-0 before:absolute before:content-[' '] before:w-full before:h-0.5 before:bg-gray-300 z-0">
+            
             <div class="table-cell text-center relative">
                 <a href="#" type="button" class="inline-block font-normal whitespace-nowrap align-middle select-none border border-solid border-transparent transition-colors w-8 h-8 text-center py-1.5 text-xs leading-snug rounded-3xl bg-blue-700 text-white {{ $currentStep != 1 ? 'bg-gray-900 text-white' : 'bg-blue-700' }}" >1</a>
                 <p class="my-2.5">Student Information</p>
