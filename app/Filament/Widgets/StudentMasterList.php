@@ -7,9 +7,12 @@ use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Enums\FiltersLayout;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class StudentMasterList extends BaseWidget
 {
+    use HasWidgetShield;
+    
     protected int | string | array $columnSpan = 'full';
     
     public function table(Table $table): Table

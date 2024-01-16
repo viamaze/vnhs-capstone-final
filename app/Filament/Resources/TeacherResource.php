@@ -39,6 +39,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Hidden;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
 

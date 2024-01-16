@@ -7,9 +7,12 @@ use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 use App\Models\Student;
 use Filament\Forms\Components\Grid;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class StudentsChart extends ChartWidget
 {
+    use HasWidgetShield;
+    
     protected static ?string $heading = 'Number of Students';
 
     protected function getData(): array

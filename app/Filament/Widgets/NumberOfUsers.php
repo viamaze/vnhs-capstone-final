@@ -8,9 +8,12 @@ use App\Models\Subject;
 use App\Models\Teacher;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class NumberOfUsers extends BaseWidget
 {
+    use HasWidgetShield;
+    
     protected function getStats(): array
     {
         return [

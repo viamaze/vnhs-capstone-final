@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 
 class SubjectResource extends Resource
 {
@@ -55,10 +57,7 @@ class SubjectResource extends Resource
                 
             ])
             ->headerActions([
-                Action::make('export')
-                ->openUrlInNewTab(),
-                Action::make('print')
-                ->openUrlInNewTab()
+                ExportAction::make()
             ])
             ->bulkActions([
                 

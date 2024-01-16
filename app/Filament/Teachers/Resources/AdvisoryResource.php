@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 
 class AdvisoryResource extends Resource
 {
@@ -64,10 +66,7 @@ class AdvisoryResource extends Resource
                 Tables\Actions\ViewAction::make()
             ])
             ->headerActions([
-                Action::make('export')
-                ->openUrlInNewTab(),
-                Action::make('print')
-                ->openUrlInNewTab()
+                ExportAction::make()
             ])
             ->bulkActions([
             
