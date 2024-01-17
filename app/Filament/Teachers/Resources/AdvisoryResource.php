@@ -18,6 +18,8 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Actions\ViewAction;
 
 class AdvisoryResource extends Resource
 {
@@ -29,15 +31,15 @@ class AdvisoryResource extends Resource
 
     protected static ?string $slug = 'sections';
 
-    /* public static function getEloquentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->join('teachers', 'users.teacher_id', '=', 'teachers.id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*')->where('users.id', auth()->id());
-    } */
+        return parent::getEloquentQuery()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->join('classrooms','sections.classroom_id', '=','classrooms.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*', 'classrooms.*')->where('users.id', auth()->id());
+    }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->query(User::query()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->join('classrooms','sections.classroom_id', '=','classrooms.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*', 'classrooms.*')->where('users.id', auth()->id()))
+           /*  ->query(User::query()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->join('classrooms','sections.classroom_id', '=','classrooms.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*', 'classrooms.*')->where('users.id', auth()->id())) */
             ->columns([
                 Tables\Columns\TextColumn::make('level')
                     ->label('Grade Level')
@@ -77,12 +79,12 @@ class AdvisoryResource extends Resource
     }
 
     public static function infolist(Infolist $infolist): Infolist
-{
-    return $infolist
-        ->schema([
-            TextEntry::make('name')
-        ]);
-}
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('email')
+            ]);
+    }
 
     public static function getRelations(): array
     {
