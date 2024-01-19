@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="w-full md:w-4/5 lg:w-1/2 overflow-hidden p-6 rounded-lg border border-gray-200 shadow-md m-auto" >
+<div class="mt-36 w-full md:w-4/5 lg:w-1/2 overflow-hidden p-6 rounded-lg border border-gray-200 shadow-md m-auto" >
         <h2 class="text-3xl text-center font-bold my-5">VNHS Student Pre-Enrollment</h2>
         
         <div class="mt-10" x-data="{student: ''}">
