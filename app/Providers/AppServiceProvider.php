@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Support\Assets\Js;
 
 class AppServiceProvider extends ServiceProvider
 {

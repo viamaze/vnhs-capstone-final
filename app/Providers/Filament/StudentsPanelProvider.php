@@ -41,6 +41,7 @@ class StudentsPanelProvider extends PanelProvider
             ->widgets([
                 
             ])
+            ->viteTheme('resources/css/filament/students/theme.css')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

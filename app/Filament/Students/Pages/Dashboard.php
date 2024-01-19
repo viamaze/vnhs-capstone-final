@@ -11,6 +11,7 @@ class Dashboard extends Page
 
     protected static string $view = 'filament.students.pages.dashboard';
 
+    
     public function getHeading(): string
     {
         $logged_user = Str::ucfirst(auth()->user()->name);

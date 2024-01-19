@@ -31,7 +31,6 @@ class NumberOfUsers extends BaseWidget
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->chart([7, 5, 10, 3, 15, 4, 17])
             ->color('success'),
-  
         ];
     }
 }
