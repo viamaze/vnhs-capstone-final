@@ -6,7 +6,7 @@
     <section id="about" class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28 justify-center items-center">
             <div class="mr-auto place-self-center lg:col-span-7">
-                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">About <br>Valencia National Highschool</h1>
+                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-4xl dark:text-white">About <br>Valencia National Highschool</h1>
                 <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Valencia National High School is located at the central part of Valencia, a progressive town of Southern Bukidnon. The school was established under the Barrio charter number 6054 in 1969 with Mr. Carlos Bacolod, Barangay Captain from 1969 to 1972 as prime mover together with the late Demetrio Dumaquita, Assistant Principal of the school at that time. The school started with an enrolment of one hundred five (105) students from first to fourth year under five (5) teachers.</p>
 
                 <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Through the years, Valencia National High School grew with the rapid growth of the town of Valencia. In 1970-71, the school was turned over to Mr. Pablito L. Intong, then Principal of Valencia Central Elementary School. Mrs. Gene Bayagna succeeded Mr. Pablito L. Intong in 1971-72. In 1972, Mr. Carlos Bacolod gave way to Mrs. Lila Alkuino, then elected as Barangay Captain..</p>
