@@ -65,7 +65,7 @@ class AdvisoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
+                
             ])
             ->headerActions([
                 ExportAction::make()

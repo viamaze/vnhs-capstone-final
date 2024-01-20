@@ -14,7 +14,7 @@
             <section id="NewStudent" class="desc bg-white dark:bg-gray-900 my-4" x-show="student == $el.id" x-cloak>
              
                 <p class="my-4">If you are a <strong>New Student</strong>. Please fill-up the form as carefully as you can.</p>
-                <livewire:create-student />
+                <livewire:student-registration />
             </section>
 
             <section id="OldStudent" class="desc h-3/6 my-4" x-show="student == $el.id" x-cloak>
