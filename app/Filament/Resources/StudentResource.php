@@ -48,6 +48,11 @@ class StudentResource extends Resource
 
     protected static ?string $navigationLabel = 'Student Data Information';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->orderBy('created_at', 'desc');
+    }
+
     public static function form(Form $form): Form
     {
         $student_id = 'VNHS' . Carbon::now()->year . random_int(1000000, 9999999);
@@ -391,6 +396,7 @@ class StudentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at')
             ->columns([
                 Tables\Columns\TextColumn::make('enrollment_status')
                 ->badge()

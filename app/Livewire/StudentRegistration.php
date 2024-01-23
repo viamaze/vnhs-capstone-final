@@ -16,7 +16,7 @@ class StudentRegistration extends Component
 
     public $currentStep = 1, $successMessage = '', $student_status = 'New Student', $enrollment_status = 'Pre-Enrolled';
 
-    public $student_id, $level_id, $lastname, $firstname, $middlename, $mi, $suffix, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province_id, $municipality_id, $barangay_id, $zipcode;
+    public $student_id, $student_lrn, $level_id, $lastname, $firstname, $middlename, $mi, $suffix, $gender, $date_of_birth, $place_of_birth, $civil_status, $nationality, $religion, $email, $contact_number, $height, $weight, $bloodtype, $ethnicity, $address, $province_id, $municipality_id, $barangay_id, $zipcode;
 
     public $father_last_name, $father_first_name, $father_middle_name, $father_dob, $father_occupation, $father_monthlyincome, $father_yearlycomp, $father_contactno, $father_educational, $father_address, $mother_last_name, $mother_first_name, $mother_middle_name, $mother_dob, $mother_occupation, $mother_monthlyincome, $mother_yearlycomp, $mother_contactno, $mother_educational, $mother_address;
 
@@ -74,7 +74,8 @@ class StudentRegistration extends Component
             'zipcode' => 'required',
         ]);
         $this->currentStep = 2;
-        $this->student_id = "VNHS" . Carbon::now()->year . random_int(100000, 999999);
+        $this->student_id = "VNHS" . Carbon::now()->year . random_int(10000000, 99999999);
+        $this->student_lrn = "LRN" . Carbon::now()->year . random_int(10000000, 99999999);
     }
 
     public function secondStepSubmit()
@@ -119,6 +120,7 @@ class StudentRegistration extends Component
 
         Student::create([
             'student_id' => $this->student_id,
+            'lrn' => $this->student_lrn,
             'level_id' => $this->level_id,
             'lastname' => $this->lastname,
             'firstname' => $this->firstname,
@@ -186,6 +188,7 @@ class StudentRegistration extends Component
     {
         
         $this->student_id ='';
+        $this->student_lrn = '';
         $this->level_id = '';
         $this->lastname = '';
         $this->firstname = '';
