@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.8",
         "nesbot/carbon": "^2.71",
         "pxlrbt/filament-excel": "^2.3",
+        "spatie/browsershot": "^4.0",
         "spatie/laravel-pdf": "^1.1"
     },
     "require-dev": {
