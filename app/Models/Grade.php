@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Grade extends Model
 {
     use HasFactory;
 
-    public function gradeItems(): HasMany
+    public function student(): BelongsTo
     {
-        return $this->HasMany(GradeItems::class);
+        return $this->BelongsTo(Student::class);
     }
 
-    public function student(): HasMany
+    public function subject(): BelongsTo
     {
-        return $this->HasMany(Student::class);
+        return $this->BelongsTo(Subject::class);
     }
 
 }

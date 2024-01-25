@@ -5,19 +5,14 @@ namespace App\Filament\Teachers\Resources;
 use App\Filament\Teachers\Resources\GradeResource\Pages;
 use App\Filament\Teachers\Resources\GradeResource\RelationManagers;
 use App\Models\Grade;
-use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextInputColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Enums\FiltersLayout;
 
 class GradeResource extends Resource
 {
@@ -30,38 +25,54 @@ class GradeResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('student_id')
-                ->relationship(name: 'student', titleAttribute: 'full_name')
-                ->preload()
-                ->live()
-                ->required(),
+                    ->relationship('student', 'full_name'),
+                Forms\Components\Select::make('subject_id')
+                    ->relationship('subject', 'subject'),
+                Forms\Components\TextInput::make('first_grading')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('second_grading')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('third_grading')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('fourth_grading')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('final_grade')
+                    ->maxLength(255),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Student::query()->join('enrollments','enrollments.student_id','=','students.id')->join('sections','enrollments.section_id','=','sections.id')->join('schedules','schedules.section_id','=','sections.id')->join('schedule_items','schedule_items.schedule_id','=','schedules.id')->join('subjects', 'subjects.id','=','schedule_items.subject_id')->join('teachers','teachers.id','=','subjects.teacher_id')->join('users','users.id','=','teachers.user_id')->select('students.*', 'subjects.*','sections.*')->where('teachers.user_id',auth()->id()))
             ->columns([
-                Tables\Columns\TextColumn::make('level.level'),
-                Tables\Columns\TextColumn::make('section'),
-                Tables\Columns\TextColumn::make('full_name')
-                ->sortable(),
-                Tables\Columns\TextColumn::make('subject'),
-                TextInputColumn::make('first_grading')
-                ->label('1st Grading'),
-                TextInputColumn::make('second_grading')
-                ->label('2nd Grading'),
-                TextInputColumn::make('third_grading')
-                ->label('3rd Grading'),
-                TextInputColumn::make('fourth_grading')
-                ->label('4th Grading'),
-                TextInputColumn::make('final_grade')
+                Tables\Columns\TextColumn::make('student.full_name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subject.subject')
+                    ->numeric()
+                    ->sortable(),
+                    TextInputColumn::make('first_grading')
+                    ->searchable(),
+                    TextInputColumn::make('second_grading')
+                    ->searchable(),
+                    TextInputColumn::make('third_grading')
+                    ->searchable(),
+                    TextInputColumn::make('fourth_grading')
+                    ->searchable(),
+                    TextInputColumn::make('final_grade')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('level')
-                ->relationship('level', 'level'),
-                
-            ],layout: FiltersLayout::AboveContent)
+                //
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

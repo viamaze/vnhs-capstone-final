@@ -15,6 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->nullable()->constrained()->onUpdate('cascade')
             ->onDelete('cascade');
+            $table->foreignId('subject_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->string('first_grading')->nullable();
+            $table->string('second_grading')->nullable();
+            $table->string('third_grading')->nullable();
+            $table->string('fourth_grading')->nullable();
+            $table->string('final_grade')->nullable();
             $table->timestamps();
         });
     }
