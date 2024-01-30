@@ -13,6 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextInputColumn;
+use Filament\Forms\Get;
+use App\Models\Student;
+use Illuminate\Support\Collection;
 
 class GradeResource extends Resource
 {
@@ -25,7 +28,16 @@ class GradeResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('student_id')
-                    ->relationship('student', 'full_name'),
+                ->relationship(name: 'student', titleAttribute: 'full_name')
+                ->options(fn (Get $get): Collection =>Student::query()
+                ->where('enrollment_status', 'enrolled')
+                ->where('active_student', 1)
+                ->pluck('full_name', 'id'))
+                ->label('Student')
+                    ->preload()
+                    ->live()
+                    ->required()
+                    ->searchable(),
                 Forms\Components\Select::make('subject_id')
                     ->relationship('subject', 'subject'),
                 Forms\Components\TextInput::make('first_grading')
@@ -61,14 +73,6 @@ class GradeResource extends Resource
                     ->searchable(),
                     TextInputColumn::make('final_grade')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

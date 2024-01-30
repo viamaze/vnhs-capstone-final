@@ -434,7 +434,7 @@ class StudentResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
-                ->relationship('level', 'level')
+                ->relationship('level', 'level', modifyQueryUsing: fn (Builder $query) => $query->orderBy('id'))
                 ->preload(),
                 Tables\Filters\SelectFilter::make('student_status')
                 ->label('Student Status')

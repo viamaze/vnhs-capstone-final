@@ -38,7 +38,7 @@ class SectionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('level_id')
-                ->relationship(name: 'level', titleAttribute: 'level')
+                ->relationship(name: 'level', titleAttribute: 'level', modifyQueryUsing: fn (Builder $query) => $query->orderBy('id'))
                 ->label('Grade Level')
                     ->preload()
                     ->live()

@@ -15,7 +15,8 @@ return new class extends Migration
 
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
-            $table->string('school_year')->nullable();
+            $table->foreignId('school_year_id')->nullable()->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->foreignId('student_id')->nullable()->constrained()->onUpdate('cascade')
             ->onDelete('cascade');
             $table->foreignId('level_id')->nullable()->constrained()->onUpdate('cascade')

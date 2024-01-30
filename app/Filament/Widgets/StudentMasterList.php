@@ -8,6 +8,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Enums\FiltersLayout;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+use Illuminate\Database\Eloquent\Builder;
 
 class StudentMasterList extends BaseWidget
 {
@@ -41,7 +42,7 @@ class StudentMasterList extends BaseWidget
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
-                ->relationship('level', 'level')
+                ->relationship('level', 'level', modifyQueryUsing: fn (Builder $query) => $query->orderBy('id'))
                 ->preload(),
                 Tables\Filters\SelectFilter::make('student_status')
                 ->label('Student Status')

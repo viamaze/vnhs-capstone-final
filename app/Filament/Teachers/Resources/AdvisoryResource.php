@@ -19,7 +19,7 @@ use Filament\Infolists\Components\TextEntry;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Actions\ViewAction;
+use Filament\Tables\Actions\ViewAction;
 
 class AdvisoryResource extends Resource
 {
@@ -33,7 +33,7 @@ class AdvisoryResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->join('classrooms','sections.classroom_id', '=','classrooms.id')->select('teachers.*','subjects.*','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*', 'classrooms.*')->where('users.id', auth()->id());
+        return parent::getEloquentQuery()->join('teachers', 'users.id', '=', 'teachers.user_id')->join('subjects', 'teachers.id', '=', 'subjects.teacher_id')->join('schedule_items', 'subjects.id', '=', 'schedule_items.subject_id')->join('schedules', 'schedule_items.schedule_id', '=', 'schedules.id')->join('levels', 'schedules.level_id', '=', 'levels.id')->join('specializations', 'schedules.specialization_id', '=', 'specializations.id')->join('sections', 'schedules.section_id', '=', 'sections.id')->join('classrooms','sections.classroom_id', '=','classrooms.id')->select('teachers.user_id','subjects.teacher_id','subjects.subject','schedule_items.*', 'schedules.*', 'levels.*','specializations.*', 'sections.*', 'classrooms.*')->where('users.id', auth()->id());
     }
 
     public static function table(Table $table): Table
@@ -65,7 +65,7 @@ class AdvisoryResource extends Resource
                 //
             ])
             ->actions([
-                
+                //ViewAction::make()
             ])
             ->headerActions([
                 ExportAction::make()

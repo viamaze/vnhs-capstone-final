@@ -38,4 +38,9 @@ class Enrollment extends Model
         return $this->BelongsTo(User::class);
     }
 
+    public function school_year(): BelongsTo
+    {
+        return $this->BelongsTo(SchoolYear::class);
+    }
+
 }

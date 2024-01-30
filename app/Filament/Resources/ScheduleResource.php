@@ -48,7 +48,7 @@ class ScheduleResource extends Resource
             ->schema([
                 Forms\Components\Select::make('level_id')
                 ->label('Grade Level')
-                ->relationship(name: 'level', titleAttribute: 'level')
+                ->relationship(name: 'level', titleAttribute: 'level', modifyQueryUsing: fn (Builder $query) => $query->orderBy('id'))
                 ->preload()
                 ->live()
                 ->required(),

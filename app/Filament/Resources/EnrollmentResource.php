@@ -10,7 +10,7 @@ use App\Models\Specialization;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Schedule;
-
+use App\Models\SchoolYear;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -36,19 +36,18 @@ class EnrollmentResource extends Resource
 
         return $form
             ->schema([
-                
-                Forms\Components\Select::make('school_year')
-                ->label('For School Year')
-                ->options([
-                    '2023-2024' => '2023-2024',
-                    '2024-2025' => '2024-2025',
-                    '2025-2026' => '2025-2026',
-                    '2026-2027' => '2026-2027',
-                    '2027-2028' => '2027-2028'
-                ]),
-                
+    
+                Forms\Components\Select::make('school_year_id')
+                ->relationship(name: 'school_year', titleAttribute: 'year_term', )
+                ->label('School Year')
+                    ->preload()
+                    ->live()
+                    ->required()
+                    ->options(fn (Get $get): Collection =>SchoolYear::query()
+                    ->where('archived', 0)
+                    ->pluck('year_term', 'id')),
                 Forms\Components\Select::make('level_id')
-                ->relationship(name: 'level', titleAttribute: 'level')
+                ->relationship(name: 'level', titleAttribute: 'level', modifyQueryUsing: fn (Builder $query) => $query->orderBy('id'))
                 ->label('Grade Level')
                     ->preload()
                     ->live()
@@ -92,7 +91,7 @@ class EnrollmentResource extends Resource
                 ->label('Student ID No.')
                 ->badge()
                 ->color('success'),
-                TextEntry::make('school_year')
+                TextEntry::make('school_year.year_term')
                 ->label('School Year'),
                 TextEntry::make('level.level')
                 ->label('Grade Level'),
@@ -114,7 +113,7 @@ class EnrollmentResource extends Resource
                 ->badge()
                 ->color('success')
                 ->sortable(),
-            Tables\Columns\TextColumn::make('school_year')
+            Tables\Columns\TextColumn::make('school_year.year_term')
                 ->searchable(),
             Tables\Columns\TextColumn::make('student.full_name')
                 ->label('Full Name')
