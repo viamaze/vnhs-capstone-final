@@ -38,7 +38,7 @@ use Filament\Forms\Components\Section;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Toggle;
-
+use Filament\Tables\Columns\SelectColumn;
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
@@ -73,7 +73,7 @@ class StudentResource extends Resource
                             ->label('Student LRN')
                             ->maxLength(255),
                             Forms\Components\Select::make('level_id')
-                            ->relationship(name: 'level', titleAttribute: 'level')
+                            ->relationship(name: 'level', titleAttribute: 'level', modifyQueryUsing: fn (Builder $query) => $query->orderBy('id'))
                             ->label('Grade Level')
                                 ->preload()
                                 ->live()
@@ -425,9 +425,14 @@ class StudentResource extends Resource
                     ->label('Last Name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('level.level')
-                    ->label('Grade Level')
-                    ->searchable(),
+                SelectColumn::make('level.level')
+                ->options([
+                    'Grade 7' => 'Grade 7',
+                    'Grade 8' => 'Grade 8',
+                    'Grade 9' => 'Grade 9',
+                    'Grade 10' => 'Grade 10',
+                ]),
+               
                 CheckboxColumn::make('active_student')
                 ->label('Active'),
                 

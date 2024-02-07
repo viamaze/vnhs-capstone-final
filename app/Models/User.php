@@ -107,4 +107,9 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(Teacher::class);
     }
 
+    public function school_year(): BelongsTo
+    {
+        return $this->BelongsTo(SchoolYear::class);
+    }
+    
 }

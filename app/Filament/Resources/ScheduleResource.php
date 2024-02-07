@@ -33,6 +33,8 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\ViewColumn;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 class ScheduleResource extends Resource
 {
@@ -41,6 +43,8 @@ class ScheduleResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
    
     protected static ?string $navigationGroup = 'Class Management';
+    
+    public $sched_name;
     
     public static function form(Form $form): Form
     {
@@ -52,6 +56,7 @@ class ScheduleResource extends Resource
                 ->preload()
                 ->live()
                 ->required(),
+
                 Forms\Components\Select::make('specialization_id')
                 ->relationship(name: 'specialization', titleAttribute: 'specialization')
                 ->preload()
@@ -68,7 +73,7 @@ class ScheduleResource extends Resource
                         ->preload()
                         ->live()
                         ->required(),
-                
+                Forms\Components\TextInput::make('schedule_name'),
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Repeater::make('scheduleItems')

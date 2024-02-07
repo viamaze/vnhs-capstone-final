@@ -142,7 +142,7 @@ class EnrollmentResource extends Resource
                     '2027-2028' => '2027-2028',
                 ]),
                 Tables\Filters\SelectFilter::make('level')
-                ->relationship('level', 'level')
+                ->relationship('level', 'level', )
                 ->preload(),
                 Tables\Filters\SelectFilter::make('specialization')
                 ->relationship('specialization', 'specialization')

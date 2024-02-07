@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('specialization_code')->nullable();
             $table->string('specialization')->nullable();
             $table->longText('description')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/pre-enrollment', function () {
     return view('pre-enrollment');
 });
+
+Route::get('/logout', 'App\Http\Controllers\AuthController@logout');

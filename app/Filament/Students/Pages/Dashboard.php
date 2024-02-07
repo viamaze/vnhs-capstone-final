@@ -18,7 +18,7 @@ class Dashboard extends Page
     public function mount()
     {
     
-        $this->students = Student::join('enrollments', 'enrollments.student_id', '=','students.id')->join('specializations','specializations.id','=','enrollments.specialization_id')->join('sections','sections.id','=','enrollments.section_id')->select('students.*','enrollments.*', 'specializations.*','sections.*')->where('user_id','like',auth()->user()->id)->get();
+        $this->students = Student::join('enrollments', 'enrollments.student_id', '=','students.id')->join('specializations','specializations.id','=','enrollments.specialization_id')->join('sections','sections.id','=','enrollments.section_id')->select('students.*','enrollments.*', 'specializations.*','sections.*')->where('user_id','=',auth()->user()->id)->get();
     }
 
     public function getHeading(): string

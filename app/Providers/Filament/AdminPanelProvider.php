@@ -65,7 +65,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Logout')
-                    ->url('', shouldOpenInNewTab: true)
+                    ->url('/logout', shouldOpenInNewTab: false)
                     ->icon('heroicon-o-presentation-chart-line')
                     ->group('User Management')
                     ->sort(3),

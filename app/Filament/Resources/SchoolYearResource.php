@@ -13,10 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Forms\Components\Select;
 
 class SchoolYearResource extends Resource
 {
     protected static ?string $model = SchoolYear::class;
+
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -24,10 +27,32 @@ class SchoolYearResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('start_year')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('end_year')
-                    ->maxLength(255),
+
+                Select::make('start_year')
+                ->options([
+                    '2024' => '2024',
+                    '2025' => '2025',
+                    '2026' => '2026',
+                    '2027' => '2027',
+                    '2028' => '2028',
+                    '2029' => '2029',
+                    '2030' => '2030',
+                ])
+                ->native(false),
+                Select::make('end_year')
+                ->options([
+                    '2024' => '2024',
+                    '2025' => '2025',
+                    '2026' => '2026',
+                    '2026' => '2026',
+                    '2026' => '2026',
+                    '2026' => '2026',
+                    '2027' => '2027',
+                    '2028' => '2028',
+                    '2029' => '2029',
+                    '2030' => '2030',
+                ])
+                ->native(false),
                 Forms\Components\Toggle::make('archived'),
             ]);
     }

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use Filament\Tables\Filters\SelectFilter;
 
 class SubjectResource extends Resource
 {
@@ -32,7 +33,7 @@ class SubjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(User::query()->join('students', 'users.id', '=', 'students.user_id')->join('enrollments', 'students.id', '=','enrollments.student_id')->select('enrollments.*')->join('schedules', 'enrollments.section_id','=','schedules.section_id')->join('schedule_items', 'schedules.id', '=', 'schedule_items.schedule_id')->join('subjects', 'schedule_items.subject_id', '=', 'subjects.id')->join('teachers', 'subjects.teacher_id', '=', 'teachers.id')->select('schedules.*','schedule_items.*', 'subjects.*', 'teachers.*')->where('users.id', auth()->id()))
+            ->query(User::query()->join('students', 'users.id', '=', 'students.user_id')->join('enrollments', 'students.id', '=','enrollments.student_id')->join('schedules', 'enrollments.section_id','=','schedules.section_id')->join('schedule_items', 'schedules.id', '=', 'schedule_items.schedule_id')->join('subjects', 'schedule_items.subject_id', '=', 'subjects.id')->join('teachers', 'subjects.teacher_id', '=', 'teachers.id')->select('enrollments.*','schedules.*','schedule_items.*', 'subjects.*', 'teachers.*')->where('users.id', auth()->id()))
             ->columns([
                 Tables\Columns\TextColumn::make('subject')
                     ->sortable(),
@@ -51,7 +52,10 @@ class SubjectResource extends Resource
 
             ])
             ->filters([
-                //
+                SelectFilter::make('school_year')
+                ->relationship('school_year', 'year_term')
+                ->searchable()
+                ->preload()
             ])
             ->actions([
                 
