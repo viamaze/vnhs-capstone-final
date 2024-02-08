@@ -18,6 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Filament\Support\Enums\MaxWidth;
 
 class StudentsPanelProvider extends PanelProvider
 {
@@ -70,6 +71,7 @@ class StudentsPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->maxContentWidth(MaxWidth::Full);
     }
 }

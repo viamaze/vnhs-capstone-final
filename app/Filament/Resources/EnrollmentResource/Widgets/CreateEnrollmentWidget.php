@@ -72,7 +72,7 @@ class CreateEnrollmentWidget extends Widget implements HasForms
                     ->required()
                     ->searchable(),
                 Select::make('specialization_id')
-                    ->options(fn (Get $get): Collection =>Specialization::query()
+                    ->options(fn (Get $get): Collection =>Specialization::query()->orderby('specialization','asc')
                     ->pluck('specialization', 'id'))
                     ->label('Specialization')
                     ->preload()

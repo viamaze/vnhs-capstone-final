@@ -111,5 +111,24 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->BelongsTo(SchoolYear::class);
     }
-    
+
+    public function level(): BelongsTo
+    {
+        return $this->BelongsTo(Level::class);
+    }
+
+    public function specialization(): BelongsTo
+    {
+        return $this->BelongsTo(Specialization::class);
+    }
+
+    public function section(): BelongsTo
+    {
+        return $this->BelongsTo(Section::class);
+    }
+
+    public function subject(): BelongsTo
+    {
+        return $this->BelongsTo(Subject::class);
+    }
 }

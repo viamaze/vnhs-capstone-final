@@ -73,7 +73,6 @@ class ScheduleResource extends Resource
                         ->preload()
                         ->live()
                         ->required(),
-                Forms\Components\TextInput::make('schedule_name'),
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Repeater::make('scheduleItems')

@@ -425,12 +425,13 @@ class StudentResource extends Resource
                     ->label('Last Name')
                     ->sortable()
                     ->searchable(),
-                SelectColumn::make('level.level')
+                SelectColumn::make('level_id')
+                ->label('Grade Level')
                 ->options([
-                    'Grade 7' => 'Grade 7',
-                    'Grade 8' => 'Grade 8',
-                    'Grade 9' => 'Grade 9',
-                    'Grade 10' => 'Grade 10',
+                    '1' => 'Grade 7',
+                    '2' => 'Grade 8',
+                    '3' => 'Grade 9',
+                    '4' => 'Grade 10',
                 ]),
                
                 CheckboxColumn::make('active_student')

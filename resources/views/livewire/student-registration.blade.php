@@ -34,7 +34,7 @@
             <div class="grid grid-cols-4">
 
                 <div class="mb-6 px-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade Level</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade Level*</label>
                     <select wire:model="level_id" name="level_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Select Grade Level</option>
                         @foreach($levels as $level)
@@ -51,7 +51,7 @@
             <div class="grid grid-cols-4">
                 
                 <div class="mb-6 px-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name*</label>
                         <input type="text" wire:model="firstname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('firstname') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -69,7 +69,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name*</label>
                         <input type="text" wire:model="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('lastname') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="mb-6 px-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status*</label>
                     <select wire:model="civil_status" name="civil_status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Select Civil Status</option>
                         <option value="Single">Single</option>
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="mb-6 px-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender*</label>
                     
                     <select wire:model="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Select Gender</option>
@@ -144,7 +144,7 @@
             </div>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth*</label>
 
                         <input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" min="1980-01-01" max="2023-12-31" wire:model="date_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('date_of_birth') 
@@ -154,7 +154,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth*</label>
                     <input type="text" wire:model="place_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('place_of_birth') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -166,7 +166,7 @@
 
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                        <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality</label>
+                        <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality*</label>
                         <select id="nationality" wire:model="nationality" name="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Nationality</option>
                             <option value="Filipino">Filipino</option>
@@ -180,7 +180,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="religion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Religion</label>
+                        <label for="religion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Religion*</label>
 
                         <select id="religion" wire:model="religion" name="religion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Religion</option>
@@ -197,7 +197,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Address*</label>
                         <input id="email" type="email" wire:model="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('email') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -206,7 +206,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="contact_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
+                        <label for="contact_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number*</label>
                         <input type="text" wire:model="contact_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('contact_number') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -272,7 +272,7 @@
             </div>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address*</label>
                         <input type="text" wire:model="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('address') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -281,7 +281,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="barangay_id" name="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay</label>
+                        <label for="barangay_id" name="barangay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barangay*</label>
                         <select id="barangay_id" wire:model="barangay_id" name="barangay_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Barangay</option>
                             @foreach($barangays as $barangay)
@@ -295,7 +295,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="municipality_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipality</label>
+                        <label for="municipality_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipality*</label>
                        
                         <select id="municipality_id" wire:model="municipality_id" name="municipality_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Municipality</option>
@@ -310,7 +310,7 @@
                          @enderror
                 </div>
                 <div class="mb-6 px-2">
-                        <label for="province_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province</label>
+                        <label for="province_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province*</label>
                         <select id="province_id" wire:model="province_id" name="province_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Select Province</option>
                             @foreach($provinces as $province)
@@ -326,7 +326,7 @@
             </div>
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
-                        <label for="zipcode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zip Code</label>
+                        <label for="zipcode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zip Code*</label>
                         <input type="text" wire:model="zipcode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('zipcode') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -334,9 +334,9 @@
                             </div>
                          @enderror
                 </div>
-
             </div>
-            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" wire:click="firstStepSubmit" type="button" >Next</button>
+            <strong>*Required</strong><br><br>
+            <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" wire:click="firstStepSubmit" type="button">Next</button>
         </div>
     
         <div class="{{ $currentStep != 2 ? 'hidden' : '' }}" id="step-2">
@@ -590,13 +590,48 @@
 
                     <table class="table">
                         <tr>
-                            <td>Name</td>
-                            <td><strong>{{$firstname}}</strong></td>
+                            <td>Name:</td>
+                            <td><strong>{{$firstname}} {{$middlename}} {{$lastname}}</strong></td>
                         </tr>
     
                         <tr>
-                            <td>Address</td>
+                            <td>Address:</td>
                             <td><strong>{{$address}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Date of Birth:</td>
+                            <td><strong>{{$date_of_birth}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Place of Birth:</td>
+                            <td><strong>{{$place_of_birth}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Civil Status:</td>
+                            <td><strong>{{$civil_status}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Nationality:</td>
+                            <td><strong>{{$nationality}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Religion:</td>
+                            <td><strong>{{$religion}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Email Address:</td>
+                            <td><strong>{{$email}}</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Contact Number:</td>
+                            <td><strong>{{$contact_number}}</strong></td>
                         </tr>
 
                     </table>

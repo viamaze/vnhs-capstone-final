@@ -70,6 +70,8 @@ class EnrollmentResource extends Resource
                     ->preload()
                     ->live()
                     ->required(),
+
+                    
                 Forms\Components\Select::make('section_id')
                     ->relationship(name: 'section', titleAttribute: 'section')
                             ->label('Section')

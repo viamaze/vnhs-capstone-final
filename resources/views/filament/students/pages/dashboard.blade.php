@@ -4,22 +4,15 @@
     <div class="bg-gray-100">
         <div class="container mx-auto py-8">
             <div class="grid grid-cols-2 sm:grid-cols-12 gap-6 px-4">
-                <div class="col-span-4 sm:col-span-3">
-                    <div class="bg-white shadow rounded-lg p-6 ">
-                        <div class="flex flex-col items-center">
-                            <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-                            </img>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-span-4 sm:col-span-9">
+                <div class="col-span-12 sm:col-span-12">
                     <div class="bg-white shadow rounded-lg p-6">
                         <h2 class="text-2xl font-bold mb-4">Profile</h2>
                         @foreach($students as $student)
                             <h1 class="text-xl font-bold">{{$student->full_name}}</h1>
+                            <p class="text-gray-900"><strong>LRN: </strong>: {{$student->lrn}}</p>
                             <p class="text-gray-900"><strong>Grade Level: </strong>: {{$student->level->level}}</p>
-                            <p class="text-gray-900"><strong>Specialization </strong>: {{$student->specialization}}</p>
-                            <p class="text-gray-900"><strong>Section </strong>: {{$student->section}}</p>
+                            <p class="text-gray-900"><strong>Contact Number: </strong>: {{$student->contact_number}}</p>
+                           
                         @endforeach
                     </div>
                 </div>
