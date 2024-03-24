@@ -78,7 +78,7 @@
                          @enderror
                 </div>
 
-                <div class="mb-6 px-2">
+{{--                 <div class="mb-6 px-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">M.I.</label>
                     <input type="text" wire:model="mi" maxlength="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('mi') 
@@ -86,11 +86,7 @@
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
                      @enderror
-                </div>
-
-            </div>
-            <div class="grid grid-cols-4">
-
+                </div> --}}
 
                 <div class="mb-6 px-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Suffix</label>
@@ -109,6 +105,12 @@
                      @enderror
 
                 </div>
+
+            </div>
+            <div class="grid grid-cols-4">
+
+
+
 
                 <div class="mb-6 px-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Civil Status*</label>
@@ -139,30 +141,29 @@
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
                      @enderror
-            </div>
-            
-            </div>
-            <div class="grid grid-cols-4">
-                <div class="mb-6 px-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth*</label>
-
-                        <input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" min="1980-01-01" max="2023-12-31" wire:model="date_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @error('date_of_birth') 
-                            <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-bold">{{ $message }}</span> 
-                            </div>
-                         @enderror
                 </div>
                 <div class="mb-6 px-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth*</label>
-                    <input type="text" wire:model="place_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @error('place_of_birth') 
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Birth*</label>
+
+                    <input type="date" name="date_of_birth" placeholder="dd-mm-yyyy" min="1980-01-01" max="2023-12-31" wire:model="date_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @error('date_of_birth') 
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
                         </div>
-                    @enderror
-                    </div>
+                     @enderror
             </div>
+            <div class="mb-6 px-2">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place of Birth*</label>
+                <input type="text" wire:model="place_of_birth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                @error('place_of_birth') 
+                    <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-bold">{{ $message }}</span> 
+                    </div>
+                @enderror
+                </div>
+            
+            </div>
+
 
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
@@ -207,7 +208,7 @@
                 </div>
                 <div class="mb-6 px-2">
                         <label for="contact_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number*</label>
-                        <input type="text" wire:model="contact_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="number" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="11" placeholder="+639 XX-XXX-XXXX" wire:model="contact_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @error('contact_number') 
                             <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                                 <span class="font-bold">{{ $message }}</span> 

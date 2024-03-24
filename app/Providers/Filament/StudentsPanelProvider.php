@@ -72,6 +72,7 @@ class StudentsPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->favicon(asset('images/favicon.jpg'))
             ->maxContentWidth(MaxWidth::Full);
     }
 }

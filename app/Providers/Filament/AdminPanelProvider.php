@@ -72,7 +72,7 @@ class AdminPanelProvider extends PanelProvider
                 
             ])
             ->authGuard('web')
-            ->favicon(asset('images/favicon.png'))
+            ->favicon(asset('images/favicon.jpg'))
             ->navigationGroups([
                 'Student Management',
                 'Teacher Management',

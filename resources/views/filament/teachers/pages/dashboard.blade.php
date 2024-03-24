@@ -1,13 +1,11 @@
 <x-filament-panels::page>
-
-    
     <div class="bg-gray-100">
         <div class="container mx-auto py-8">
             <div class="grid grid-cols-2 sm:grid-cols-12 gap-6 px-4">
                 <div class="col-span-4 sm:col-span-3">
                     <div class="bg-white shadow rounded-lg p-6 ">
                         <div class="flex flex-col items-center">
-                            <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                            <img src="{{ asset('/images/profile.png') }}" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
                             </img>
                         </div>
                     </div>

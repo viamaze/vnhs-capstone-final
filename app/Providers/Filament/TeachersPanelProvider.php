@@ -66,6 +66,7 @@ class TeachersPanelProvider extends PanelProvider
                     //action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
                 ),
             ])
+            ->favicon(asset('images/favicon.jpg'))
             ->authMiddleware([
                 Authenticate::class,
             ]);
