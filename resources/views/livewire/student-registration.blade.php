@@ -418,7 +418,8 @@
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
                     <label for="father_contactno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
-                    <input type="text" wire:model="father_contactno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                    <input type="number" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="11" placeholder="+639 XX-XXX-XXXX" wire:model="father_contactno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('father_contactno')
                     <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
@@ -517,7 +518,7 @@
             <div class="grid grid-cols-4">
                 <div class="mb-6 px-2">
                     <label for="mother_contactno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
-                    <input type="text" wire:model="mother_contactno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="number" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="11" placeholder="+639 XX-XXX-XXXX" wire:model="mother_contactno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('mother_contactno')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
@@ -571,7 +572,7 @@
 
                 <div class="mb-6 px-2"> 
                     <label for="emergency_mobile" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mobile Number</label>
-                    <input type="text" wire:model="emergency_mobile" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="number" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="11" placeholder="+639 XX-XXX-XXXX" wire:model="emergency_mobile" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @error('emergency_mobile')
                         <div class="mt-2 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                             <span class="font-bold">{{ $message }}</span> 
@@ -587,29 +588,26 @@
         <div class="{{ $currentStep != 4 ? 'hidden' : '' }}" id="step-4">
             <div class="mb-6">
                 <div class="mb-6">
-                    <h3 class="mb-2 text-2xl text-center font-bold">Confirm </h3>
+                    <h3 class="mb-2 text-2xl text-center font-bold">Confirm</h3>
 
+                    <h4 class="mb-2 text-xl text-center font-bold">Student Information</h4>
                     <table class="table">
                         <tr>
                             <td>Name:</td>
-                            <td><strong>{{$firstname}} {{$middlename}} {{$lastname}}</strong></td>
+                            <td><strong>{{$firstname}} {{$middlename}} {{$lastname}} {{$suffix}}</strong></td>
                         </tr>
-    
                         <tr>
-                            <td>Address:</td>
-                            <td><strong>{{$address}}</strong></td>
+                            <td>Gender:</td>
+                            <td><strong>{{$gender}}</strong></td>
                         </tr>
-
                         <tr>
                             <td>Date of Birth:</td>
                             <td><strong>{{$date_of_birth}}</strong></td>
                         </tr>
-
                         <tr>
                             <td>Place of Birth:</td>
                             <td><strong>{{$place_of_birth}}</strong></td>
                         </tr>
-
                         <tr>
                             <td>Civil Status:</td>
                             <td><strong>{{$civil_status}}</strong></td>
@@ -635,7 +633,66 @@
                             <td><strong>{{$contact_number}}</strong></td>
                         </tr>
 
+                        <tr>
+                            <td>Address:</td>
+                            <td><strong>{{$address}}, {{$barangay->barangay}}, {{$municipality->municipality}}, {{$province->province}} {{$zipcode}}</strong></td>
+                        </tr>
                     </table>
+            
+                    <h4 class="my-2 text-xl text-center font-bold">Parents Information</h4>
+                    <table class="table">
+                        <tr>
+                            <td>Fathers Name: </td>
+                            <td><strong>{{$father_first_name}} {{$father_middle_name}} {{$father_last_name}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth: </td>
+                            <td><strong>{{$father_dob}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number: </td>
+                            <td><strong>{{$father_contactno}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Occupation: </td>
+                            <td><strong>{{$father_address}}</strong></td>
+                        </tr>
+                    </table>
+
+                    <table class="table">
+                        <td>Mothers Name: </td>
+                        <td><strong>{{$mother_first_name}} {{$mother_middle_name}} {{$mother_last_name}}</strong></td>
+                        <tr>
+                            <td>Date of Birth: </td>
+                            <td><strong>{{$mother_dob}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number: </td>
+                            <td><strong>{{$mother_contactno}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Occupation: </td>
+                            <td><strong>{{$mother_address}}</strong></td>
+                        </tr>
+                    </table>
+
+                    <h4 class="my-2 text-xl text-center font-bold">Emergency Contact Information</h4>
+
+                    <table class="table">
+                        <tr>
+                            <td>Contact Person: </td>
+                            <td><strong>{{$emergency_contact_person}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Address: </td>
+                            <td><strong>{{$emergency_address}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number: </td>
+                            <td><strong>{{$emergency_mobile}}</strong></td>
+                        </tr>
+                    </table>
+
                     <div class="my-10">
                     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" wire:click="back(3)">Back</button>
 

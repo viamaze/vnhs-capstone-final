@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\SelectColumn;
+
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
@@ -50,7 +51,11 @@ class StudentResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->orderBy('created_at', 'desc');
+        return parent::getEloquentQuery()
+        ->orderBy('created_at', 'desc')
+        ->withoutGlobalScopes([
+            SoftDeletingScope::class,
+        ]);
     }
 
     public static function form(Form $form): Form
@@ -461,17 +466,22 @@ class StudentResource extends Resource
                 ->options([
                     '1' => 'Active',
                     '0' => 'Inactive',
-                ])
+                ]),
+                Tables\Filters\TrashedFilter::make()
             ], layout: FiltersLayout::AboveContent)
-            ->filtersFormColumns(4)
+            ->filtersFormColumns(5)
             ->actions([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([

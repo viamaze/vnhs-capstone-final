@@ -40,6 +40,9 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Hidden;
 use Illuminate\Support\Facades\Hash;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 use Illuminate\Support\Carbon;
 
@@ -244,14 +247,20 @@ class TeacherResource extends Resource
                 Tables\Filters\SelectFilter::make('level')
                 ->relationship('level', 'level')
                 ->preload(),
+                Tables\Filters\SelectFilter::make('department')
+                ->relationship('department', 'department')
+                ->preload(),
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(3)
             ->actions([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
-                Tables\Actions\ReplicateAction::make()
-                ->excludeAttributes(['full_name']),
+                // Tables\Actions\ReplicateAction::make()
+                // ->excludeAttributes(['full_name']),
+            ])
+            ->headerActions([
+                ExportAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

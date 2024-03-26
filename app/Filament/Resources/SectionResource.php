@@ -18,6 +18,9 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Get;
 use Filament\Forms\Components\Select;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 use App\Models\Section;
 use App\Models\Subject;
@@ -101,6 +104,9 @@ class SectionResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
+            ->headerActions([
+                ExportAction::make()
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -124,6 +130,7 @@ class SectionResource extends Resource
             'index' => Pages\ListSections::route('/'),
             'create' => Pages\CreateSection::route('/create'),
             'edit' => Pages\EditSection::route('/{record}/edit'),
+            
         ];
     }    
 }

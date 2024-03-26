@@ -13,10 +13,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Enums\FiltersLayout;
+
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class SubjectResource extends Resource
 {
@@ -91,8 +93,8 @@ class SubjectResource extends Resource
         return [
             'index' => Pages\ListSubjects::route('/'),
             'create' => Pages\CreateSubject::route('/create'),
-            'view' => Pages\ViewSubject::route('/{record}'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
+            //'view' => Pages\ViewSubject::route('/{record}'),
+            //'edit' => Pages\EditSubject::route('/{record}/edit'),
         ];
     }    
 }

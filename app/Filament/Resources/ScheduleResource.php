@@ -35,6 +35,9 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Forms\Set;
 use Illuminate\Support\Str;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ScheduleResource extends Resource
 {
@@ -207,6 +210,9 @@ class ScheduleResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
